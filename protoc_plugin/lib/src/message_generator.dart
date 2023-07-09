@@ -652,7 +652,7 @@ class MessageGenerator extends ProtobufContainer {
     IndentingWriter out,
     List<int> memberFieldPath,
   ) {
-    final fieldTypeString = field.getDartType();
+    var fieldTypeString = field.getDartType();
     final defaultExpr = field.getDefaultExpr();
     final names = field.memberNames;
 
