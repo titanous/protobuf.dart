@@ -19,9 +19,12 @@ TEST_PROTO_LIST = \
 	google/protobuf/type \
 	google/protobuf/unittest_import \
 	google/protobuf/unittest_import_public \
+	google/protobuf/unittest_import_proto3 \
+	google/protobuf/unittest_import_public_proto3 \
 	google/protobuf/unittest_optimize_for \
 	google/protobuf/unittest_well_known_types \
 	google/protobuf/unittest \
+	google/protobuf/unittest_proto3 \
 	google/protobuf/wrappers \
 	custom_option \
 	dart_name \
