@@ -93,6 +93,28 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
 		$(TEST_PROTO_SRCS)
 
+	mkdir -p $(TEST_PROTO_DIR)/constructor_args
+
+	protoc\
+		--experimental_allow_proto3_optional\
+		--dart_out="$(TEST_PROTO_DIR)/constructor_args"\
+		-Iprotos\
+		-I$(TEST_PROTO_SRC_DIR)\
+		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
+		$(TEST_PROTO_SRCS)
+
+	mkdir -p $(TEST_PROTO_DIR)/nullable
+
+	protoc\
+		--experimental_allow_proto3_optional\
+		--dart_out="nullable:$(TEST_PROTO_DIR)/nullable"\
+		-Iprotos\
+		-I$(TEST_PROTO_SRC_DIR)\
+		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
+		$(TEST_PROTO_SRCS)
+
+	dart format $(TEST_PROTO_DIR)
+
 update-pregenerated: $(PLUGIN_PATH) $(PREGENERATED_SRCS)
 	protoc --dart_out=lib/src/gen \
 		-Iprotos \
