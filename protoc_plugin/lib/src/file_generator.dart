@@ -186,6 +186,7 @@ class FileGenerator extends ProtobufContainer {
           defaultMixin,
           usedTopLevelNames,
           i,
+          options.useNullable,
         ),
       );
     }

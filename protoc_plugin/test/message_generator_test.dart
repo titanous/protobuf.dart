@@ -88,7 +88,7 @@ void main() {
         )!;
 
     final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
-    final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0);
+    final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0, false);
 
     final ctx = GenerationContext(options);
     mg.register(ctx);
@@ -121,7 +121,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
     final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
-    final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0);
+    final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0, false);
 
     final ctx = GenerationContext(options);
     mg.register(ctx);
