@@ -15,6 +15,7 @@ import 'package:protoc_plugin/src/options.dart';
 import 'package:test/test.dart';
 
 import 'src/golden_file.dart';
+import 'src/test_util.dart';
 
 void main() {
   test('testExtensionGenerator', () {
@@ -35,7 +36,7 @@ void main() {
           ..messageType.add(messageDescriptor)
           ..extension.add(extensionFieldDescriptor);
 
-    final fileGenerator = FileGenerator(fileDescriptor, GenerationOptions());
+    final fileGenerator = FileGenerator(fileDescriptor, GenerationOptions(), createTestExtensionRegistry(), createTestExtensionDecoder());
     final options = parseGenerationOptions(
       pb.CodeGeneratorRequest(),
       pb.CodeGeneratorResponse(),

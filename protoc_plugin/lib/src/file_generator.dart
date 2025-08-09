@@ -113,6 +113,8 @@ class FileGenerator extends ProtobufContainer {
 
   final FileDescriptorProto descriptor;
   final GenerationOptions options;
+  final ExtensionRegistry extensionRegistry;
+  final ExtensionValueDecoder extensionDecoder;
 
   // The relative path used to import the .proto file, as a URI.
   final Uri protoFileUri;
@@ -142,7 +144,7 @@ class FileGenerator extends ProtobufContainer {
 
   final ProtoSyntax syntax;
 
-  FileGenerator(this.descriptor, this.options)
+  FileGenerator(this.descriptor, this.options, this.extensionRegistry, this.extensionDecoder)
     : protoFileUri = Uri.file(descriptor.name),
       syntax =
           descriptor.syntax == 'proto3'

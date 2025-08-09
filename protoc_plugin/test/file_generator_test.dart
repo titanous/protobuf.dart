@@ -15,6 +15,7 @@ import 'package:protoc_plugin/src/options.dart';
 import 'package:test/test.dart';
 
 import 'src/golden_file.dart';
+import 'src/test_util.dart';
 
 FileDescriptorProto buildFileDescriptor({
   bool phoneNumber = true,
@@ -111,7 +112,7 @@ void main() {
             CodeGeneratorRequest()..parameter = 'disable_constructor_args',
             CodeGeneratorResponse(),
           )!;
-      final fg = FileGenerator(fd, options);
+      final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
       link(options, [fg]);
       expectGolden(
         fg.generateMainFile().emitSource(format: true),
@@ -127,7 +128,7 @@ void main() {
           CodeGeneratorRequest()..parameter = 'disable_constructor_args',
           CodeGeneratorResponse(),
         )!;
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
     expectGolden(
       fg.generateMainFile().emitSource(format: true),
@@ -145,7 +146,7 @@ void main() {
               ..parameter = 'generate_kythe_info,disable_constructor_args',
             CodeGeneratorResponse(),
           )!;
-      final fg = FileGenerator(fd, options);
+      final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
       link(options, [fg]);
       expectGolden(
         fg.generateMainFile().sourceLocationInfo.toString(),
@@ -163,7 +164,7 @@ void main() {
             CodeGeneratorRequest()..parameter = 'disable_constructor_args',
             CodeGeneratorResponse(),
           )!;
-      final fg = FileGenerator(fd, options);
+      final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
       link(options, [fg]);
       expectGolden(fg.generateJsonFile(), 'oneMessage.pbjson.dart');
     },
@@ -177,7 +178,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
     expectGolden(
       fg.generateMainFile().emitSource(format: true),
@@ -197,7 +198,7 @@ void main() {
             ..parameter = 'generate_kythe_info,disable_constructor_args',
           CodeGeneratorResponse(),
         )!;
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
 
     expectGolden(
@@ -218,7 +219,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
     expectGolden(fg.generateJsonFile(), 'topLevelEnum.pbjson.dart');
   });
@@ -232,7 +233,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
 
     final writer = IndentingWriter();
@@ -262,7 +263,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
 
     final writer = IndentingWriter();
@@ -295,7 +296,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
 
     final writer = IndentingWriter();
@@ -330,7 +331,7 @@ void main() {
 
       final options = GenerationOptions(useGrpc: true);
 
-      final fg = FileGenerator(fd, options);
+      final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
       link(options, [fg]);
 
       final writer = IndentingWriter();
@@ -427,7 +428,7 @@ void main() {
 
     final options = GenerationOptions(useGrpc: true);
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [fg]);
 
     final writer = IndentingWriter();
@@ -547,11 +548,11 @@ void main() {
     final response = CodeGeneratorResponse();
     final options = parseGenerationOptions(request, response)!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     link(options, [
       fg,
-      FileGenerator(fd1, options),
-      FileGenerator(fd2, options),
+      FileGenerator(fd1, options, createTestExtensionRegistry(), createTestExtensionDecoder()),
+      FileGenerator(fd2, options, createTestExtensionRegistry(), createTestExtensionDecoder()),
     ]);
     expectGolden(
       fg.generateMainFile().emitSource(format: true),

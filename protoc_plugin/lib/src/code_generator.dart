@@ -7,10 +7,10 @@ import 'dart:typed_data' show BytesBuilder;
 
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:protobuf/protobuf.dart';
+import 'package:protobuf/protobuf.dart' as protobuf;
 
 import '../names.dart' show lowerCaseFirstLetter;
-import '../protoc.dart' show FileGenerator;
+import '../protoc.dart' show FileGenerator, ExtensionRegistry, ExtensionValueDecoder;
 import 'gen/dart_options.pb.dart';
 import 'gen/google/api/client.pb.dart';
 import 'gen/google/protobuf/compiler/plugin.pb.dart';
@@ -86,7 +86,7 @@ class CodeGenerator {
     Map<String, SingleOptionParser>? optionParsers,
     OutputConfiguration config = const DefaultOutputConfiguration(),
   }) async {
-    final extensions = ExtensionRegistry();
+    final extensions = protobuf.ExtensionRegistry();
 
     Dart_options.registerAllExtensions(extensions);
     Client.registerAllExtensions(extensions);
@@ -98,7 +98,7 @@ class CodeGenerator {
     final bytes = builder.takeBytes();
     // Suppress CodedBufferReader builtin size limitation when reading the
     // request; protobuf definitions can be larger than default limit of 64Mb.
-    final reader = CodedBufferReader(bytes, sizeLimit: bytes.length);
+    final reader = protobuf.CodedBufferReader(bytes, sizeLimit: bytes.length);
     final request = CodeGeneratorRequest();
     request.mergeFromCodedBufferReader(reader, extensions);
     reader.checkLastTagWas(0);
@@ -114,11 +114,15 @@ class CodeGenerator {
       return;
     }
 
+    // Create extension registry and decoder for all proto files
+    final extensionRegistry = ExtensionRegistry(request);
+    final extensionDecoder = ExtensionValueDecoder(extensionRegistry);
+
     // Create a syntax tree for each .proto file given to us.
     // (We may import it even if we don't generate the .pb.dart file.)
     final generators = <FileGenerator>[];
     for (final file in request.protoFile) {
-      generators.add(FileGenerator(file, options));
+      generators.add(FileGenerator(file, options, extensionRegistry, extensionDecoder));
     }
 
     // Collect field types and importable files.

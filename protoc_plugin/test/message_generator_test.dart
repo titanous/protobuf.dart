@@ -17,6 +17,7 @@ import 'package:protoc_plugin/src/options.dart';
 import 'package:test/test.dart';
 
 import 'src/golden_file.dart';
+import 'src/test_util.dart';
 
 void main() {
   late FileDescriptorProto fd;
@@ -86,7 +87,7 @@ void main() {
           CodeGeneratorResponse(),
         )!;
 
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0);
 
     final ctx = GenerationContext(options);
@@ -119,7 +120,7 @@ void main() {
           CodeGeneratorRequest()..parameter = 'disable_constructor_args',
           CodeGeneratorResponse(),
         )!;
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, createTestExtensionRegistry(), createTestExtensionDecoder());
     final mg = MessageGenerator.topLevel(md, fg, {}, null, <String>{}, 0);
 
     final ctx = GenerationContext(options);

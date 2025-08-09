@@ -35,6 +35,7 @@ TEST_PROTO_LIST = \
 	extend_unittest \
 	ExtensionEnumNameConflict \
 	ExtensionNameConflict \
+	field_options_test \
 	foo \
 	high_tagnumber \
 	import_clash \

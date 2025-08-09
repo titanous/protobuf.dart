@@ -7,6 +7,8 @@ library;
 
 import 'package:protoc_plugin/indenting_writer.dart';
 import 'package:protoc_plugin/protoc.dart';
+import 'package:protoc_plugin/src/gen/google/protobuf/compiler/plugin.pb.dart'
+    show CodeGeneratorRequest;
 import 'package:protoc_plugin/src/linker.dart';
 import 'package:protoc_plugin/src/options.dart';
 import 'package:test/test.dart';
@@ -17,18 +19,24 @@ import 'src/service_util.dart';
 void main() {
   test('testServiceGenerator', () {
     final options = GenerationOptions();
+    
+    // Create a mock CodeGeneratorRequest for testing
+    final request = CodeGeneratorRequest();
+    final extensionRegistry = ExtensionRegistry(request);
+    final extensionDecoder = ExtensionValueDecoder(extensionRegistry);
+    
     final fd = buildFileDescriptor('testpkg', 'testpkg.proto', [
       'SomeRequest',
       'SomeReply',
     ]);
     fd.service.add(buildServiceDescriptor());
-    final fg = FileGenerator(fd, options);
+    final fg = FileGenerator(fd, options, extensionRegistry, extensionDecoder);
 
     final fd2 = buildFileDescriptor('foo.bar', 'foobar.proto', [
       'EmptyMessage',
       'AnotherReply',
     ]);
-    final fg2 = FileGenerator(fd2, options);
+    final fg2 = FileGenerator(fd2, options, extensionRegistry, extensionDecoder);
 
     link(GenerationOptions(), [fg, fg2]);
 

@@ -12,6 +12,7 @@ import 'package:protoc_plugin/src/options.dart';
 import 'package:test/test.dart';
 
 import 'src/golden_file.dart';
+import 'src/test_util.dart';
 
 void main() {
   test('testEnumGenerator', () {
@@ -36,7 +37,7 @@ void main() {
       generateMetadata: true,
       fileName: 'sample.proto',
     );
-    final fg = FileGenerator(FileDescriptorProto(), GenerationOptions());
+    final fg = FileGenerator(FileDescriptorProto(), GenerationOptions(), createTestExtensionRegistry(), createTestExtensionDecoder());
     final eg = EnumGenerator.topLevel(ed, fg, <String>{}, 0);
     eg.generate(writer);
     expectGolden(writer.emitSource(format: false), 'enum.pbenum.dart');

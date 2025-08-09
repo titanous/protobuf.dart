@@ -4,6 +4,9 @@
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';
+import 'package:protoc_plugin/protoc.dart' as protoc_plugin;
+import 'package:protoc_plugin/src/gen/google/protobuf/compiler/plugin.pb.dart'
+    show CodeGeneratorRequest;
 import 'package:test/test.dart';
 
 import '../gen/google/protobuf/unittest.pb.dart';
@@ -2049,4 +2052,16 @@ void setUnpackedFields(TestUnpackedTypes message) {
   message.unpackedDouble.add(712.0);
   message.unpackedBool.add(false);
   message.unpackedEnum.add(ForeignEnum.FOREIGN_BAZ);
+}
+
+/// Create an empty ExtensionRegistry for testing
+protoc_plugin.ExtensionRegistry createTestExtensionRegistry() {
+  // Create an empty CodeGeneratorRequest for testing
+  final request = CodeGeneratorRequest();
+  return protoc_plugin.ExtensionRegistry(request);
+}
+
+/// Create an ExtensionValueDecoder for testing
+protoc_plugin.ExtensionValueDecoder createTestExtensionDecoder() {
+  return protoc_plugin.ExtensionValueDecoder(createTestExtensionRegistry());
 }

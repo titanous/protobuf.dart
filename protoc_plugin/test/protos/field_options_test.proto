@@ -1,0 +1,57 @@
+// Test proto for field options and extensions
+
+syntax = "proto3";
+
+package test.field_options;
+
+import "google/protobuf/descriptor.proto";
+
+// Define custom field options as extensions
+extend google.protobuf.FieldOptions {
+  string custom_validator = 51234;
+  bool is_sensitive = 51235;
+  int32 max_retries = 51236;
+}
+
+// Define custom message options as extensions  
+extend google.protobuf.MessageOptions {
+  string custom_message_type = 51237;
+  bool requires_auth = 51238;
+}
+
+// Test message with custom field options
+message TestFieldOptions {
+  // Field with custom validator option
+  string email = 1 [(custom_validator) = "email"];
+  
+  // Field with retry option
+  int32 retry_count = 2 [(max_retries) = 3];
+  
+  // Field without custom options
+  string normal_field = 3;
+  
+  // Repeated field with options
+  repeated string tags = 4 [(is_sensitive) = true];
+  
+  // Map field with options
+  map<string, int32> counts = 5 [(is_sensitive) = false];
+}
+
+// Test message with message-level options
+message TestMessageOptions {
+  option (custom_message_type) = "User";
+  option (requires_auth) = true;
+  
+  string username = 1;
+  string password = 2 [(is_sensitive) = true];
+}
+
+// Nested message to test complex scenarios
+message OuterMessage {
+  message InnerMessage {
+    string inner_field = 1;
+  }
+  
+  InnerMessage inner = 1;
+  string outer_field = 2;
+}

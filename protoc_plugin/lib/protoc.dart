@@ -27,6 +27,8 @@ part 'src/base_type.dart';
 part 'src/client_generator.dart';
 part 'src/enum_generator.dart';
 part 'src/extension_generator.dart';
+part 'src/extension_registry.dart';
+part 'src/extension_value_decoder.dart';
 part 'src/file_generator.dart';
 part 'src/grpc_generator.dart';
 part 'src/message_generator.dart';
