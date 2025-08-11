@@ -387,8 +387,18 @@ abstract class GeneratedMessage {
       _fieldSet._ensureInfo(tagNumber).readonlyDefault;
 
   /// Returns `true` if a value of [extension] is present.
-  bool hasExtension(Extension extension) =>
-      _fieldSet._extensions?._getFieldOrNull(extension) != null;
+  /// 
+  /// This method validates both that the extension applies to this message type
+  /// and that the extension field is actually set on this message instance.
+  bool hasExtension(Extension extension) {
+    // First check if the extension actually extends this message type
+    if (extension.extendee != _fieldSet._messageName) {
+      return false;
+    }
+    
+    // Then check if the extension field is set
+    return _fieldSet._extensions?._getFieldOrNull(extension) != null;
+  }
 
   /// Whether this message has a field associated with [tagNumber].
   bool hasField(int tagNumber) => _fieldSet._hasField(tagNumber);
