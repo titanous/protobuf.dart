@@ -21,3 +21,5 @@ export 'src/protobuf/internal.dart'
         mapValueFieldNumber,
         mergeFromProto3JsonAny,
         writeToProto3JsonAny;
+
+export 'src/protobuf/extension_options.dart';

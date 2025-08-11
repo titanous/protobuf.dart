@@ -81,6 +81,11 @@ class ExtensionGenerator {
     if (!_resolved) throw StateError('resolve not called');
     return _field.needsFixnumImport;
   }
+  
+  /// Returns true if this extension needs the FieldOptions import.
+  bool get needsFieldOptionsImport {
+    return _descriptor.hasOptions();
+  }
 
   /// Adds dependencies of [generate] to [imports].
   ///
@@ -107,6 +112,40 @@ class ExtensionGenerator {
     // No dependencies - nothing to do.
   }
 
+  /// Generates code to create a FieldOptions object with preserved extensions.
+  String? _generateOptionsInitializer(FieldOptions options) {
+    final optionsBytes = options.writeToBuffer();
+    if (optionsBytes.isEmpty) {
+      return null;
+    }
+    
+    // Generate a compact byte array representation
+    // Group bytes in chunks for readability
+    final chunks = <String>[];
+    for (var i = 0; i < optionsBytes.length; i += 16) {
+      final end = (i + 16 < optionsBytes.length) ? i + 16 : optionsBytes.length;
+      final chunk = optionsBytes
+          .sublist(i, end)
+          .map((b) => '0x${b.toRadixString(16).padLeft(2, '0')}')
+          .join(',');
+      chunks.add(chunk);
+    }
+    
+    // Generate the code to reconstruct FieldOptions
+    // The file generator will need to import the descriptor types
+    final buffer = StringBuffer();
+    buffer.write('(() {');
+    buffer.write('final _bytes = <int>[');
+    buffer.write(chunks.join(','));
+    buffer.write('];');
+    // Use the global extension registry that should have all extensions registered
+    // FieldOptions needs to be imported from google/protobuf/descriptor.pb.dart
+    buffer.write('return FieldOptions.fromBuffer(_bytes, $protobufImportPrefix.ExtensionRegistry.EMPTY);');
+    buffer.write('})()');
+    
+    return buffer.toString();
+  }
+  
   void generate(IndentingWriter out) {
     if (!_resolved) throw StateError('resolve not called');
 
@@ -159,6 +198,18 @@ class ExtensionGenerator {
         named['enumValues'] = '$dartEnum.values';
       }
     }
+    
+    // Add options bytes if they exist
+    if (_descriptor.hasOptions()) {
+      final optionsBytes = _descriptor.options.writeToBuffer();
+      if (optionsBytes.isNotEmpty) {
+        // Pass the serialized bytes as a list literal
+        // Use the core import prefix to qualify int type
+        final bytesLiteral = '<$coreImportPrefix.int>[' + optionsBytes.map((b) => b.toString()).join(',') + ']';
+        named['optionsBytes'] = bytesLiteral;
+      }
+    }
+    
     final fieldDefinition = 'static final ';
     out.printAnnotated(
       '$fieldDefinition$name = '
