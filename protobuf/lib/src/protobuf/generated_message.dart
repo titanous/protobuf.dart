@@ -295,12 +295,17 @@ abstract class GeneratedMessage {
   ///
   /// Throws [FormatException] if the JSON not formatted correctly (a String
   /// where a number was expected etc.).
+  ///
+  /// When [allowUnknownEnumIntegers] is true, unknown enum integer values
+  /// are preserved instead of causing parse errors. This enables proto3
+  /// compatibility with forward-compatible enum evolution.
   void mergeFromProto3Json(
     Object? json, {
     TypeRegistry typeRegistry = const TypeRegistry.empty(),
     bool ignoreUnknownFields = false,
     bool supportNamesWithUnderscores = true,
     bool permissiveEnums = false,
+    bool allowUnknownEnumIntegers = false,
   }) => _mergeFromProto3Json(
     json,
     _fieldSet,
@@ -308,6 +313,7 @@ abstract class GeneratedMessage {
     ignoreUnknownFields,
     supportNamesWithUnderscores,
     permissiveEnums,
+    allowUnknownEnumIntegers,
   );
 
   /// Merges field values from [data], a JSON object, encoded as described by

@@ -940,6 +940,61 @@ void main() {
       );
     });
 
+    test('allowUnknownEnumIntegers', () {
+      // Test unknown enum integer values are preserved using field access
+      final messageWithUnknownEnum = SparseEnumMessage()
+        ..mergeFromProto3Json({'sparseEnum': 999}, allowUnknownEnumIntegers: true);
+      final unknownEnumValue = messageWithUnknownEnum.getField(1) as ProtobufEnum;
+      expect(unknownEnumValue.value, 999);
+      expect(unknownEnumValue.name, 'UNKNOWN_ENUM_VALUE_999');
+
+      // Test known enum values still work normally
+      final messageWithKnownEnum = SparseEnumMessage()
+        ..mergeFromProto3Json({'sparseEnum': 123}, allowUnknownEnumIntegers: true);
+      expect(messageWithKnownEnum.sparseEnum, TestSparseEnum.SPARSE_A);
+
+      // Test negative enum values using field access
+      final messageWithNegativeEnum = SparseEnumMessage()
+        ..mergeFromProto3Json({'sparseEnum': -5}, allowUnknownEnumIntegers: true);
+      final negativeEnumValue = messageWithNegativeEnum.getField(1) as ProtobufEnum;
+      expect(negativeEnumValue.value, -5);
+      expect(negativeEnumValue.name, 'UNKNOWN_ENUM_VALUE_-5');
+
+      // Test that unknown enum integers are rejected when flag is false (default behavior)
+      expect(
+        () => SparseEnumMessage()..mergeFromProto3Json({'sparseEnum': 999}),
+        parseFailure(['sparseEnum']),
+      );
+
+      // Test that ignoreUnknownFields still works with unknown enum integers
+      final messageIgnored = SparseEnumMessage()
+        ..mergeFromProto3Json(
+          {'sparseEnum': 999}, 
+          ignoreUnknownFields: true,
+        );
+      expect(messageIgnored.sparseEnum, TestSparseEnum.SPARSE_A); // default value
+
+      // Test combination of allowUnknownEnumIntegers and ignoreUnknownFields
+      final messageAllowedAndIgnored = SparseEnumMessage()
+        ..mergeFromProto3Json(
+          {'sparseEnum': 888}, 
+          allowUnknownEnumIntegers: true,
+          ignoreUnknownFields: true,
+        );
+      final allowedEnumValue = messageAllowedAndIgnored.getField(1) as ProtobufEnum;
+      expect(allowedEnumValue.value, 888);
+
+      // Test string enum values still throw errors when unknown
+      expect(
+        () => SparseEnumMessage()
+          ..mergeFromProto3Json(
+            {'sparseEnum': 'UNKNOWN_STRING'}, 
+            allowUnknownEnumIntegers: true,
+          ),
+        parseFailure(['sparseEnum']),
+      );
+    });
+
     test('map value', () {
       final expected =
           TestMap()

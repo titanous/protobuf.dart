@@ -8,11 +8,13 @@ class JsonParsingContext {
   final bool ignoreUnknownFields;
   final bool supportNamesWithUnderscores;
   final bool permissiveEnums;
+  final bool allowUnknownEnumIntegers;
 
   JsonParsingContext(
     this.ignoreUnknownFields,
     this.supportNamesWithUnderscores,
     this.permissiveEnums,
+    this.allowUnknownEnumIntegers,
   );
 
   void addMapIndex(String index) {
