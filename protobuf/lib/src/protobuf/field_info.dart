@@ -98,6 +98,14 @@ class FieldInfo<T> {
   /// Only available in repeated fields.
   final CheckFunc<T>? check;
 
+  /// Field presence semantics (proto2 explicit vs proto3 implicit).
+  ///
+  /// This determines how hasField() behaves:
+  /// - [FieldPresence.explicit]: proto2 behavior, tracks explicit setting
+  /// - [FieldPresence.implicit]: proto3 behavior, compares to default values
+  /// - [FieldPresence.legacyRequired]: proto2 required fields
+  final FieldPresence presence;
+
   FieldInfo(
     this.name,
     this.tagNumber,
@@ -109,6 +117,7 @@ class FieldInfo<T> {
     this.enumValues,
     this.defaultEnumValue,
     String? protoName,
+    this.presence = FieldPresence.explicit,
   }) : makeDefault = findMakeDefault(type, defaultOrMaker),
        check = null,
        _protoName = protoName,
@@ -131,7 +140,8 @@ class FieldInfo<T> {
       check = null,
       enumValues = null,
       defaultEnumValue = null,
-      subBuilder = null;
+      subBuilder = null,
+      presence = FieldPresence.explicit;
 
   FieldInfo.repeated(
     this.name,
@@ -144,6 +154,7 @@ class FieldInfo<T> {
     this.enumValues,
     this.defaultEnumValue,
     String? protoName,
+    this.presence = FieldPresence.explicit,
   }) : makeDefault = (() => PbList<T>(check: check)),
        _protoName = protoName,
        assert(PbFieldType.isRepeated(type)),
@@ -297,6 +308,7 @@ class MapFieldInfo<K, V> extends FieldInfo<PbMap<K, V>?> {
     this.valueCreator, {
     ProtobufEnum? defaultEnumValue,
     String? protoName,
+    FieldPresence? presence,
   }) : assert(PbFieldType.isMapField(type)),
        super(
          name,
@@ -306,6 +318,7 @@ class MapFieldInfo<K, V> extends FieldInfo<PbMap<K, V>?> {
          defaultOrMaker: () => PbMap<K, V>(keyFieldType, valueFieldType),
          defaultEnumValue: defaultEnumValue,
          protoName: protoName,
+         presence: presence ?? FieldPresence.explicit,
        ) {
     assert(!PbFieldType.isEnum(type) || valueOf != null);
   }

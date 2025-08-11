@@ -36,6 +36,7 @@ part 'extension_field_set.dart';
 part 'extension_registry.dart';
 part 'field_error.dart';
 part 'field_info.dart';
+part 'field_presence.dart';
 part 'field_set.dart';
 part 'field_type.dart';
 part 'generated_message.dart';

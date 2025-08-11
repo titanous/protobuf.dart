@@ -63,6 +63,7 @@ class BuilderInfo {
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues, {
     String? protoName,
+    FieldPresence? presence,
   }) {
     final index = byIndex.length;
     final fieldInfo =
@@ -78,6 +79,7 @@ class BuilderInfo {
               valueOf: valueOf,
               enumValues: enumValues,
               protoName: protoName,
+              presence: presence ?? FieldPresence.explicit,
             );
     _addField(fieldInfo);
   }
@@ -91,6 +93,7 @@ class BuilderInfo {
     CreateBuilderFunc? valueCreator, {
     ProtobufEnum? defaultEnumValue,
     String? protoName,
+    FieldPresence? presence,
   }) {
     final index = byIndex.length;
     _addField(
@@ -105,6 +108,7 @@ class BuilderInfo {
         valueCreator,
         defaultEnumValue: defaultEnumValue,
         protoName: protoName,
+        presence: presence ?? FieldPresence.explicit,
       ),
     );
   }
@@ -119,6 +123,7 @@ class BuilderInfo {
     List<ProtobufEnum>? enumValues, {
     ProtobufEnum? defaultEnumValue,
     String? protoName,
+    FieldPresence? presence,
   }) {
     final index = byIndex.length;
     _addField(
@@ -133,6 +138,7 @@ class BuilderInfo {
         enumValues: enumValues,
         defaultEnumValue: defaultEnumValue,
         protoName: protoName,
+        presence: presence ?? FieldPresence.explicit,
       ),
     );
   }
@@ -159,6 +165,7 @@ class BuilderInfo {
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues,
     String? protoName,
+    FieldPresence? presence,
   }) {
     add<T>(
       tagNumber,
@@ -169,12 +176,13 @@ class BuilderInfo {
       valueOf,
       enumValues,
       protoName: protoName,
+      presence: presence,
     );
   }
 
   /// Adds PbFieldType.OS String with no default value to reduce generated
   /// code size.
-  void aOS(int tagNumber, String name, {String? protoName}) {
+  void aOS(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
     add<String>(
       tagNumber,
       name,
@@ -184,6 +192,7 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 
@@ -202,7 +211,7 @@ class BuilderInfo {
   }
 
   /// Adds PbFieldType.QS String with no default value.
-  void aQS(int tagNumber, String name, {String? protoName}) {
+  void aQS(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
     add<String>(
       tagNumber,
       name,
@@ -212,11 +221,12 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 
   /// Adds Int64 field with Int64.ZERO default.
-  void aInt64(int tagNumber, String name, {String? protoName}) {
+  void aInt64(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
     add<Int64>(
       tagNumber,
       name,
@@ -226,11 +236,12 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 
   /// Adds a boolean with no default value.
-  void aOB(int tagNumber, String name, {String? protoName}) {
+  void aOB(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
     add<bool>(
       tagNumber,
       name,
@@ -240,6 +251,7 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 
@@ -252,6 +264,7 @@ class BuilderInfo {
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues,
     String? protoName,
+    FieldPresence? presence,
   }) {
     add<T>(
       tagNumber,
@@ -262,6 +275,7 @@ class BuilderInfo {
       valueOf,
       enumValues,
       protoName: protoName,
+      presence: presence,
     );
   }
 
@@ -315,6 +329,7 @@ class BuilderInfo {
     String name, {
     required T Function() subBuilder,
     String? protoName,
+    FieldPresence? presence,
   }) {
     add<T>(
       tagNumber,
@@ -325,6 +340,7 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 
@@ -333,6 +349,7 @@ class BuilderInfo {
     String name, {
     required T Function() subBuilder,
     String? protoName,
+    FieldPresence? presence,
   }) {
     add<T>(
       tagNumber,
@@ -343,6 +360,7 @@ class BuilderInfo {
       null,
       null,
       protoName: protoName,
+      presence: presence,
     );
   }
 

@@ -462,10 +462,53 @@ class FieldSet {
 
   /// The implementation of a generated 'has' method.
   bool _$has(int index) {
+    final fieldInfo = _nonExtensionInfoByIndex(index);
     final value = _values[index];
+    
+    // Handle null values consistently
     if (value == null) return false;
+    
+    // Use proto3 implicit presence semantics for proto3 fields
+    if (fieldInfo.presence == FieldPresence.implicit) {
+      return _hasFieldImplicit(fieldInfo, value);
+    }
+    
+    // Use proto2 explicit presence semantics (existing behavior)
     if (value is List) return value.isNotEmpty;
     return true;
+  }
+  
+  /// Check if a field is set using proto3 implicit presence semantics.
+  bool _hasFieldImplicit(FieldInfo fieldInfo, dynamic value) {
+    // For repeated fields and maps, check if non-empty
+    if (fieldInfo.isRepeated) {
+      if (value is List) return value.isNotEmpty;
+      if (value is Map) return value.isNotEmpty;
+      return false;
+    }
+    
+    // For message/group fields, still use explicit presence tracking
+    if (fieldInfo.isGroupOrMessage) {
+      return true; // If not null, it's set
+    }
+    
+    // For scalar and enum fields, compare against default values
+    // This implements proto3 implicit presence semantics
+    if (value is bool) {
+      return value != false; // proto3 bool default is false
+    } else if (value is int) {
+      return value != 0; // proto3 int default is 0
+    } else if (value is double) {
+      return value != 0.0; // proto3 double default is 0.0
+    } else if (value is String) {
+      return value.isNotEmpty; // proto3 string default is ""
+    } else if (value is List<int>) {
+      return value.isNotEmpty; // proto3 bytes default is empty
+    }
+    
+    // For other types, compare against the field's default value
+    final defaultValue = fieldInfo.makeDefault?.call();
+    return value != defaultValue;
   }
 
   /// The implementation of a generated setter.
