@@ -17,6 +17,16 @@ class Rec extends MockMessage {
   Rec createEmptyInstance() => Rec();
 }
 
+class TestMessageWithOneof extends MockMessage {
+  @override
+  BuilderInfo get info_ => _info;
+  static final _info = mockInfo('TestMessageWithOneof', TestMessageWithOneof.new)
+    ..oo(0, [1, 2], 'choice')
+    ..oo(1, [3, 4], 'option');
+  @override
+  TestMessageWithOneof createEmptyInstance() => TestMessageWithOneof();
+}
+
 Matcher throwsError(String expectedMessage) => throwsA(
   isA<ArgumentError>().having((p0) => p0.message, 'message', expectedMessage),
 );
@@ -86,5 +96,31 @@ void main() {
     b.child = Rec();
     expect(a == b, true);
     expect(a.hashCode, b.hashCode);
+  });
+
+  group('oneof methods', () {
+    test('getOneofName returns correct names', () {
+      final msg = TestMessageWithOneof();
+      expect(msg.getOneofName(0), 'choice');
+      expect(msg.getOneofName(1), 'option');
+      expect(msg.getOneofName(2), null);
+    });
+
+    test('getOneofIndexByName finds correct indices', () {
+      final msg = TestMessageWithOneof();
+      expect(msg.getOneofIndexByName('choice'), 0);
+      expect(msg.getOneofIndexByName('option'), 1);
+      expect(msg.getOneofIndexByName('unknown'), null);
+    });
+
+    test('isOneofSetByName returns false for unknown oneof', () {
+      final msg = TestMessageWithOneof();
+      expect(msg.isOneofSetByName('unknown'), false);
+    });
+
+    test('whichOneofByName returns 0 for unknown oneof', () {
+      final msg = TestMessageWithOneof();
+      expect(msg.whichOneofByName('unknown'), 0);
+    });
   });
 }

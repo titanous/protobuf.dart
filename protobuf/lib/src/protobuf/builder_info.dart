@@ -31,6 +31,9 @@ class BuilderInfo {
   /// [FieldSet._oneofCases].
   final Map<int, int> oneofs = <int, int>{};
 
+  /// Oneof names by index. Following protobuf-es pattern for runtime name access.
+  final List<String> oneofNames = <String>[];
+
   /// Whether the message has extension fields.
   bool hasExtensions = false;
 
@@ -365,9 +368,18 @@ class BuilderInfo {
   }
 
   // oneof declarations.
-  void oo(int oneofIndex, List<int> tags) {
+  void oo(int oneofIndex, List<int> tags, [String? name]) {
     for (final tag in tags) {
       oneofs[tag] = oneofIndex;
+    }
+    
+    // Store oneof name if provided (following protobuf-es pattern)
+    if (name != null) {
+      // Grow list if needed to accommodate this index
+      while (oneofNames.length <= oneofIndex) {
+        oneofNames.add('');
+      }
+      oneofNames[oneofIndex] = name;
     }
   }
 
@@ -501,6 +513,24 @@ class BuilderInfo {
         ?.getExtension(qualifiedMessageName, tagNumber)
         ?.valueOf
         ?.call(rawValue);
+  }
+
+  /// Gets the name of a oneof by its index.
+  /// Returns null if the index is out of bounds.
+  /// Following protobuf-es pattern for runtime oneof access.
+  String? getOneofName(int index) {
+    if (index < 0 || index >= oneofNames.length) return null;
+    final name = oneofNames[index];
+    return name.isEmpty ? null : name;
+  }
+
+  /// Gets the index of a oneof by its name.
+  /// Returns null if the name is not found or empty.
+  /// Following protobuf-es pattern for runtime oneof access.
+  int? getOneofIndexByName(String name) {
+    if (name.isEmpty) return null;
+    final index = oneofNames.indexOf(name);
+    return index == -1 ? null : index;
   }
 }
 

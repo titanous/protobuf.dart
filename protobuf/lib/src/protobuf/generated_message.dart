@@ -449,6 +449,32 @@ abstract class GeneratedMessage {
     _fieldSet._setField(tagNumber, value);
   }
 
+  /// Gets the name of a oneof by its index.
+  /// Returns null if the index is out of bounds.
+  /// Following protobuf-es pattern for runtime oneof access.
+  String? getOneofName(int index) => info_.getOneofName(index);
+
+  /// Gets the index of a oneof by its name.
+  /// Returns null if the name is not found.
+  /// Following protobuf-es pattern for runtime oneof access.
+  int? getOneofIndexByName(String name) => info_.getOneofIndexByName(name);
+
+  /// Check if a oneof with the given name has a field set.
+  /// Returns false if the oneof name is not found.
+  bool isOneofSetByName(String name) {
+    final index = getOneofIndexByName(name);
+    if (index == null) return false;
+    return $_whichOneof(index) != 0;
+  }
+
+  /// Get which field tag is set in a oneof by name.
+  /// Returns 0 if no field is set or if the oneof name is not found.
+  int whichOneofByName(String name) {
+    final index = getOneofIndexByName(name);
+    if (index == null) return 0;
+    return $_whichOneof(index);
+  }
+
   /// For generated code only.
   /// @nodoc
   T $_get<T>(int index, T defaultValue) =>

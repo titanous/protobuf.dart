@@ -448,7 +448,8 @@ class MessageGenerator extends ProtobufContainer {
                   _oneofFields[oneof]
                       .map((ProtobufField f) => f.number)
                       .toList();
-              out.println('..oo($oneof, $tags)');
+              final oneofName = _oneofNames[oneof].descriptor.name;
+              out.println('..oo($oneof, $tags, \'$oneofName\')');
             }
 
             for (final field in _fieldList) {
