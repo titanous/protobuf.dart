@@ -368,13 +368,21 @@ void _mergeFromProto3JsonWithContext(
             if ((result != null) || context.ignoreUnknownFields) return result;
             throw context.parseException('Unknown enum value', value);
           } else if (value is int) {
-            return fieldInfo.valueOf!(value) ??
-                (ignoreUnknownFields
-                    ? null
-                    : (throw context.parseException(
-                      'Unknown enum value',
-                      value,
-                    )));
+            final knownEnumValue = fieldInfo.valueOf!(value);
+            if (knownEnumValue != null) {
+              return knownEnumValue;
+            } else {
+              // Handle unknown enum integer values for proto3 compatibility
+              if (context.allowUnknownEnumIntegers || context.permissiveEnums) {
+                // Store unknown enum values as _UnknownEnumValue to preserve them
+                // while allowing type-safe access via generated getters
+                return _UnknownEnumValue(value);
+              } else if (context.ignoreUnknownFields) {
+                return null;
+              } else {
+                throw context.parseException('Unknown enum value', value);
+              }
+            }
           }
           throw context.parseException(
             'Expected enum as a string or integer',
@@ -729,6 +737,7 @@ void _mergeFromProto3JsonWithContext(
 
   recursionHelper(json, fieldSet);
 }
+
 
 /// A synthetic ProtobufEnum that preserves unknown integer enum values.
 /// This allows proto3 JSON parsing to handle unknown enum integers gracefully,

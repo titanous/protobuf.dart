@@ -184,7 +184,13 @@ class FieldSet {
     final fi = _nonExtensionInfo(_meta, tagNumber);
     if (fi != null) {
       final value = _values[fi.index!];
-      if (value != null) return value;
+      if (value != null) {
+        // Handle unknown enum values that were preserved during parsing
+        if (_isUnknownEnumValue(value)) {
+          return _handleUnknownEnumValue(value, fi.index!);
+        }
+        return value;
+      }
       return _getDefault(fi);
     }
     final extensions = _extensions;
@@ -362,8 +368,39 @@ class FieldSet {
   /// pushes the type check to the caller.
   dynamic _$getND(int index) {
     final value = _values[index];
-    if (value != null) return value;
+    if (value != null) {
+      // Handle unknown enum values that were preserved during parsing
+      if (_isUnknownEnumValue(value)) {
+        return _handleUnknownEnumValue(value, index);
+      }
+      return value;
+    }
     return _getDefault(_nonExtensionInfoByIndex(index));
+  }
+
+  /// Check if a value is an unknown enum value
+  bool _isUnknownEnumValue(dynamic value) {
+    return value.toString().startsWith('UNKNOWN_ENUM_VALUE_');
+  }
+
+  /// Handle unknown enum values by returning the default enum value for type safety
+  /// while preserving the unknown value for access via getFieldOrNull()
+  dynamic _handleUnknownEnumValue(dynamic unknownEnum, int index) {
+    final fieldInfo = _nonExtensionInfoByIndex(index);
+    final enumValue = (unknownEnum as dynamic).value as int;
+    
+    // Try to find a known enum with this value
+    final valueOf = fieldInfo.valueOf;
+    if (valueOf != null) {
+      final knownEnum = valueOf(enumValue);
+      if (knownEnum != null) {
+        return knownEnum;
+      }
+    }
+    
+    // For unknown enum values in proto3, return the default value to maintain type safety
+    // The raw unknown value can still be accessed via getFieldOrNull() for special cases like CEL
+    return fieldInfo.makeDefault!();
   }
 
   T _$ensure<T>(int index) {
@@ -983,3 +1020,4 @@ extension FieldSetInternalExtension on FieldSet {
   void setFieldUnchecked(BuilderInfo meta, FieldInfo fi, dynamic value) =>
       _setFieldUnchecked(meta, fi, value);
 }
+
