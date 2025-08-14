@@ -31,7 +31,8 @@ class PhoneNumber extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PhoneNumber',
       createEmptyInstance: create)
-    ..aQS(1, _omitFieldNames ? '' : 'number')
+    ..aQS(1, _omitFieldNames ? '' : 'number',
+        presence: $pb.FieldPresence.legacyRequired)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
     ..a<$core.String>(3, _omitFieldNames ? '' : 'name', $pb.PbFieldType.OS,
         defaultOrMaker: '\$');

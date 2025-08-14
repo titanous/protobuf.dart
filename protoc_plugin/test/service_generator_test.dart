@@ -19,12 +19,12 @@ import 'src/service_util.dart';
 void main() {
   test('testServiceGenerator', () {
     final options = GenerationOptions();
-    
+
     // Create a mock CodeGeneratorRequest for testing
     final request = CodeGeneratorRequest();
     final extensionRegistry = ExtensionRegistry(request);
     final extensionDecoder = ExtensionValueDecoder(extensionRegistry);
-    
+
     final fd = buildFileDescriptor('testpkg', 'testpkg.proto', [
       'SomeRequest',
       'SomeReply',
@@ -36,7 +36,12 @@ void main() {
       'EmptyMessage',
       'AnotherReply',
     ]);
-    final fg2 = FileGenerator(fd2, options, extensionRegistry, extensionDecoder);
+    final fg2 = FileGenerator(
+      fd2,
+      options,
+      extensionRegistry,
+      extensionDecoder,
+    );
 
     link(GenerationOptions(), [fg, fg2]);
 

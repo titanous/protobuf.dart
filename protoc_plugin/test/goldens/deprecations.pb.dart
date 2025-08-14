@@ -42,7 +42,8 @@ class HelloRequest extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'HelloRequest',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'service2'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(1, _omitFieldNames ? '' : 'name',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -102,7 +103,8 @@ class HelloReply extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'HelloReply',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'service2'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..aOS(1, _omitFieldNames ? '' : 'message',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')

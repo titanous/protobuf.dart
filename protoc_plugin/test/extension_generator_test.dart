@@ -36,7 +36,12 @@ void main() {
           ..messageType.add(messageDescriptor)
           ..extension.add(extensionFieldDescriptor);
 
-    final fileGenerator = FileGenerator(fileDescriptor, GenerationOptions(), createTestExtensionRegistry(), createTestExtensionDecoder());
+    final fileGenerator = FileGenerator(
+      fileDescriptor,
+      GenerationOptions(),
+      createTestExtensionRegistry(),
+      createTestExtensionDecoder(),
+    );
     final options = parseGenerationOptions(
       pb.CodeGeneratorRequest(),
       pb.CodeGeneratorResponse(),

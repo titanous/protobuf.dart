@@ -157,41 +157,41 @@ class ProtobufField {
     // seem useful and not breaking proto3 semantics, and dart protobuf uses it
     // for example in package:protobuf/src/protobuf/mixins/well_known.dart.
   }
-  
+
   /// Determines the field presence semantics for this field.
   String _getFieldPresence() {
     // Repeated fields and maps always use explicit presence (they track emptiness)
     if (isRepeated || isMapField) {
       return 'FieldPresence.explicit';
     }
-    
+
     // Required fields use legacy required presence
     if (isRequired) {
       return 'FieldPresence.legacyRequired';
     }
-    
+
     // Check proto syntax and field properties
     switch (parent.fileGen!.syntax) {
       case ProtoSyntax.proto2:
         // Proto2 fields use explicit presence by default
         return 'FieldPresence.explicit';
-        
+
       case ProtoSyntax.proto3:
         // Proto3 optional fields (proto3_optional) use explicit presence
         if (descriptor.hasProto3Optional() && descriptor.proto3Optional) {
           return 'FieldPresence.explicit';
         }
-        
+
         // Proto3 oneof fields use explicit presence
         if (descriptor.hasOneofIndex()) {
           return 'FieldPresence.explicit';
         }
-        
+
         // Message fields in proto3 use explicit presence
         if (baseType.isMessage || baseType.isGroup) {
           return 'FieldPresence.explicit';
         }
-        
+
         // Regular proto3 scalar and enum fields use implicit presence
         return 'FieldPresence.implicit';
     }
@@ -270,13 +270,13 @@ class ProtobufField {
 
     final args = <String>[];
     final named = <String, String?>{'protoName': quotedProtoName};
-    
+
     // Determine field presence based on proto syntax and field properties
     final presence = _getFieldPresence();
     if (presence != 'FieldPresence.explicit') {
       named['presence'] = '$protobufImportPrefix.$presence';
     }
-    
+
     args.add('$number');
     args.add(quotedName);
 

@@ -189,16 +189,12 @@ void main() {
   test('throws if an enum extension is set to a bad value', () {
     final message = TestAllExtensions();
 
-    // For a non-repeated enum, we only check for a ProtobufEnum.
-    expect(
-      () {
-        message.setExtension(Unittest.optionalNestedEnumExtension, 123);
-      },
-      throwsArgError(
-        'Illegal to set field optionalNestedEnumExtension (21)'
-        ' of protobuf_unittest.TestAllExtensions to value (123): not type ProtobufEnum',
-      ),
-    );
+    // For a non-repeated enum, we now accept both ProtobufEnum and int values
+    // to support proto3 semantics and unknown enum values.
+    // This test verifies that setting an int value is allowed.
+    expect(() {
+      message.setExtension(Unittest.optionalNestedEnumExtension, 123);
+    }, returnsNormally);
 
     // For a repeated enum, the type check is exact.
     expect(() {

@@ -144,8 +144,12 @@ class FileGenerator extends ProtobufContainer {
 
   final ProtoSyntax syntax;
 
-  FileGenerator(this.descriptor, this.options, this.extensionRegistry, this.extensionDecoder)
-    : protoFileUri = Uri.file(descriptor.name),
+  FileGenerator(
+    this.descriptor,
+    this.options,
+    this.extensionRegistry,
+    this.extensionDecoder,
+  ) : protoFileUri = Uri.file(descriptor.name),
       syntax =
           descriptor.syntax == 'proto3'
               ? ProtoSyntax.proto3
@@ -376,7 +380,7 @@ class FileGenerator extends ProtobufContainer {
     if (_needsProtobufImport) {
       importWriter.addImport(_protobufImportUrl, prefix: protobufImportPrefix);
     }
-    
+
     // Extensions with options are handled inline with serialized bytes
     // No additional import needed as FieldOptions will be referenced
     // from the generated code context
@@ -452,7 +456,7 @@ class FileGenerator extends ProtobufContainer {
       messageGenerators.isNotEmpty ||
       extensionGenerators.isNotEmpty ||
       clientApiGenerators.isNotEmpty;
-  
+
   /// Returns true if any extension in this file has options that need FieldOptions.
   bool _needsFieldOptionsImport() {
     // Check top-level extensions
@@ -465,7 +469,7 @@ class FileGenerator extends ProtobufContainer {
     }
     return false;
   }
-  
+
   bool _messageNeedsFieldOptions(MessageGenerator msg) {
     // Note: extensionGenerators is private in MessageGenerator
     // We'd need to expose it or add a getter

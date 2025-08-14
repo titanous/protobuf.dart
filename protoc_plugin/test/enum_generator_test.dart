@@ -37,7 +37,12 @@ void main() {
       generateMetadata: true,
       fileName: 'sample.proto',
     );
-    final fg = FileGenerator(FileDescriptorProto(), GenerationOptions(), createTestExtensionRegistry(), createTestExtensionDecoder());
+    final fg = FileGenerator(
+      FileDescriptorProto(),
+      GenerationOptions(),
+      createTestExtensionRegistry(),
+      createTestExtensionDecoder(),
+    );
     final eg = EnumGenerator.topLevel(ed, fg, <String>{}, 0);
     eg.generate(writer);
     expectGolden(writer.emitSource(format: false), 'enum.pbenum.dart');

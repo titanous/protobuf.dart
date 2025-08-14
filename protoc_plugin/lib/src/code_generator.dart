@@ -10,7 +10,8 @@ import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart' as protobuf;
 
 import '../names.dart' show lowerCaseFirstLetter;
-import '../protoc.dart' show FileGenerator, ExtensionRegistry, ExtensionValueDecoder;
+import '../protoc.dart'
+    show FileGenerator, ExtensionRegistry, ExtensionValueDecoder;
 import 'gen/dart_options.pb.dart';
 import 'gen/google/api/client.pb.dart';
 import 'gen/google/protobuf/compiler/plugin.pb.dart';
@@ -122,7 +123,9 @@ class CodeGenerator {
     // (We may import it even if we don't generate the .pb.dart file.)
     final generators = <FileGenerator>[];
     for (final file in request.protoFile) {
-      generators.add(FileGenerator(file, options, extensionRegistry, extensionDecoder));
+      generators.add(
+        FileGenerator(file, options, extensionRegistry, extensionDecoder),
+      );
     }
 
     // Collect field types and importable files.

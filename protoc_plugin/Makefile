@@ -98,8 +98,8 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 	protoc\
 		--experimental_allow_proto3_optional\
 		--dart_out="$(TEST_PROTO_DIR)/constructor_args"\
-		-Iprotos\
 		-I$(TEST_PROTO_SRC_DIR)\
+		-Iprotos\
 		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
 		$(TEST_PROTO_SRCS)
 
@@ -108,8 +108,8 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 	protoc\
 		--experimental_allow_proto3_optional\
 		--dart_out="nullable:$(TEST_PROTO_DIR)/nullable"\
-		-Iprotos\
 		-I$(TEST_PROTO_SRC_DIR)\
+		-Iprotos\
 		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
 		$(TEST_PROTO_SRCS)
 

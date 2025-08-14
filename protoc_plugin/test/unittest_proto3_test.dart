@@ -1,12 +1,13 @@
 import 'package:test/test.dart';
-import '../out/protos/nullable/google/protobuf/unittest_proto3.pb.dart';
+import 'gen/nullable/google/protobuf/unittest_proto3.pb.dart';
 
 void main() {
   group('Optional fields should be nullable for', () {
     test('int32', () {
-      final obj = TestAllTypes.create()
-        ..singleInt32 = 1
-        ..optionalSingleInt32 = 2;
+      final obj =
+          TestAllTypes.create()
+            ..singleInt32 = 1
+            ..optionalSingleInt32 = 2;
       expect(obj.singleInt32, 1);
       expect(obj.optionalSingleInt32, 2);
       expect(obj.hasOptionalSingleInt32(), true);
