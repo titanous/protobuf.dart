@@ -7,6 +7,39 @@ import 'package:protobuf/protobuf.dart';
 import 'package:conformance_runner/src/generated/conformance/conformance.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/any.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/duration.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/timestamp.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/field_mask.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/struct.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/wrappers.pb.dart';
+
+// TypeRegistry containing all message types that might be wrapped in Any
+final _typeRegistry = TypeRegistry([
+  // Test message types
+  TestAllTypesProto2(),
+  TestAllTypesProto3(),
+
+  // Well-known types
+  Any(),
+  Duration(),
+  Timestamp(),
+  FieldMask(),
+  Struct(),
+  Value(),
+  ListValue(),
+
+  // Wrapper types
+  BoolValue(),
+  BytesValue(),
+  DoubleValue(),
+  FloatValue(),
+  Int32Value(),
+  Int64Value(),
+  StringValue(),
+  UInt32Value(),
+  UInt64Value(),
+]);
 
 void main() {
   // Process conformance test requests until EOF
@@ -54,6 +87,7 @@ ConformanceResponse test(ConformanceRequest request) {
           final decoded = jsonDecode(request.jsonPayload);
           message.mergeFromProto3Json(
             decoded,
+            typeRegistry: _typeRegistry,
             ignoreUnknownFields: request.testCategory ==
                 TestCategory.JSON_IGNORE_UNKNOWN_PARSING_TEST,
             supportNamesWithUnderscores: true,
@@ -85,7 +119,7 @@ ConformanceResponse test(ConformanceRequest request) {
         response.protobufPayload = message.writeToBuffer();
         return response;
       case WireFormat.JSON:
-        final proto3Json = message.toProto3Json();
+        final proto3Json = message.toProto3Json(typeRegistry: _typeRegistry);
         response.jsonPayload = jsonEncode(proto3Json);
         return response;
       case WireFormat.JSPB:
