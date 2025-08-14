@@ -51,7 +51,8 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'CommonLanguageSettings',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'referenceDocsUri')
+    ..aOS(1, _omitFieldNames ? '' : 'referenceDocsUri',
+        presence: $pb.FieldPresence.implicit)
     ..pc<ClientLibraryDestination>(
         2, _omitFieldNames ? '' : 'destinations', $pb.PbFieldType.KE,
         valueOf: ClientLibraryDestination.valueOf,
@@ -162,13 +163,16 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ClientLibrarySettings',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'version')
+    ..aOS(1, _omitFieldNames ? '' : 'version',
+        presence: $pb.FieldPresence.implicit)
     ..e<$1.LaunchStage>(
         2, _omitFieldNames ? '' : 'launchStage', $pb.PbFieldType.OE,
+        presence: $pb.FieldPresence.implicit,
         defaultOrMaker: $1.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
         valueOf: $1.LaunchStage.valueOf,
         enumValues: $1.LaunchStage.values)
-    ..aOB(3, _omitFieldNames ? '' : 'restNumericEnums')
+    ..aOB(3, _omitFieldNames ? '' : 'restNumericEnums',
+        presence: $pb.FieldPresence.implicit)
     ..aOM<JavaSettings>(21, _omitFieldNames ? '' : 'javaSettings',
         subBuilder: JavaSettings.create)
     ..aOM<CppSettings>(22, _omitFieldNames ? '' : 'cppSettings',
@@ -391,14 +395,20 @@ class Publishing extends $pb.GeneratedMessage {
     ..pc<MethodSettings>(
         2, _omitFieldNames ? '' : 'methodSettings', $pb.PbFieldType.PM,
         subBuilder: MethodSettings.create)
-    ..aOS(101, _omitFieldNames ? '' : 'newIssueUri')
-    ..aOS(102, _omitFieldNames ? '' : 'documentationUri')
-    ..aOS(103, _omitFieldNames ? '' : 'apiShortName')
-    ..aOS(104, _omitFieldNames ? '' : 'githubLabel')
+    ..aOS(101, _omitFieldNames ? '' : 'newIssueUri',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(102, _omitFieldNames ? '' : 'documentationUri',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(103, _omitFieldNames ? '' : 'apiShortName',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(104, _omitFieldNames ? '' : 'githubLabel',
+        presence: $pb.FieldPresence.implicit)
     ..pPS(105, _omitFieldNames ? '' : 'codeownerGithubTeams')
-    ..aOS(106, _omitFieldNames ? '' : 'docTagPrefix')
+    ..aOS(106, _omitFieldNames ? '' : 'docTagPrefix',
+        presence: $pb.FieldPresence.implicit)
     ..e<ClientLibraryOrganization>(
         107, _omitFieldNames ? '' : 'organization', $pb.PbFieldType.OE,
+        presence: $pb.FieldPresence.implicit,
         defaultOrMaker:
             ClientLibraryOrganization.CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED,
         valueOf: ClientLibraryOrganization.valueOf,
@@ -406,8 +416,10 @@ class Publishing extends $pb.GeneratedMessage {
     ..pc<ClientLibrarySettings>(
         109, _omitFieldNames ? '' : 'librarySettings', $pb.PbFieldType.PM,
         subBuilder: ClientLibrarySettings.create)
-    ..aOS(110, _omitFieldNames ? '' : 'protoReferenceDocumentationUri')
-    ..aOS(111, _omitFieldNames ? '' : 'restReferenceDocumentationUri')
+    ..aOS(110, _omitFieldNames ? '' : 'protoReferenceDocumentationUri',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(111, _omitFieldNames ? '' : 'restReferenceDocumentationUri',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -564,7 +576,8 @@ class JavaSettings extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'JavaSettings',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'libraryPackage')
+    ..aOS(1, _omitFieldNames ? '' : 'libraryPackage',
+        presence: $pb.FieldPresence.implicit)
     ..m<$core.String, $core.String>(
         2, _omitFieldNames ? '' : 'serviceClassNames',
         entryClassName: 'JavaSettings.ServiceClassNamesEntry',
@@ -799,9 +812,12 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'PythonSettings.ExperimentalFeatures',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'restAsyncIoEnabled')
-    ..aOB(2, _omitFieldNames ? '' : 'protobufPythonicTypesEnabled')
-    ..aOB(3, _omitFieldNames ? '' : 'unversionedPackageDisabled')
+    ..aOB(1, _omitFieldNames ? '' : 'restAsyncIoEnabled',
+        presence: $pb.FieldPresence.implicit)
+    ..aOB(2, _omitFieldNames ? '' : 'protobufPythonicTypesEnabled',
+        presence: $pb.FieldPresence.implicit)
+    ..aOB(3, _omitFieldNames ? '' : 'unversionedPackageDisabled',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1314,7 +1330,8 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
     ..aOM<$0.Duration>(1, _omitFieldNames ? '' : 'initialPollDelay',
         subBuilder: $0.Duration.create)
     ..a<$core.double>(
-        2, _omitFieldNames ? '' : 'pollDelayMultiplier', $pb.PbFieldType.OF)
+        2, _omitFieldNames ? '' : 'pollDelayMultiplier', $pb.PbFieldType.OF,
+        presence: $pb.FieldPresence.implicit)
     ..aOM<$0.Duration>(3, _omitFieldNames ? '' : 'maxPollDelay',
         subBuilder: $0.Duration.create)
     ..aOM<$0.Duration>(4, _omitFieldNames ? '' : 'totalPollTimeout',
@@ -1425,7 +1442,8 @@ class MethodSettings extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'MethodSettings',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'selector')
+    ..aOS(1, _omitFieldNames ? '' : 'selector',
+        presence: $pb.FieldPresence.implicit)
     ..aOM<MethodSettings_LongRunning>(2, _omitFieldNames ? '' : 'longRunning',
         subBuilder: MethodSettings_LongRunning.create)
     ..pPS(3, _omitFieldNames ? '' : 'autoPopulatedFields')
@@ -1538,7 +1556,8 @@ class SelectiveGapicGeneration extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
     ..pPS(1, _omitFieldNames ? '' : 'methods')
-    ..aOB(2, _omitFieldNames ? '' : 'generateOmittedAsInternal')
+    ..aOB(2, _omitFieldNames ? '' : 'generateOmittedAsInternal',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')

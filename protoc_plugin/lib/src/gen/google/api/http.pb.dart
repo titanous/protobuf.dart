@@ -46,7 +46,8 @@ class Http extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..pc<HttpRule>(1, _omitFieldNames ? '' : 'rules', $pb.PbFieldType.PM,
         subBuilder: HttpRule.create)
-    ..aOB(2, _omitFieldNames ? '' : 'fullyDecodeReservedExpansion')
+    ..aOB(2, _omitFieldNames ? '' : 'fullyDecodeReservedExpansion',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -406,20 +407,23 @@ class HttpRule extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'HttpRule',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 8])
-    ..aOS(1, _omitFieldNames ? '' : 'selector')
+    ..oo(0, [2, 3, 4, 5, 6, 8], 'pattern')
+    ..aOS(1, _omitFieldNames ? '' : 'selector',
+        presence: $pb.FieldPresence.implicit)
     ..aOS(2, _omitFieldNames ? '' : 'get')
     ..aOS(3, _omitFieldNames ? '' : 'put')
     ..aOS(4, _omitFieldNames ? '' : 'post')
     ..aOS(5, _omitFieldNames ? '' : 'delete')
     ..aOS(6, _omitFieldNames ? '' : 'patch')
-    ..aOS(7, _omitFieldNames ? '' : 'body')
+    ..aOS(7, _omitFieldNames ? '' : 'body',
+        presence: $pb.FieldPresence.implicit)
     ..aOM<CustomHttpPattern>(8, _omitFieldNames ? '' : 'custom',
         subBuilder: CustomHttpPattern.create)
     ..pc<HttpRule>(
         11, _omitFieldNames ? '' : 'additionalBindings', $pb.PbFieldType.PM,
         subBuilder: HttpRule.create)
-    ..aOS(12, _omitFieldNames ? '' : 'responseBody')
+    ..aOS(12, _omitFieldNames ? '' : 'responseBody',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -585,8 +589,10 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'CustomHttpPattern',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'kind')
-    ..aOS(2, _omitFieldNames ? '' : 'path')
+    ..aOS(1, _omitFieldNames ? '' : 'kind',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(2, _omitFieldNames ? '' : 'path',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')

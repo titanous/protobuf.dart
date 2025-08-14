@@ -458,8 +458,10 @@ class RoutingParameter extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'RoutingParameter',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'field')
-    ..aOS(2, _omitFieldNames ? '' : 'pathTemplate')
+    ..aOS(1, _omitFieldNames ? '' : 'field',
+        presence: $pb.FieldPresence.implicit)
+    ..aOS(2, _omitFieldNames ? '' : 'pathTemplate',
+        presence: $pb.FieldPresence.implicit)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
