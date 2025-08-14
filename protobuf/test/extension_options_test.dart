@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:protobuf/protobuf.dart';
-import 'package:protobuf/src/protobuf/extension_options.dart';
 import 'package:test/test.dart';
 
 // Mock FieldOptions for testing

@@ -26,7 +26,7 @@ Uint8List _decodeBase64OrBase64Url(String base64Str) {
   int es = (base64Str.length * 3) ~/ 4;
   if (base64Str.length >= 2 && base64Str[base64Str.length - 2] == '=') {
     es -= 2;
-  } else if (base64Str.length >= 1 && base64Str[base64Str.length - 1] == '=') {
+  } else if (base64Str.isNotEmpty && base64Str[base64Str.length - 1] == '=') {
     es -= 1;
   }
   

@@ -133,7 +133,7 @@ void main() {
   group('ExtensionValueDecoder', () {
     test('can extract field extensions from unknown fields', () {
       // Create a field with options containing extensions in unknown fields
-      final fieldOptions = FieldOptions();
+      FieldOptions();
 
       // Simulate having extension data in unknown fields
       // In real usage, this would come from parsing a proto with extensions

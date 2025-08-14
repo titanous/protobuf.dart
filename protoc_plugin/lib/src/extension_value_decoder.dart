@@ -173,13 +173,11 @@ class ExtensionValueDecoder {
 
   String _escapeString(String str) {
     // Simple string escaping for Dart code generation
-    return "'" +
-        str
+    return "'${str
             .replaceAll('\\', '\\\\')
             .replaceAll("'", "\\'")
             .replaceAll('\n', '\\n')
             .replaceAll('\r', '\\r')
-            .replaceAll('\t', '\\t') +
-        "'";
+            .replaceAll('\t', '\\t')}'";
   }
 }

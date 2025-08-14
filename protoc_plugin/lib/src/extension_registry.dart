@@ -156,7 +156,7 @@ class ExtensionRegistry {
     // Try with and without leading dot
     var result = _extensionsByTag[extendee]?[tagNumber];
     if (result == null && !extendee.startsWith('.')) {
-      result = _extensionsByTag['.${extendee}']?[tagNumber];
+      result = _extensionsByTag['.$extendee']?[tagNumber];
     }
     return result;
   }

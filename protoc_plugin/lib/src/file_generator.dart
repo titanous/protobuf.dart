@@ -457,25 +457,6 @@ class FileGenerator extends ProtobufContainer {
       extensionGenerators.isNotEmpty ||
       clientApiGenerators.isNotEmpty;
 
-  /// Returns true if any extension in this file has options that need FieldOptions.
-  bool _needsFieldOptionsImport() {
-    // Check top-level extensions
-    for (final ext in extensionGenerators) {
-      if (ext.needsFieldOptionsImport) return true;
-    }
-    // Check nested extensions in messages
-    for (final msg in messageGenerators) {
-      if (_messageNeedsFieldOptions(msg)) return true;
-    }
-    return false;
-  }
-
-  bool _messageNeedsFieldOptions(MessageGenerator msg) {
-    // Note: extensionGenerators is private in MessageGenerator
-    // We'd need to expose it or add a getter
-    // For now, return false
-    return false;
-  }
 
   /// Returns the generator for each .pb.dart file we need to import.
   void _findProtosToImport(
