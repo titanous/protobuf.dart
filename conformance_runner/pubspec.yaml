@@ -1,0 +1,16 @@
+name: conformance_runner
+description: Protobuf conformance test runner for Dart
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  protobuf:
+    path: ../protobuf
+  fixnum: ^1.1.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.24.0
