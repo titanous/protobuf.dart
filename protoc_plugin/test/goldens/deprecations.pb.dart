@@ -75,9 +75,6 @@ class HelloRequest extends $pb.GeneratedMessage {
   set name($core.String value) => $_setString(0, value);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
-  @$core.Deprecated('This field is deprecated.')
-  @$pb.TagNumber(1)
   void clearName() => $_clearField(1);
 }
 
@@ -130,8 +127,6 @@ class HelloReply extends $pb.GeneratedMessage {
   $core.String get message => $_getSZ(0);
   @$pb.TagNumber(1)
   set message($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasMessage() => $_has(0);
   @$pb.TagNumber(1)
   void clearMessage() => $_clearField(1);
 }

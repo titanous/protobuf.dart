@@ -18,8 +18,6 @@ const String _protobufImportUrl = 'package:protobuf/protobuf.dart';
 const String _typedDataImportPrefix = r'$typed_data';
 const String _typedDataImportUrl = 'dart:typed_data';
 
-enum ProtoSyntax { proto2, proto3, editions }
-
 /// Generates the Dart output files for one .proto input file.
 ///
 /// Outputs include .pb.dart, pbenum.dart, and .pbjson.dart.
@@ -111,18 +109,6 @@ class FileGenerator extends ProtobufContainer {
     return pbMixins;
   }
 
-  /// Determines the ProtoSyntax from the FileDescriptorProto
-  static ProtoSyntax _determineSyntax(FileDescriptorProto descriptor) {
-    if (descriptor.hasEdition() &&
-        descriptor.edition != Edition.EDITION_UNKNOWN) {
-      return ProtoSyntax.editions;
-    }
-    if (descriptor.syntax == 'proto3') {
-      return ProtoSyntax.proto3;
-    }
-    return ProtoSyntax.proto2;
-  }
-
   /// Determines the Edition from the FileDescriptorProto
   static Edition? _determineEdition(FileDescriptorProto descriptor) {
     if (descriptor.hasEdition() &&
@@ -167,8 +153,10 @@ class FileGenerator extends ProtobufContainer {
   /// Whether cross-references have been resolved.
   bool _linked = false;
 
-  final ProtoSyntax syntax;
   final Edition? edition;
+
+  /// Resolved features for this file
+  final ResolvedFeatures fileFeatures;
 
   FileGenerator(
     this.descriptor,
@@ -176,8 +164,8 @@ class FileGenerator extends ProtobufContainer {
     this.extensionRegistry,
     this.extensionDecoder,
   ) : protoFileUri = Uri.file(descriptor.name),
-      syntax = _determineSyntax(descriptor),
-      edition = _determineEdition(descriptor) {
+      edition = _determineEdition(descriptor),
+      fileFeatures = resolveFileFeatures(descriptor) {
     if (protoFileUri.isAbsolute) {
       // protoc should never generate an import with an absolute path.
       throw 'FAILURE: Import with absolute path is not supported';
@@ -480,7 +468,6 @@ class FileGenerator extends ProtobufContainer {
       messageGenerators.isNotEmpty ||
       extensionGenerators.isNotEmpty ||
       clientApiGenerators.isNotEmpty;
-
 
   /// Returns the generator for each .pb.dart file we need to import.
   void _findProtosToImport(

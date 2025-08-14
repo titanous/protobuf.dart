@@ -130,19 +130,12 @@ class ProtobufField {
   bool get hasPresence {
     // NB. Map fields are represented as repeated message fields
     if (isRepeated) return false;
-    return true;
-    // TODO(sigurdm): to provide the correct semantics for non-optional proto3
-    // fields would need something like the following:
-    // return baseType.isMessage ||
-    //   descriptor.proto3Optional ||
-    //   parent.fileGen.descriptor.syntax == "proto2";
-    //
-    // This change would break any accidental uses of the proto3 hazzers, and
-    // would require some clean-up.
-    //
-    // We could consider keeping hazzers for proto3-oneof fields. There they
-    // seem useful and not breaking proto3 semantics, and dart protobuf uses it
-    // for example in package:protobuf/src/protobuf/mixins/well_known.dart.
+
+    // Use feature-based presence semantics
+    // Only fields with explicit or legacy required presence get hazzers
+    // Proto3 implicit presence fields (non-optional scalars) don't have hazzers
+    return _fieldPresence == FIELD_PRESENCE_EXPLICIT ||
+        _fieldPresence == FIELD_PRESENCE_LEGACY_REQUIRED;
   }
 
   /// Determines the field presence semantics for this field.
@@ -170,56 +163,39 @@ class ProtobufField {
     }
   }
 
-  /// Gets the effective field presence based on edition/syntax and field properties.
-  String _getEffectiveFieldPresence() {
+  /// Resolved field presence (computed once during construction)
+  late final int _fieldPresence = _computeFieldPresence();
+
+  /// Compute the field presence
+  int _computeFieldPresence() {
     final fileGen = parent.fileGen!;
 
-    // Handle editions syntax
-    if (fileGen.syntax == ProtoSyntax.editions) {
-      switch (fileGen.edition) {
-        case Edition.EDITION_2023:
-        case Edition.EDITION_PROTO2:
-          // Proto2 semantics: explicit by default
-          return 'explicit';
-        case Edition.EDITION_PROTO3:
-          return _getProto3FieldPresence();
-        default:
-          // Future editions default to explicit for now
-          return 'explicit';
-      }
+    // Get the parent descriptor for feature resolution
+    dynamic parentDescriptor;
+    if (parent is MessageGenerator) {
+      parentDescriptor = (parent as MessageGenerator).descriptor;
     }
 
-    // Handle legacy syntax
-    switch (fileGen.syntax) {
-      case ProtoSyntax.proto2:
-        return 'explicit';
-      case ProtoSyntax.proto3:
-        return _getProto3FieldPresence();
-      case ProtoSyntax.editions:
-        // Should not reach here due to check above
-        return 'explicit';
-    }
+    return resolveFieldPresence(
+      descriptor,
+      fileGen.descriptor,
+      parentDescriptor: parentDescriptor,
+      isExtension: false, // Regular fields are not extensions
+    );
   }
 
-  /// Gets field presence for proto3 semantics.
-  String _getProto3FieldPresence() {
-    // Proto3 optional fields use explicit presence
-    if (descriptor.hasProto3Optional() && descriptor.proto3Optional) {
-      return 'explicit';
+  /// Gets the effective field presence based on edition/syntax and field properties.
+  String _getEffectiveFieldPresence() {
+    // Use the resolved field presence
+    switch (_fieldPresence) {
+      case FIELD_PRESENCE_LEGACY_REQUIRED:
+      case FIELD_PRESENCE_EXPLICIT:
+        return 'explicit';
+      case FIELD_PRESENCE_IMPLICIT:
+        return 'implicit';
+      default:
+        return 'explicit'; // Default to explicit for unknown
     }
-
-    // Proto3 oneof fields use explicit presence
-    if (descriptor.hasOneofIndex()) {
-      return 'explicit';
-    }
-
-    // Message fields in proto3 use explicit presence
-    if (baseType.isMessage || baseType.isGroup) {
-      return 'explicit';
-    }
-
-    // Regular proto3 scalar and enum fields use implicit presence
-    return 'implicit';
   }
 
   /// Returns the type to use for the Dart field type.
@@ -551,53 +527,20 @@ class ProtobufField {
     );
   }
 
-  /// Gets the effective packed encoding based on edition/syntax.
+  /// Gets the effective packed encoding based on features.
   bool _getEffectivePackedEncoding() {
     final fileGen = parent.fileGen!;
 
-    // Handle editions syntax
-    if (fileGen.syntax == ProtoSyntax.editions) {
-      switch (fileGen.edition) {
-        case Edition.EDITION_2023:
-        case Edition.EDITION_PROTO3:
-          // Proto3 semantics: packed by default
-          if (!descriptor.hasOptions()) {
-            return true;
-          } else {
-            return !descriptor.options.hasPacked() || descriptor.options.packed;
-          }
-        case Edition.EDITION_PROTO2:
-          // Proto2 semantics: not packed by default
-          if (!descriptor.hasOptions()) {
-            return false;
-          } else {
-            return descriptor.options.packed;
-          }
-        default:
-          // Future editions default to packed
-          return !descriptor.hasOptions() ||
-              !descriptor.options.hasPacked() ||
-              descriptor.options.packed;
-      }
+    // Get the parent descriptor for feature resolution
+    dynamic parentDescriptor;
+    if (parent is MessageGenerator) {
+      parentDescriptor = (parent as MessageGenerator).descriptor;
     }
 
-    // Handle legacy syntax
-    switch (fileGen.syntax) {
-      case ProtoSyntax.proto3:
-        if (!descriptor.hasOptions()) {
-          return true; // packed by default in proto3
-        } else {
-          return !descriptor.options.hasPacked() || descriptor.options.packed;
-        }
-      case ProtoSyntax.proto2:
-        if (!descriptor.hasOptions()) {
-          return false; // not packed by default in proto2
-        } else {
-          return descriptor.options.packed;
-        }
-      case ProtoSyntax.editions:
-        // Should not reach here due to check above
-        return true;
-    }
+    return resolvePackedEncoding(
+      descriptor,
+      fileGen.descriptor,
+      parentDescriptor: parentDescriptor,
+    );
   }
 }

@@ -58,6 +58,7 @@ class MessageGenerator extends ProtobufContainer {
   final ProtobufContainer? parent;
 
   final DescriptorProto _descriptor;
+  DescriptorProto get descriptor => _descriptor;
   final List<EnumGenerator> _enumGenerators = <EnumGenerator>[];
   final List<MessageGenerator> _messageGenerators = <MessageGenerator>[];
   final List<ExtensionGenerator> _extensionGenerators = <ExtensionGenerator>[];
