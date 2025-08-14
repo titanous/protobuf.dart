@@ -3,4 +3,5 @@ lib/src/generated/
 proto/
 
 conformance_test_failures_checklist.md
+succeeding_tests.txt
 failing_tests_text_format.txt
