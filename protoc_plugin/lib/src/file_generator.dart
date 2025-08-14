@@ -18,7 +18,7 @@ const String _protobufImportUrl = 'package:protobuf/protobuf.dart';
 const String _typedDataImportPrefix = r'$typed_data';
 const String _typedDataImportUrl = 'dart:typed_data';
 
-enum ProtoSyntax { proto2, proto3 }
+enum ProtoSyntax { proto2, proto3, editions }
 
 /// Generates the Dart output files for one .proto input file.
 ///
@@ -111,6 +111,31 @@ class FileGenerator extends ProtobufContainer {
     return pbMixins;
   }
 
+  /// Determines the ProtoSyntax from the FileDescriptorProto
+  static ProtoSyntax _determineSyntax(FileDescriptorProto descriptor) {
+    if (descriptor.hasEdition() &&
+        descriptor.edition != Edition.EDITION_UNKNOWN) {
+      return ProtoSyntax.editions;
+    }
+    if (descriptor.syntax == 'proto3') {
+      return ProtoSyntax.proto3;
+    }
+    return ProtoSyntax.proto2;
+  }
+
+  /// Determines the Edition from the FileDescriptorProto
+  static Edition? _determineEdition(FileDescriptorProto descriptor) {
+    if (descriptor.hasEdition() &&
+        descriptor.edition != Edition.EDITION_UNKNOWN) {
+      return descriptor.edition;
+    }
+    // Map legacy syntax to editions internally
+    if (descriptor.syntax == 'proto3') {
+      return Edition.EDITION_PROTO3;
+    }
+    return Edition.EDITION_PROTO2;
+  }
+
   final FileDescriptorProto descriptor;
   final GenerationOptions options;
   final ExtensionRegistry extensionRegistry;
@@ -143,6 +168,7 @@ class FileGenerator extends ProtobufContainer {
   bool _linked = false;
 
   final ProtoSyntax syntax;
+  final Edition? edition;
 
   FileGenerator(
     this.descriptor,
@@ -150,10 +176,8 @@ class FileGenerator extends ProtobufContainer {
     this.extensionRegistry,
     this.extensionDecoder,
   ) : protoFileUri = Uri.file(descriptor.name),
-      syntax =
-          descriptor.syntax == 'proto3'
-              ? ProtoSyntax.proto3
-              : ProtoSyntax.proto2 {
+      syntax = _determineSyntax(descriptor),
+      edition = _determineEdition(descriptor) {
     if (protoFileUri.isAbsolute) {
       // protoc should never generate an import with an absolute path.
       throw 'FAILURE: Import with absolute path is not supported';

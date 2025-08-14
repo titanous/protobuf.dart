@@ -97,20 +97,7 @@ class ProtobufField {
       return false;
     }
 
-    switch (parent.fileGen!.syntax) {
-      case ProtoSyntax.proto3:
-        if (!descriptor.hasOptions()) {
-          return true; // packed by default in proto3
-        } else {
-          return !descriptor.options.hasPacked() || descriptor.options.packed;
-        }
-      case ProtoSyntax.proto2:
-        if (!descriptor.hasOptions()) {
-          return false; // not packed by default in proto3
-        } else {
-          return descriptor.options.packed;
-        }
-    }
+    return _getEffectivePackedEncoding();
   }
 
   /// Whether the field has the `overrideGetter` annotation set to true.
@@ -170,31 +157,69 @@ class ProtobufField {
       return 'FieldPresence.legacyRequired';
     }
 
-    // Check proto syntax and field properties
-    switch (parent.fileGen!.syntax) {
-      case ProtoSyntax.proto2:
-        // Proto2 fields use explicit presence by default
+    final effectivePresence = _getEffectiveFieldPresence();
+    switch (effectivePresence) {
+      case 'explicit':
         return 'FieldPresence.explicit';
-
-      case ProtoSyntax.proto3:
-        // Proto3 optional fields (proto3_optional) use explicit presence
-        if (descriptor.hasProto3Optional() && descriptor.proto3Optional) {
-          return 'FieldPresence.explicit';
-        }
-
-        // Proto3 oneof fields use explicit presence
-        if (descriptor.hasOneofIndex()) {
-          return 'FieldPresence.explicit';
-        }
-
-        // Message fields in proto3 use explicit presence
-        if (baseType.isMessage || baseType.isGroup) {
-          return 'FieldPresence.explicit';
-        }
-
-        // Regular proto3 scalar and enum fields use implicit presence
+      case 'implicit':
         return 'FieldPresence.implicit';
+      case 'legacyRequired':
+        return 'FieldPresence.legacyRequired';
+      default:
+        return 'FieldPresence.explicit';
     }
+  }
+
+  /// Gets the effective field presence based on edition/syntax and field properties.
+  String _getEffectiveFieldPresence() {
+    final fileGen = parent.fileGen!;
+
+    // Handle editions syntax
+    if (fileGen.syntax == ProtoSyntax.editions) {
+      switch (fileGen.edition) {
+        case Edition.EDITION_2023:
+        case Edition.EDITION_PROTO2:
+          // Proto2 semantics: explicit by default
+          return 'explicit';
+        case Edition.EDITION_PROTO3:
+          return _getProto3FieldPresence();
+        default:
+          // Future editions default to explicit for now
+          return 'explicit';
+      }
+    }
+
+    // Handle legacy syntax
+    switch (fileGen.syntax) {
+      case ProtoSyntax.proto2:
+        return 'explicit';
+      case ProtoSyntax.proto3:
+        return _getProto3FieldPresence();
+      case ProtoSyntax.editions:
+        // Should not reach here due to check above
+        return 'explicit';
+    }
+  }
+
+  /// Gets field presence for proto3 semantics.
+  String _getProto3FieldPresence() {
+    // Proto3 optional fields use explicit presence
+    if (descriptor.hasProto3Optional() && descriptor.proto3Optional) {
+      return 'explicit';
+    }
+
+    // Proto3 oneof fields use explicit presence
+    if (descriptor.hasOneofIndex()) {
+      return 'explicit';
+    }
+
+    // Message fields in proto3 use explicit presence
+    if (baseType.isMessage || baseType.isGroup) {
+      return 'explicit';
+    }
+
+    // Regular proto3 scalar and enum fields use implicit presence
+    return 'implicit';
   }
 
   /// Returns the type to use for the Dart field type.
@@ -524,5 +549,55 @@ class ProtobufField {
       _upperCase,
       (match) => '_${match.group(0)!.toLowerCase()}',
     );
+  }
+
+  /// Gets the effective packed encoding based on edition/syntax.
+  bool _getEffectivePackedEncoding() {
+    final fileGen = parent.fileGen!;
+
+    // Handle editions syntax
+    if (fileGen.syntax == ProtoSyntax.editions) {
+      switch (fileGen.edition) {
+        case Edition.EDITION_2023:
+        case Edition.EDITION_PROTO3:
+          // Proto3 semantics: packed by default
+          if (!descriptor.hasOptions()) {
+            return true;
+          } else {
+            return !descriptor.options.hasPacked() || descriptor.options.packed;
+          }
+        case Edition.EDITION_PROTO2:
+          // Proto2 semantics: not packed by default
+          if (!descriptor.hasOptions()) {
+            return false;
+          } else {
+            return descriptor.options.packed;
+          }
+        default:
+          // Future editions default to packed
+          return !descriptor.hasOptions() ||
+              !descriptor.options.hasPacked() ||
+              descriptor.options.packed;
+      }
+    }
+
+    // Handle legacy syntax
+    switch (fileGen.syntax) {
+      case ProtoSyntax.proto3:
+        if (!descriptor.hasOptions()) {
+          return true; // packed by default in proto3
+        } else {
+          return !descriptor.options.hasPacked() || descriptor.options.packed;
+        }
+      case ProtoSyntax.proto2:
+        if (!descriptor.hasOptions()) {
+          return false; // not packed by default in proto2
+        } else {
+          return descriptor.options.packed;
+        }
+      case ProtoSyntax.editions:
+        // Should not reach here due to check above
+        return true;
+    }
   }
 }

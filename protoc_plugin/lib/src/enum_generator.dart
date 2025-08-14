@@ -107,6 +107,41 @@ class EnumGenerator extends ProtobufContainer {
   @override
   FileGenerator? get fileGen => parent.fileGen;
 
+  /// Whether this enum is open (allows unknown values) or closed.
+  /// In proto3, enums are open by default. In proto2, enums are closed by default.
+  /// In editions, this is controlled by the enum_type feature.
+  bool get isOpen {
+    final file = fileGen;
+    if (file == null) return false; // Default to closed if no file context
+
+    // Handle editions syntax
+    if (file.syntax == ProtoSyntax.editions) {
+      switch (file.edition) {
+        case Edition.EDITION_2023:
+        case Edition.EDITION_PROTO3:
+          // Proto3 semantics: enums are open by default
+          return true;
+        case Edition.EDITION_PROTO2:
+          // Proto2 semantics: enums are closed by default
+          return false;
+        default:
+          // Future editions default to open
+          return true;
+      }
+    }
+
+    // Handle legacy syntax
+    switch (file.syntax) {
+      case ProtoSyntax.proto3:
+        return true; // Open in proto3
+      case ProtoSyntax.proto2:
+        return false; // Closed in proto2
+      case ProtoSyntax.editions:
+        // Should not reach here due to check above
+        return true;
+    }
+  }
+
   /// Make this enum available as a field type.
   void register(GenerationContext ctx) {
     ctx.registerFieldType(this);
