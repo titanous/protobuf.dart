@@ -312,21 +312,33 @@ mixin DurationMixin {
   int get nanos;
   set nanos(int value);
 
-  static final RegExp finalZeroes = RegExp(r'0+$');
-
   static Object toProto3JsonHelper(
     GeneratedMessage message,
     TypeRegistry typeRegistry,
   ) {
     final duration = message as DurationMixin;
-    final secFrac = duration.nanos
-        // nanos and seconds should always have the same sign.
-        .abs()
-        .toString()
-        .padLeft(9, '0')
-        .replaceFirst(finalZeroes, '');
-    final secPart = secFrac == '' ? '' : '.$secFrac';
-    return '${duration.seconds}${secPart}s';
+    if (duration.nanos == 0) {
+      return '${duration.seconds}s';
+    }
+
+    String nanosStr = duration.nanos.abs().toString().padLeft(9, '0');
+
+    // Preserve fractional seconds in groups of 3, 6, or 9 digits
+    // Similar to protobuf-es implementation
+    if (nanosStr.substring(3) == '000000') {
+      nanosStr = nanosStr.substring(0, 3);
+    } else if (nanosStr.substring(6) == '000') {
+      nanosStr = nanosStr.substring(0, 6);
+    }
+    // Otherwise keep all 9 digits
+
+    // Add negative sign if seconds are 0 and nanos are negative
+    final text =
+        duration.nanos < 0 && duration.seconds == Int64.ZERO
+            ? '-${duration.seconds}.${nanosStr}s'
+            : '${duration.seconds}.${nanosStr}s';
+
+    return text;
   }
 
   static final RegExp durationPattern = RegExp(r'(-?\d*)(?:\.(\d*))?s$');

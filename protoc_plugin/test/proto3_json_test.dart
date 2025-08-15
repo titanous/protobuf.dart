@@ -296,7 +296,7 @@ void main() {
               ..seconds = Int64(10)
               ..nanos = 10)
             .toProto3Json(),
-        '10.00000001s',
+        '10.000000010s',
       );
       expect(
         (Duration()
