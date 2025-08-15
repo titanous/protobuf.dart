@@ -638,7 +638,17 @@ void _mergeFromProto3JsonWithContext(
                   value,
                 );
               }
-              result = Int64(value.toInt());
+              // Check if value exceeds UINT64_MAX (2^64 - 1)
+              // Note: Due to double precision, we check against 2^64
+              if (value >= 18446744073709551616.0) {
+                throw context.parseException(
+                  'uint64 field value out of range',
+                  value,
+                );
+              }
+              // For large uint64 values, convert to string first to avoid overflow
+              // when calling toInt() on doubles larger than max signed int64
+              result = Int64.parseInt(value.toStringAsFixed(0));
             } else {
               throw context.parseException('Expected integer value', value);
             }
@@ -649,7 +659,9 @@ void _mergeFromProto3JsonWithContext(
             }
             result = _tryParse64BitProto3(json, value, context);
             // Check for overflow (values > UINT64_MAX)
-            if (result.isNegative && result.toStringUnsigned() != value) {
+            // When parsing large unsigned values, Int64.parseInt may wrap around
+            // We need to verify the parsed value matches the original string
+            if (result.toStringUnsigned() != value) {
               throw context.parseException(
                 'uint64 field value out of range',
                 value,
