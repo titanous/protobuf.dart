@@ -9,6 +9,10 @@ const int _int32Min = -2147483648; // -2^31
 const int _int32Max = 2147483647; // 2^31 - 1
 const int _uint32Max = 0xFFFFFFFF; // 2^32 - 1
 
+// Constants for 32-bit float bounds
+const double _float32Max = 3.4028234663852886e38;
+const double _float32Min = -3.4028234663852886e38;
+
 /// Validates that a string contains valid UTF-16 sequences.
 /// Returns true if valid, false if it contains invalid surrogate sequences.
 bool _isValidUtf16(String str) {
@@ -530,11 +534,21 @@ void _mergeFromProto3JsonWithContext(
           throw context.parseException('Expected String value', value);
         case PbFieldType.FLOAT_BIT:
         case PbFieldType.DOUBLE_BIT:
+          final isFloat = fieldType == PbFieldType.FLOAT_BIT;
+          final typeName = isFloat ? 'float' : 'double';
+          
           if (value is double) {
             // Reject numeric NaN and Infinity - they must be encoded as strings
             if (value.isNaN || !value.isFinite) {
               throw context.parseException(
                 'NaN and Infinity must be encoded as strings',
+                value,
+              );
+            }
+            // Check float32 range for float fields
+            if (isFloat && (value > _float32Max || value < _float32Min)) {
+              throw context.parseException(
+                '$typeName field value out of range',
                 value,
               );
             }
@@ -544,6 +558,13 @@ void _mergeFromProto3JsonWithContext(
             if (doubleValue.isNaN || !doubleValue.isFinite) {
               throw context.parseException(
                 'NaN and Infinity must be encoded as strings',
+                value,
+              );
+            }
+            // Check float32 range for float fields
+            if (isFloat && (doubleValue > _float32Max || doubleValue < _float32Min)) {
+              throw context.parseException(
+                '$typeName field value out of range',
                 value,
               );
             }
@@ -557,23 +578,31 @@ void _mergeFromProto3JsonWithContext(
             final parsed = double.tryParse(value);
             if (parsed == null) {
               throw context.parseException(
-                'Expected String to encode a double',
+                'Expected String to encode a $typeName',
                 value,
               );
             }
-            // Reject if parsing resulted in infinity (overflow)
+            // Check for overflow - if parsing resulted in infinity but input wasn't "Infinity"
             if (!parsed.isFinite &&
                 value != 'Infinity' &&
                 value != '-Infinity') {
               throw context.parseException(
-                'double field value out of range',
+                '$typeName field value out of range',
+                value,
+              );
+            }
+            // Check float32 range for float fields with finite values
+            if (isFloat && parsed.isFinite &&
+                (parsed > _float32Max || parsed < _float32Min)) {
+              throw context.parseException(
+                '$typeName field value out of range',
                 value,
               );
             }
             return parsed;
           }
           throw context.parseException(
-            'Expected a double represented as a String or number',
+            'Expected a $typeName represented as a String or number',
             value,
           );
         case PbFieldType.ENUM_BIT:
