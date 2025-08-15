@@ -215,7 +215,16 @@ mixin TimestampMixin {
   }
 
   static final DateTime _minTimestamp = DateTime.utc(1);
-  static final DateTime _maxTimestamp = DateTime.utc(9999, 13, 31, 23, 59, 59);
+  static final DateTime _maxTimestamp = DateTime.utc(
+    9999,
+    12,
+    31,
+    23,
+    59,
+    59,
+    999,
+    999,
+  );
 
   // From google/protobuf/timestamp.proto:
   // # JSON Mapping
