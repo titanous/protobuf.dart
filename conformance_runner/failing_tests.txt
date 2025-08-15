@@ -14,16 +14,8 @@ Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.Unp
 Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\003\000\230\003\001\230\003\002\230\003\377\377\377\377\377\377\377
 Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \302\005\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\003\000\230\003\001\230\003\002\230\003\377\377\377\377\377\377\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \202\005\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \202\005\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
 Recommended.Editions_Proto2.ProtobufInput.ValidDataScalarBinary.ENUM[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
 Recommended.Editions_Proto2.ProtobufInput.ValidDataScalarBinary.ENUM[4].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
-Recommended.Editions_Proto2.ProtobufInput.ValidDataScalarBinary.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\376\377\377\377\377\377\377\377\377\001, but got: \060\001
-Recommended.Editions_Proto2.ProtobufInput.ValidDataScalarBinary.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\377\377\377\377\377\377\377\377\377\001, but got: \060\000
 Recommended.Editions_Proto3.JsonInput.DurationHas3FractionalDigits.Validator # JSON payload validation failed.
 Recommended.Editions_Proto3.JsonInput.DurationHas6FractionalDigits.Validator # JSON payload validation failed.
 Recommended.Editions_Proto3.JsonInput.DurationHas9FractionalDigits.Validator # JSON payload validation failed.
@@ -44,12 +36,6 @@ Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.Unp
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \260\006\000\260\006\001\260\006\002\260\006\377\377\377\377\377\377\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \360\005\000\360\005\362\300\001\360\005\376\377\377\377\377\377\377\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \360\005\000\360\005\362\300\001\360\005\376\377\377\377\377\377\377\377
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \150\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \172\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \141\000\000\000\000\000\000\000\000
@@ -66,8 +52,6 @@ Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED32[0].Prot
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \121\000\000\000\000\000\000\000\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \050\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \060\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\376\377\377\377\377\377\377\377\377\001, but got: \060\001
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\377\377\377\377\377\377\377\377\377\001, but got: \060\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \162\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
@@ -88,16 +72,8 @@ Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.UnpackedOutp
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\003\000\230\003\001\230\003\002\230\003\377\377\377\377\377\377\377
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \302\005\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\003\000\230\003\001\230\003\002\230\003\377\377\377\377\377\377\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \202\005\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \202\005\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
 Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.ENUM[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
 Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.ENUM[4].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
-Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\376\377\377\377\377\377\377\377\377\001, but got: \060\001
-Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\377\377\377\377\377\377\377\377\377\001, but got: \060\000
 Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.ProtobufOutput # Output was not equivalent to reference message: deleted: message_set_correct.(protobuf_test_messages.proto2.TestAllTypesProto2.M
 Recommended.Proto3.JsonInput.DurationHas3FractionalDigits.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.DurationHas6FractionalDigits.Validator # JSON payload validation failed.
@@ -119,12 +95,6 @@ Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.UnpackedOutp
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \260\006\000\260\006\001\260\006\002\260\006\377\377\377\377\377\377\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \360\005\000\360\005\362\300\001\360\005\376\377\377\377\377\377\377\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \242\002\030\000\362\300\001\376\377\377\377\377\377\377\377\377\001\377
-Recommended.Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \360\005\000\360\005\362\300\001\360\005\376\377\377\377\377\377\377\377
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \150\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \172\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \141\000\000\000\000\000\000\000\000
@@ -141,8 +111,6 @@ Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED32[0].ProtobufOutpu
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \121\000\000\000\000\000\000\000\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \050\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \060\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\376\377\377\377\377\377\377\377\377\001, but got: \060\001
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\377\377\377\377\377\377\377\377\377\001, but got: \060\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \162\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
@@ -172,8 +140,6 @@ Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Fai
 Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto2.ProtobufInput.RepeatedScalarSelectsLast.SINT64.JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
-Required.Editions_Proto2.ProtobufInput.RepeatedScalarSelectsLast.SINT64.ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
@@ -188,16 +154,8 @@ Required.Editions_Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault
 Required.Editions_Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
 Required.Editions_Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Editions_Proto2.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.SINT64[2].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.SINT64[3].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
 Required.Editions_Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Editions_Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
@@ -246,8 +204,6 @@ Required.Editions_Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to p
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto3.ProtobufInput.RepeatedScalarSelectsLast.SINT64.JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
-Required.Editions_Proto3.ProtobufInput.RepeatedScalarSelectsLast.SINT64.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
 Required.Editions_Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
@@ -262,15 +218,7 @@ Required.Editions_Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault
 Required.Editions_Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
 Required.Editions_Proto3.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto3.ProtobufInput.ValidDataScalar.SINT64[2].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Editions_Proto3.ProtobufInput.ValidDataScalar.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Editions_Proto3.ProtobufInput.ValidDataScalar.SINT64[3].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
-Required.Editions_Proto3.ProtobufInput.ValidDataScalar.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
 Required.Editions_Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
@@ -297,8 +245,6 @@ Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to pa
 Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.SINT64.JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.SINT64.ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
 Required.Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
@@ -313,16 +259,8 @@ Required.Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.Protobuf
 Required.Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[2].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[3].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: -9223372036854775808 -> 0
 Required.Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
@@ -371,8 +309,6 @@ Required.Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but
 Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto3.ProtobufInput.RepeatedScalarSelectsLast.SINT64.JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
-Required.Proto3.ProtobufInput.RepeatedScalarSelectsLast.SINT64.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
 Required.Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
 Required.Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
@@ -387,13 +323,5 @@ Required.Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.Protobuf
 Required.Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto3.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.JsonOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
-Required.Proto3.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.ProtobufOutput # Output was not equivalent to reference message: modified: repeated_sint64[2]: 9223372036854775807 -> -1modified: repeated_sint64
 Required.Proto3.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
-Required.Proto3.ProtobufInput.ValidDataScalar.SINT64[2].JsonOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Proto3.ProtobufInput.ValidDataScalar.SINT64[2].ProtobufOutput # Output was not equivalent to reference message: modified: optional_sint64: 9223372036854775807 -> -1
-Required.Proto3.ProtobufInput.ValidDataScalar.SINT64[3].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
-Required.Proto3.ProtobufInput.ValidDataScalar.SINT64[3].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint64: -9223372036854775808
 Required.Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.

@@ -322,18 +322,18 @@ class CodedBufferReader {
   @pragma('vm:prefer-inline')
   @pragma('wasm:prefer-inline')
   static int _decodeZigZag32(int value) {
-    if ((value & 0x1) == 1) {
-      return -(value >> 1) - 1;
-    } else {
-      return value >> 1;
-    }
+    // Decode zigzag encoding: (n >>> 1) ^ -(n & 1)
+    // Use unsigned right shift to handle edge cases correctly
+    return (value >>> 1) ^ -(value & 1);
   }
 
   @pragma('vm:prefer-inline')
   @pragma('wasm:prefer-inline')
   static Int64 _decodeZigZag64(Int64 value) {
-    if ((value & 0x1) == 1) value = -value;
-    return value >> 1;
+    // Decode zigzag encoding: (n >>> 1) ^ -(n & 1)
+    // Use shiftRightUnsigned for proper unsigned right shift
+    final s = -(value & Int64.ONE);
+    return value.shiftRightUnsigned(1) ^ s;
   }
 
   @pragma('vm:prefer-inline')
