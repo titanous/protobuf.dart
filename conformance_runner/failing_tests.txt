@@ -103,13 +103,9 @@ Required.Editions_Proto2.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Fai
 Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
-Required.Editions_Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Editions_Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
@@ -157,12 +153,8 @@ Required.Editions_Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput #
 Required.Editions_Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
-Required.Editions_Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Editions_Proto3.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
@@ -188,13 +180,9 @@ Required.Proto2.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Failed to pa
 Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
 Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
-Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
-Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
@@ -242,10 +230,6 @@ Required.Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed t
 Required.Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
-Required.Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
-Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
-Required.Proto3.ProtobufInput.ValidDataScalar.FIXED64[2].JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.

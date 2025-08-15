@@ -28,8 +28,9 @@ String? _getFieldError(int fieldType, var value) {
       if (value is! double) return 'not type double';
       return null;
     case PbFieldType.ENUM_BIT:
-      if (value is! ProtobufEnum && value is! int)
+      if (value is! ProtobufEnum && value is! int) {
         return 'not type ProtobufEnum or int';
+      }
       return null;
 
     case PbFieldType.INT32_BIT:

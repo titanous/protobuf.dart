@@ -136,6 +136,7 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
       case PbFieldType.STRING_BIT:
         return key;
       case PbFieldType.UINT64_BIT:
+      case PbFieldType.FIXED64_BIT:
         return (key as Int64).toStringUnsigned();
       case PbFieldType.INT32_BIT:
       case PbFieldType.SINT32_BIT:
@@ -145,7 +146,6 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
       case PbFieldType.INT64_BIT:
       case PbFieldType.SINT64_BIT:
       case PbFieldType.SFIXED64_BIT:
-      case PbFieldType.FIXED64_BIT:
         return key.toString();
       default:
         throw StateError('Not a valid key type $keyType');
@@ -178,8 +178,9 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
         case PbFieldType.INT64_BIT:
         case PbFieldType.SINT64_BIT:
         case PbFieldType.SFIXED64_BIT:
-        case PbFieldType.FIXED64_BIT:
           return fieldValue.toString();
+        case PbFieldType.FIXED64_BIT:
+          return (fieldValue as Int64).toStringUnsigned();
         case PbFieldType.FLOAT_BIT:
         case PbFieldType.DOUBLE_BIT:
           final double value = fieldValue;

@@ -151,7 +151,7 @@ void main() {
 
       expect(message.toProto3Json(), {
         'optionalUint64': '17293822573397606400',
-        'optionalFixed64': '-1152921500311945215',
+        'optionalFixed64': '17293822573397606401',
       });
     });
 
