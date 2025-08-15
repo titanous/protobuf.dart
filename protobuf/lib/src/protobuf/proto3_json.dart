@@ -4,6 +4,11 @@
 
 part of 'internal.dart';
 
+// Constants for 32-bit integer bounds
+const int _int32Min = -2147483648; // -2^31
+const int _int32Max = 2147483647; // 2^31 - 1
+const int _uint32Max = 0xFFFFFFFF; // 2^32 - 1
+
 /// Decodes a base64 or base64url encoded string to bytes.
 ///
 /// Supports both standard base64 encoding (using '+' and '/') and
@@ -279,25 +284,82 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
 }
 
 int _tryParse32BitProto3(String s, JsonParsingContext context) {
-  return int.tryParse(s) ??
-      (throw context.parseException('expected integer', s));
+  // Handle empty string or leading/trailing whitespace
+  if (s.isEmpty || s.trim().length != s.length) {
+    throw context.parseException('expected integer', s);
+  }
+
+  // Check if string contains decimal point or exponential notation
+  if (s.contains('.') || s.contains('e') || s.contains('E')) {
+    // Parse as double to handle exponential notation (e.g., "1e2", "1.0")
+    final num = double.tryParse(s);
+    // Check if it's a valid integer (using truncateToDouble to match JS Number.isInteger)
+    if (num == null || !num.isFinite || num != num.truncateToDouble()) {
+      throw context.parseException('expected integer', s);
+    }
+
+    // Check if the value fits in int32 range before converting
+    if (num < _int32Min || num > _int32Max) {
+      throw context.parseException('expected 32 bit integer', s);
+    }
+
+    // Convert to int
+    return num.toInt();
+  }
+
+  // Regular integer parsing for normal cases
+  final intValue = int.tryParse(s);
+  if (intValue != null) {
+    return intValue;
+  }
+
+  throw context.parseException('expected integer', s);
 }
 
 int _check32BitSignedProto3(int n, JsonParsingContext context) {
-  if (n < -2147483648 || n > 2147483647) {
+  if (n < _int32Min || n > _int32Max) {
     throw context.parseException('expected 32 bit signed integer', n);
   }
   return n;
 }
 
 int _check32BitUnsignedProto3(int n, JsonParsingContext context) {
-  if (n < 0 || n > 0xFFFFFFFF) {
+  if (n < 0 || n > _uint32Max) {
     throw context.parseException('expected 32 bit unsigned integer', n);
   }
   return n;
 }
 
 Int64 _tryParse64BitProto3(Object? json, String s, JsonParsingContext context) {
+  // Handle empty string or leading/trailing whitespace
+  if (s.isEmpty || s.trim().length != s.length) {
+    throw context.parseException('expected integer', json);
+  }
+
+  // Check if string contains decimal point or exponential notation
+  if (s.contains('.') || s.contains('e') || s.contains('E')) {
+    // Parse as double to handle exponential notation (e.g., "1e2", "1.0")
+    final num = double.tryParse(s);
+    // Check if it's a valid integer
+    if (num == null || !num.isFinite || num != num.truncateToDouble()) {
+      throw context.parseException('expected integer', json);
+    }
+
+    // For 64-bit integers, we need to be careful about precision loss
+    // JavaScript's Number type can only safely represent integers up to 2^53
+    // So for larger values, we should reject the float representation
+    if (num.abs() > 9007199254740992) {
+      // 2^53
+      throw context.parseException(
+        'integer value too large for safe conversion from float',
+        json,
+      );
+    }
+
+    return Int64(num.toInt());
+  }
+
+  // Regular Int64 parsing for normal cases
   try {
     return Int64.parseInt(s);
   } on FormatException {
@@ -480,6 +542,13 @@ void _mergeFromProto3JsonWithContext(
           int result;
           if (value is int) {
             result = value;
+          } else if (value is double) {
+            // Handle double values that represent integers
+            if (value.isFinite && value == value.truncateToDouble()) {
+              result = value.toInt();
+            } else {
+              throw context.parseException('Expected integer value', value);
+            }
           } else if (value is String) {
             result = _tryParse32BitProto3(value, context);
           } else {
@@ -495,6 +564,13 @@ void _mergeFromProto3JsonWithContext(
           int result;
           if (value is int) {
             result = value;
+          } else if (value is double) {
+            // Handle double values that represent integers
+            if (value.isFinite && value == value.truncateToDouble()) {
+              result = value.toInt();
+            } else {
+              throw context.parseException('Expected integer value', value);
+            }
           } else if (value is String) {
             result = _tryParse32BitProto3(value, context);
           } else {
@@ -509,6 +585,13 @@ void _mergeFromProto3JsonWithContext(
           Int64 result;
           if (value is int) {
             result = Int64(value);
+          } else if (value is double) {
+            // Handle double values that represent integers
+            if (value.isFinite && value == value.truncateToDouble()) {
+              result = Int64(value.toInt());
+            } else {
+              throw context.parseException('Expected integer value', value);
+            }
           } else if (value is String) {
             result = _tryParse64BitProto3(json, value, context);
           } else {
@@ -523,6 +606,14 @@ void _mergeFromProto3JsonWithContext(
         case PbFieldType.FIXED64_BIT:
         case PbFieldType.SFIXED64_BIT:
           if (value is int) return Int64(value);
+          if (value is double) {
+            // Handle double values that represent integers
+            if (value.isFinite && value == value.truncateToDouble()) {
+              return Int64(value.toInt());
+            } else {
+              throw context.parseException('Expected integer value', value);
+            }
+          }
           if (value is String) {
             Int64 result;
             try {

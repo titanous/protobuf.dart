@@ -82,26 +82,12 @@ Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[4].ProtobufOutput # 
 Required.Editions_Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
-Required.Editions_Proto2.JsonInput.Int32FieldExponentialFormat.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldExponentialFormat.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldFloatTrailingZero.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldFloatTrailingZero.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldLeadingSpace # Should have failed to parse, but didn't.
-Required.Editions_Proto2.JsonInput.Int32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldMinFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldMinFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Int32FieldTrailingSpace # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.Int64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.Int64FieldTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
-Required.Editions_Proto2.JsonInput.Uint32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
+Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
+Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
 Required.Editions_Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
@@ -124,18 +110,6 @@ Required.Editions_Proto3.JsonInput.EnumFieldWithAliasUseAlias.JsonOutput # Faile
 Required.Editions_Proto3.JsonInput.EnumFieldWithAliasUseAlias.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.Int32FieldExponentialFormat.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldExponentialFormat.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldFloatTrailingZero.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldFloatTrailingZero.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldLeadingSpace # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.Int32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldMinFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldMinFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Int32FieldTrailingSpace # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.Int64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.Int64FieldTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
@@ -146,10 +120,8 @@ Required.Editions_Proto3.JsonInput.TimestampJsonInputMissingT # Should have fail
 Required.Editions_Proto3.JsonInput.TimestampJsonInputMissingZ # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.TimestampJsonInputTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.TimestampJsonInputTooSmall # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.Uint32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
+Required.Editions_Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
+Required.Editions_Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
 Required.Editions_Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
@@ -159,26 +131,12 @@ Required.Editions_Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have fa
 Required.Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.Int32FieldExponentialFormat.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldExponentialFormat.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldFloatTrailingZero.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldFloatTrailingZero.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldLeadingSpace # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.Int32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldMinFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldMinFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Int32FieldTrailingSpace # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.Int64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.Int64FieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.Uint32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
+Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
 Required.Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
@@ -201,18 +159,6 @@ Required.Proto3.JsonInput.EnumFieldWithAliasUseAlias.JsonOutput # Failed to pars
 Required.Proto3.JsonInput.EnumFieldWithAliasUseAlias.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.Int32FieldExponentialFormat.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldExponentialFormat.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldFloatTrailingZero.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldFloatTrailingZero.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldLeadingSpace # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.Int32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldMinFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldMinFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Int32FieldTrailingSpace # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.Int64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.Int64FieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
@@ -223,10 +169,8 @@ Required.Proto3.JsonInput.TimestampJsonInputMissingT # Should have failed to par
 Required.Proto3.JsonInput.TimestampJsonInputMissingZ # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.TimestampJsonInputTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.TimestampJsonInputTooSmall # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.Uint32FieldMaxFloatValue.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Uint32FieldMaxFloatValue.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.JsonOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
+Required.Proto3.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Output was not equivalent to reference message: modified: optional_uint64: 18446744073709549568 -> 9223372036854775807
 Required.Proto3.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
