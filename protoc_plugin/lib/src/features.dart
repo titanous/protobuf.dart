@@ -364,6 +364,7 @@ bool resolveDelimitedEncoding(
   FieldDescriptorProto field,
   FileDescriptorProto file, {
   dynamic parentDescriptor,
+  bool isMapValueField = false,
 }) {
   // GROUP type always uses delimited encoding
   if (field.type == FieldDescriptorProto_Type.TYPE_GROUP) {
@@ -372,6 +373,12 @@ bool resolveDelimitedEncoding(
 
   // Only message fields can have delimited encoding
   if (field.type != FieldDescriptorProto_Type.TYPE_MESSAGE) {
+    return false;
+  }
+
+  // Map value fields always use LENGTH_PREFIXED encoding
+  // (map entries are synthetic and never use group encoding)
+  if (isMapValueField) {
     return false;
   }
 

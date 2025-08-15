@@ -16,6 +16,9 @@ class BaseType {
   /// (For example, 'B' for boolean or '3' for int32.)
   final String typeConstantSuffix;
 
+  /// Whether this field uses group encoding (for editions delimited messages)
+  final bool usesGroupEncoding;
+
   // Method name of the setter method for this type.
   final String? setter;
 
@@ -28,10 +31,12 @@ class BaseType {
     this.typeConstantSuffix,
     this.unprefixed,
     this.setter,
-    this.generator,
-  );
+    this.generator, {
+    this.usesGroupEncoding = false,
+  });
 
-  bool get isGroup => descriptor == FieldDescriptorProto_Type.TYPE_GROUP;
+  bool get isGroup =>
+      descriptor == FieldDescriptorProto_Type.TYPE_GROUP || usesGroupEncoding;
   bool get isMessage => descriptor == FieldDescriptorProto_Type.TYPE_MESSAGE;
   bool get isEnum => descriptor == FieldDescriptorProto_Type.TYPE_ENUM;
   bool get isString => descriptor == FieldDescriptorProto_Type.TYPE_STRING;
@@ -65,7 +70,11 @@ class BaseType {
   String getRepeatedDartTypeIterable(FileGenerator fileGen) =>
       '$coreImportPrefix.Iterable<${getDartType(fileGen)}>';
 
-  factory BaseType(FieldDescriptorProto field, GenerationContext ctx) {
+  factory BaseType(
+    FieldDescriptorProto field,
+    GenerationContext ctx, {
+    ProtobufContainer? parent,
+  }) {
     String constSuffix;
 
     switch (field.type) {
@@ -194,7 +203,29 @@ class BaseType {
         constSuffix = 'G';
         break;
       case FieldDescriptorProto_Type.TYPE_MESSAGE:
-        constSuffix = 'M';
+        // Check if this message field should use delimited encoding in editions
+        if (parent != null && parent.fileGen != null) {
+          // Get the parent descriptor - could be message or file
+          dynamic parentDesc;
+          bool isMapEntry = false;
+          if (parent is MessageGenerator) {
+            parentDesc = parent.descriptor;
+            // Check if the parent message is a map entry
+            isMapEntry = parent.descriptor.options.mapEntry;
+          } else if (parent is FileGenerator) {
+            parentDesc = parent.descriptor;
+          }
+
+          final useDelimited = resolveDelimitedEncoding(
+            field,
+            parent.fileGen!.descriptor,
+            parentDescriptor: parentDesc,
+            isMapValueField: isMapEntry,
+          );
+          constSuffix = useDelimited ? 'G' : 'M';
+        } else {
+          constSuffix = 'M';
+        }
         break;
       case FieldDescriptorProto_Type.TYPE_ENUM:
         constSuffix = 'E';
@@ -215,6 +246,7 @@ class BaseType {
       generator.classname!,
       null,
       generator,
+      usesGroupEncoding: constSuffix == 'G',
     );
   }
 }

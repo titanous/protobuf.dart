@@ -50,7 +50,7 @@ class ProtobufField {
     GenerationContext ctx,
   ) : memberNames = dartNames,
       fullName = '${parent.fullName}.${descriptor.name}',
-      baseType = BaseType(descriptor, ctx);
+      baseType = BaseType(descriptor, ctx, parent: parent);
 
   /// The index of this field in MessageGenerator.fieldList.
   ///
@@ -375,7 +375,12 @@ class ProtobufField {
           if (baseType.isMessage || baseType.isGroup) {
             named['subBuilder'] = '$type.create';
           }
-          if (baseType.isMessage) {
+          if (baseType.isGroup) {
+            // Groups use the generic 'a' method with the type constant
+            invocation = 'a<$type>';
+            named['defaultOrMaker'] = makeDefault;
+            args.add(typeConstant);
+          } else if (baseType.isMessage) {
             invocation = isRequired ? 'aQM<$type>' : 'aOM<$type>';
           } else {
             invocation = 'a<$type>';
