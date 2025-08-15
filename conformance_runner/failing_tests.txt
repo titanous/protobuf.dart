@@ -6,28 +6,24 @@ Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.Prot
 Recommended.Proto3.JsonInput.NullValueInOtherOneofNewFormat.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.NullValueInOtherOneofOldFormat.Validator # JSON payload validation failed.
 Required.Editions_Proto2.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
-Required.Editions_Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Editions_Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
 Required.Editions_Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.SkipsDefaultPrimitive.Validator # JSON payload validation failed.
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto2.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
 Required.Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.SkipsDefaultPrimitive.Validator # JSON payload validation failed.
 Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }

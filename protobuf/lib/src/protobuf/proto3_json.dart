@@ -496,6 +496,11 @@ void _mergeFromProto3JsonWithContext(
   TypeRegistry typeRegistry,
   JsonParsingContext context,
 ) {
+  // Reject top-level null for proto3 JSON
+  if (json == null) {
+    throw context.parseException('Expected JSON object, got null', json);
+  }
+
   fieldSet._ensureWritable();
 
   void recursionHelper(Object? json, FieldSet fieldSet) {
@@ -536,7 +541,7 @@ void _mergeFromProto3JsonWithContext(
         case PbFieldType.DOUBLE_BIT:
           final isFloat = fieldType == PbFieldType.FLOAT_BIT;
           final typeName = isFloat ? 'float' : 'double';
-          
+
           if (value is double) {
             // Reject numeric NaN and Infinity - they must be encoded as strings
             if (value.isNaN || !value.isFinite) {
@@ -562,7 +567,8 @@ void _mergeFromProto3JsonWithContext(
               );
             }
             // Check float32 range for float fields
-            if (isFloat && (doubleValue > _float32Max || doubleValue < _float32Min)) {
+            if (isFloat &&
+                (doubleValue > _float32Max || doubleValue < _float32Min)) {
               throw context.parseException(
                 '$typeName field value out of range',
                 value,
@@ -592,7 +598,8 @@ void _mergeFromProto3JsonWithContext(
               );
             }
             // Check float32 range for float fields with finite values
-            if (isFloat && parsed.isFinite &&
+            if (isFloat &&
+                parsed.isFinite &&
                 (parsed > _float32Max || parsed < _float32Min)) {
               throw context.parseException(
                 '$typeName field value out of range',
