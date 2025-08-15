@@ -1,24 +1,8 @@
 Recommended.Editions_Proto2.JsonInput.FieldNameExtension.Validator # Expected JSON payload but got type 1
-Recommended.Editions_Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapValue.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedField.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapValue.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedField.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Editions_Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Editions_Proto3.JsonInput.NullValueInOtherOneofNewFormat.Validator # JSON payload validation failed.
 Recommended.Editions_Proto3.JsonInput.NullValueInOtherOneofOldFormat.Validator # JSON payload validation failed.
 Recommended.Proto2.JsonInput.FieldNameExtension.Validator # Expected JSON payload but got type 1
-Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapValue.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedField.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.ProtobufOutput # Output was not equivalent to reference message: deleted: message_set_correct.(protobuf_test_messages.proto2.TestAllTypesProto2.M
-Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapValue.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedField.ProtobufOutput # Failed to parse input or produce output.
-Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto3.JsonInput.NullValueInOtherOneofNewFormat.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.NullValueInOtherOneofOldFormat.Validator # JSON payload validation failed.
 Required.Editions_Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.

@@ -975,8 +975,15 @@ void _mergeFromProto3JsonWithContext(
                 throw context.parseException('Expected a String key', subKey);
               }
               context.addMapIndex(subKey);
-              fieldValues[decodeMapKey(subKey, mapFieldInfo.keyFieldType)] =
-                  convertProto3JsonValue(subValue, mapFieldInfo.valueFieldInfo);
+              final convertedValue = convertProto3JsonValue(
+                subValue,
+                mapFieldInfo.valueFieldInfo,
+              );
+              // Skip null values (e.g., unknown enum strings when ignoreUnknownFields is true)
+              if (convertedValue != null) {
+                fieldValues[decodeMapKey(subKey, mapFieldInfo.keyFieldType)] =
+                    convertedValue;
+              }
               context.popIndex();
             });
           } else {
@@ -988,7 +995,11 @@ void _mergeFromProto3JsonWithContext(
             for (var i = 0; i < value.length; i++) {
               final entry = value[i];
               context.addListIndex(i);
-              values.add(convertProto3JsonValue(entry, fieldInfo));
+              final convertedValue = convertProto3JsonValue(entry, fieldInfo);
+              // Skip null values (e.g., unknown enum strings when ignoreUnknownFields is true)
+              if (convertedValue != null) {
+                values.add(convertedValue);
+              }
               context.popIndex();
             }
           } else {
