@@ -27,14 +27,8 @@ Required.Editions_Proto2.JsonInput.OneofFieldDuplicate # Should have failed to p
 Required.Editions_Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Editions_Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
-Required.Editions_Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
-Required.Editions_Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.DurationJsonInputTooLarge # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.DurationJsonInputTooSmall # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.DurationNegativeNanos.JsonOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
-Required.Editions_Proto3.JsonInput.DurationNegativeNanos.ProtobufOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Editions_Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
 Required.Editions_Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
@@ -56,14 +50,8 @@ Required.Proto2.JsonInput.OneofFieldDuplicate # Should have failed to parse, but
 Required.Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
-Required.Proto3.DurationProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
-Required.Proto3.DurationProtoInputTooSmall.JsonOutput # Should have failed to serialize, but didn't.
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.DurationJsonInputTooLarge # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.DurationJsonInputTooSmall # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.DurationNegativeNanos.JsonOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
-Required.Proto3.JsonInput.DurationNegativeNanos.ProtobufOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
 Required.Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.

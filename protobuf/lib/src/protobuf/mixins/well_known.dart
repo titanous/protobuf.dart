@@ -312,11 +312,23 @@ mixin DurationMixin {
   int get nanos;
   set nanos(int value);
 
+  static final Int64 _durationMaxSeconds = Int64.parseInt('315576000000');
+  static final Int64 _durationMinSeconds = Int64.parseInt('-315576000000');
+
   static Object toProto3JsonHelper(
     GeneratedMessage message,
     TypeRegistry typeRegistry,
   ) {
     final duration = message as DurationMixin;
+
+    // Validate duration range (±10,000 years)
+    if (duration.seconds > _durationMaxSeconds ||
+        duration.seconds < _durationMinSeconds) {
+      throw ArgumentError(
+        'cannot encode message ${message.info_.qualifiedMessageName} to JSON: value out of range',
+      );
+    }
+
     if (duration.nanos == 0) {
       return '${duration.seconds}s';
     }
@@ -359,11 +371,31 @@ mixin DurationMixin {
         );
       } else {
         final secondsString = match[1]!;
-        final seconds =
-            secondsString == '' ? Int64.ZERO : Int64.parseInt(secondsString);
+        // Parse seconds as a regular number first for range validation
+        final longSeconds = secondsString == '' ? 0 : num.parse(secondsString);
+
+        // Validate duration range (±10,000 years)
+        if (longSeconds > 315576000000 || longSeconds < -315576000000) {
+          throw context.parseException('Duration out of valid range', json);
+        }
+
+        final seconds = Int64.parseInt(
+          secondsString == '' ? '0' : secondsString,
+        );
         duration.seconds = seconds;
-        final nanos = int.parse((match[2] ?? '').padRight(9, '0'));
-        duration.nanos = seconds < 0 ? -nanos : nanos;
+
+        if (match[2] != null && match[2]!.isNotEmpty) {
+          final nanosStr = match[2]!.padRight(9, '0');
+          final nanos = int.parse(nanosStr);
+          // Handle negative nanos: if seconds are negative or -0, negate nanos
+          duration.nanos =
+              (longSeconds < 0 ||
+                      (longSeconds == 0 && secondsString.startsWith('-')))
+                  ? -nanos
+                  : nanos;
+        } else {
+          duration.nanos = 0;
+        }
       }
     } else {
       throw context.parseException(
