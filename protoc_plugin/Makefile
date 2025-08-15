@@ -89,40 +89,18 @@ PREGENERATED_SRCS := $(shell find protos -name '*.proto')
 
 $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 	mkdir -p $(TEST_PROTO_DIR)
-
 	protoc\
 		--dart_out="$(TEST_PROTO_DIR)"\
 		-I$(TEST_PROTO_SRC_DIR)\
 		-Iprotos\
 		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
 		$(TEST_PROTO_SRCS)
-
-	mkdir -p $(TEST_PROTO_DIR)/constructor_args
-
-	protoc\
-		--experimental_allow_proto3_optional\
-		--dart_out="$(TEST_PROTO_DIR)/constructor_args"\
-		-I$(TEST_PROTO_SRC_DIR)\
-		-Iprotos\
-		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
-		$(TEST_PROTO_SRCS)
-
-	mkdir -p $(TEST_PROTO_DIR)/nullable
-
-	protoc\
-		--experimental_allow_proto3_optional\
-		--dart_out="nullable:$(TEST_PROTO_DIR)/nullable"\
-		-I$(TEST_PROTO_SRC_DIR)\
-		-Iprotos\
-		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
-		$(TEST_PROTO_SRCS)
-
 	dart format $(TEST_PROTO_DIR)
 
-update-pregenerated: $(PLUGIN_PATH) $(PREGENERATED_SRCS)
+update-pregenerated: $(PLUGIN_PATH) $(PREGENERATED_SRCS) protos/dart_features.proto
 	protoc --dart_out=lib/src/gen \
 		-Iprotos \
-		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH)) $(PREGENERATED_SRCS)
+		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH)) $(PREGENERATED_SRCS) protos/dart_features.proto
 	find lib/src/gen -name '*.pbjson.dart' -delete
 
 protos: $(PLUGIN_PATH) $(TEST_PROTO_LIBS)

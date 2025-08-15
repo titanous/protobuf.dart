@@ -2,9 +2,17 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: constant_identifier_names
+
 import 'gen/google/protobuf/compiler/plugin.pb.dart';
 
 typedef OnError = void Function(String details);
+
+// Dart API level feature values
+const int API_LEVEL_UNSPECIFIED = 0;
+const int API_LEVEL_HAZZERS = 1;
+const int API_LEVEL_NULLABLE = 2;
+const int API_LEVEL_HYBRID = 3;
 
 /// Helper function implementing a generic option parser that reads
 /// `request.parameters` and treats each token as either a flag ("name") or a
@@ -54,14 +62,16 @@ class GenerationOptions {
   final bool useGrpc;
   final bool generateMetadata;
   final bool disableConstructorArgs;
-  final bool useNullable;
+  final String? defaultApiLevel;
+  final Map<String, String> apiLevelMappings;
 
   GenerationOptions({
     this.useGrpc = false,
     this.generateMetadata = false,
     this.disableConstructorArgs = false,
-    this.useNullable = false,
-  });
+    this.defaultApiLevel,
+    Map<String, String>? apiLevelMappings,
+  }) : apiLevelMappings = apiLevelMappings ?? {};
 }
 
 /// A parser for a name-value pair option. Options parsed in
@@ -114,16 +124,67 @@ class DisableConstructorArgsParser implements SingleOptionParser {
   }
 }
 
-class NullableOptionParser implements SingleOptionParser {
-  bool nullableEnabled = false;
+class DefaultApiLevelParser implements SingleOptionParser {
+  String? defaultApiLevel;
 
   @override
   void parse(String name, String? value, OnError onError) {
-    if (value != null) {
-      onError('Invalid nullable option. No value expected.');
+    if (value == null) {
+      onError(
+        'default_api_level requires a value: API_LEVEL_HAZZERS, API_LEVEL_NULLABLE, or API_LEVEL_HYBRID',
+      );
       return;
     }
-    nullableEnabled = true;
+    if (![
+      'API_LEVEL_HAZZERS',
+      'API_LEVEL_NULLABLE',
+      'API_LEVEL_HYBRID',
+    ].contains(value)) {
+      onError(
+        'Invalid api_level: $value. Must be one of: API_LEVEL_HAZZERS, API_LEVEL_NULLABLE, API_LEVEL_HYBRID',
+      );
+      return;
+    }
+    defaultApiLevel = value;
+  }
+}
+
+class ApiLevelMappingParser implements SingleOptionParser {
+  final Map<String, String> apiLevelMappings = {};
+
+  @override
+  void parse(String name, String? value, OnError onError) {
+    // Extract the filename from the option name
+    // Format: api_levelMfilename.proto=API_LEVEL
+    // The name parameter will be: api_levelMfilename.proto
+    if (!name.startsWith('api_levelM')) {
+      onError('Invalid api_levelM option format');
+      return;
+    }
+
+    final filename = name.substring('api_levelM'.length);
+    if (filename.isEmpty) {
+      onError('api_levelM requires a filename: api_levelMfile.proto=API_LEVEL');
+      return;
+    }
+
+    if (value == null) {
+      onError(
+        'api_levelM requires a value: API_LEVEL_HAZZERS, API_LEVEL_NULLABLE, or API_LEVEL_HYBRID',
+      );
+      return;
+    }
+
+    if (![
+      'API_LEVEL_HAZZERS',
+      'API_LEVEL_NULLABLE',
+      'API_LEVEL_HYBRID',
+    ].contains(value)) {
+      onError('Invalid api_level for $filename: $value');
+      return;
+    }
+
+    apiLevelMappings[filename] = value;
   }
 }
 
@@ -143,18 +204,71 @@ GenerationOptions? parseGenerationOptions(
 
   final generateMetadataParser = GenerateMetadataParser();
   newParsers['generate_kythe_info'] = generateMetadataParser;
-  final nullableOptionParser = NullableOptionParser();
-  newParsers['nullable'] = nullableOptionParser;
+
+  final defaultApiLevelParser = DefaultApiLevelParser();
+  newParsers['default_api_level'] = defaultApiLevelParser;
+
+  final apiLevelMappingParser = ApiLevelMappingParser();
+  // Register a parser that handles all api_levelM* options
+  // We need to handle these specially in genericOptionsParser
 
   final disableConstructorArgsParser = DisableConstructorArgsParser();
   newParsers['disable_constructor_args'] = disableConstructorArgsParser;
 
-  if (genericOptionsParser(request, response, newParsers)) {
+  // Handle api_levelM options specially and filter them out
+  final parameter = request.parameter;
+  final options = parameter.trim().split(',');
+  final filteredOptions = <String>[];
+
+  for (var option in options) {
+    option = option.trim();
+    if (option.isEmpty) continue;
+
+    final nameValue = option.split('=');
+    final name = nameValue.isNotEmpty ? nameValue[0].trim() : '';
+
+    if (name.startsWith('api_levelM')) {
+      final filename = name.substring('api_levelM'.length);
+      if (filename.isEmpty) {
+        // api_levelM= without filename
+        response.error =
+            '${response.error}api_levelM requires a filename: api_levelMfile.proto=API_LEVEL\n';
+        return null;
+      }
+      if (nameValue.length == 1) {
+        // api_levelMfile.proto without value
+        response.error =
+            '${response.error}api_levelM requires a value: api_levelMfile.proto=API_LEVEL\n';
+        return null;
+      } else if (nameValue.length == 2) {
+        final value = nameValue[1].trim();
+        apiLevelMappingParser.parse(name, value, (error) {
+          response.error = '${response.error}$error\n';
+        });
+        // Check if there was an error during parsing
+        if (response.error.isNotEmpty) {
+          return null;
+        }
+      }
+    } else {
+      // Keep non-api_levelM options for genericOptionsParser
+      filteredOptions.add(option);
+    }
+  }
+
+  // Create a new request with filtered options
+  final filteredRequest =
+      CodeGeneratorRequest()
+        ..parameter = filteredOptions.join(',')
+        ..protoFile.addAll(request.protoFile);
+
+  if (genericOptionsParser(filteredRequest, response, newParsers)) {
     return GenerationOptions(
       useGrpc: grpcOptionParser.grpcEnabled,
       generateMetadata: generateMetadataParser.generateKytheInfo,
       disableConstructorArgs: disableConstructorArgsParser.value,
-      useNullable: nullableOptionParser.nullableEnabled,
+      defaultApiLevel: defaultApiLevelParser.defaultApiLevel,
+      apiLevelMappings: apiLevelMappingParser.apiLevelMappings,
     );
   }
   return null;

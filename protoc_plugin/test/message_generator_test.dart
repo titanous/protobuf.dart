@@ -100,7 +100,7 @@ void main() {
       null,
       <String>{},
       0,
-      false,
+      API_LEVEL_HAZZERS,
     );
 
     final ctx = GenerationContext(options);
@@ -146,7 +146,7 @@ void main() {
       null,
       <String>{},
       0,
-      false,
+      API_LEVEL_HAZZERS,
     );
 
     final ctx = GenerationContext(options);

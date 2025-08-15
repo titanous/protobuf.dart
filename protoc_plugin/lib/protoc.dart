@@ -22,6 +22,12 @@ import 'src/shared.dart';
 import 'string_escape.dart';
 
 export 'src/code_generator.dart';
+export 'src/options.dart'
+    show
+        API_LEVEL_HAZZERS,
+        API_LEVEL_NULLABLE,
+        API_LEVEL_HYBRID,
+        API_LEVEL_UNSPECIFIED;
 
 part 'src/base_type.dart';
 part 'src/client_generator.dart';

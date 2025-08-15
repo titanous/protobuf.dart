@@ -51,6 +51,7 @@ class ResolvedFeatures {
   final int utf8Validation;
   final int jsonFormat;
   final int messageEncoding;
+  final int dartApiLevel;
 
   const ResolvedFeatures({
     required this.fieldPresence,
@@ -59,6 +60,7 @@ class ResolvedFeatures {
     required this.utf8Validation,
     required this.jsonFormat,
     required this.messageEncoding,
+    required this.dartApiLevel,
   });
 
   ResolvedFeatures copyWith({
@@ -68,6 +70,7 @@ class ResolvedFeatures {
     int? utf8Validation,
     int? jsonFormat,
     int? messageEncoding,
+    int? dartApiLevel,
   }) {
     return ResolvedFeatures(
       fieldPresence: fieldPresence ?? this.fieldPresence,
@@ -77,6 +80,7 @@ class ResolvedFeatures {
       utf8Validation: utf8Validation ?? this.utf8Validation,
       jsonFormat: jsonFormat ?? this.jsonFormat,
       messageEncoding: messageEncoding ?? this.messageEncoding,
+      dartApiLevel: dartApiLevel ?? this.dartApiLevel,
     );
   }
 }
@@ -91,6 +95,7 @@ const Map<int, ResolvedFeatures> _featureDefaults = {
     utf8Validation: UTF8_VALIDATION_NONE,
     jsonFormat: JSON_FORMAT_LEGACY_BEST_EFFORT,
     messageEncoding: MESSAGE_ENCODING_LENGTH_PREFIXED,
+    dartApiLevel: API_LEVEL_HAZZERS,
   ),
   // EDITION_PROTO3 = 999
   999: ResolvedFeatures(
@@ -100,6 +105,7 @@ const Map<int, ResolvedFeatures> _featureDefaults = {
     utf8Validation: UTF8_VALIDATION_VERIFY,
     jsonFormat: JSON_FORMAT_ALLOW,
     messageEncoding: MESSAGE_ENCODING_LENGTH_PREFIXED,
+    dartApiLevel: API_LEVEL_HAZZERS,
   ),
   // EDITION_2023 = 1000
   1000: ResolvedFeatures(
@@ -109,6 +115,7 @@ const Map<int, ResolvedFeatures> _featureDefaults = {
     utf8Validation: UTF8_VALIDATION_VERIFY,
     jsonFormat: JSON_FORMAT_ALLOW,
     messageEncoding: MESSAGE_ENCODING_LENGTH_PREFIXED,
+    dartApiLevel: API_LEVEL_NULLABLE,
   ),
 };
 
@@ -390,4 +397,51 @@ bool resolveDelimitedEncoding(
   );
 
   return encoding == MESSAGE_ENCODING_DELIMITED;
+}
+
+/// Convert string API level to constant
+int _apiLevelFromString(String apiLevel) {
+  switch (apiLevel) {
+    case 'API_LEVEL_HAZZERS':
+      return API_LEVEL_HAZZERS;
+    case 'API_LEVEL_NULLABLE':
+      return API_LEVEL_NULLABLE;
+    case 'API_LEVEL_HYBRID':
+      return API_LEVEL_HYBRID;
+    default:
+      return API_LEVEL_UNSPECIFIED;
+  }
+}
+
+/// Resolve Dart API level for a file with command-line overrides
+int resolveDartApiLevel(FileDescriptorProto file, GenerationOptions options) {
+  // 1. Check for per-file command-line override
+  final filename = file.name;
+  if (options.apiLevelMappings.containsKey(filename)) {
+    return _apiLevelFromString(options.apiLevelMappings[filename]!);
+  }
+
+  // 2. Check for global default command-line option
+  if (options.defaultApiLevel != null) {
+    return _apiLevelFromString(options.defaultApiLevel!);
+  }
+
+  // 3. TODO: Check for proto file features once dart_features.proto is compiled
+  // This will require access to the dart extension
+  // if (file.hasOptions() && file.options.hasFeatures()) {
+  //   final dartFeatures = file.options.features.getExtension(dart);
+  //   if (dartFeatures?.hasApiLevel()) {
+  //     return dartFeatures.apiLevel.value;
+  //   }
+  // }
+
+  // 4. Use edition defaults
+  final edition = _getFileEdition(file);
+  final defaults = _featureDefaults[edition];
+  if (defaults != null) {
+    return defaults.dartApiLevel;
+  }
+
+  // Safe fallback to HAZZERS for unknown editions
+  return API_LEVEL_HAZZERS;
 }

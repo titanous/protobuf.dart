@@ -126,6 +126,7 @@ class FileGenerator extends ProtobufContainer {
   final GenerationOptions options;
   final ExtensionRegistry extensionRegistry;
   final ExtensionValueDecoder extensionDecoder;
+  final int dartApiLevel;
 
   // The relative path used to import the .proto file, as a URI.
   final Uri protoFileUri;
@@ -165,7 +166,8 @@ class FileGenerator extends ProtobufContainer {
     this.extensionDecoder,
   ) : protoFileUri = Uri.file(descriptor.name),
       edition = _determineEdition(descriptor),
-      fileFeatures = resolveFileFeatures(descriptor) {
+      fileFeatures = resolveFileFeatures(descriptor),
+      dartApiLevel = resolveDartApiLevel(descriptor, options) {
     if (protoFileUri.isAbsolute) {
       // protoc should never generate an import with an absolute path.
       throw 'FAILURE: Import with absolute path is not supported';
@@ -202,7 +204,7 @@ class FileGenerator extends ProtobufContainer {
           defaultMixin,
           usedTopLevelNames,
           i,
-          options.useNullable,
+          dartApiLevel,
         ),
       );
     }

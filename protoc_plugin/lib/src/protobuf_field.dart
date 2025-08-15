@@ -131,6 +131,20 @@ class ProtobufField {
     // NB. Map fields are represented as repeated message fields
     if (isRepeated) return false;
 
+    // Check API level from parent MessageGenerator
+    if (parent is MessageGenerator) {
+      final messageGen = parent as MessageGenerator;
+      final apiLevel = messageGen.dartApiLevel;
+
+      // API_LEVEL_NULLABLE: No hazzers for optional fields
+      if (apiLevel == API_LEVEL_NULLABLE && isOptional) {
+        return false;
+      }
+
+      // API_LEVEL_HAZZERS and API_LEVEL_HYBRID: Always generate hazzers for optional fields
+      // Continue to normal feature-based logic below
+    }
+
     // Use feature-based presence semantics
     // Only fields with explicit or legacy required presence get hazzers
     // Proto3 implicit presence fields (non-optional scalars) don't have hazzers

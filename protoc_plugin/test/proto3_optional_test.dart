@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 import 'gen/proto3_optional.pb.dart';
 
 void main() {
-  test('optional fields have presence', () {
+  test('optional fields have hazzers by default', () {
     final f = Foo();
     expect(f.hasOptionalSubmessage(), isFalse);
     f.optionalSubmessage = Submessage();

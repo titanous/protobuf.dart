@@ -1,0 +1,49 @@
+// Copyright (c) 2025, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+// Dart-specific feature definitions for protobuf editions support.
+// Similar to go_features.proto for Go language support.
+
+syntax = "proto2";
+
+package dart.features;
+
+import "google/protobuf/descriptor.proto";
+
+// Extension for Dart-specific features in FeatureSet
+// Temporarily using extension number 9995 for Dart (avoiding conflicts with other languages)
+extend google.protobuf.FeatureSet {
+  optional DartFeatures dart = 9995;
+}
+
+// Dart-specific features that can be applied at file or message level
+message DartFeatures {
+  // API level controls the generated Dart API style for field presence.
+  enum ApiLevel {
+    // Unspecified defaults to edition-specific behavior
+    API_LEVEL_UNSPECIFIED = 0;
+
+    // HAZZERS: Traditional mode with hasXxx() methods for presence tracking.
+    // Non-nullable types for optional fields.
+    // This is the default for proto2 and proto3.
+    API_LEVEL_HAZZERS = 1;
+
+    // NULLABLE: Modern mode using nullable types without hazzer methods.
+    // Null indicates field absence.
+    // This is the default for edition 2023 and later.
+    API_LEVEL_NULLABLE = 2;
+
+    // HYBRID: Both nullable types AND hazzer methods.
+    // Provides flexibility for transition.
+    API_LEVEL_HYBRID = 3;
+  }
+
+  // Controls the API level for field presence in generated Dart code.
+  // Edition defaults are handled in code:
+  // - EDITION_PROTO2: API_LEVEL_HAZZERS (backward compatibility)
+  // - EDITION_PROTO3: API_LEVEL_HAZZERS (backward compatibility)
+  // - EDITION_2023: API_LEVEL_NULLABLE (modern default)
+  // - EDITION_2024: API_LEVEL_NULLABLE (modern default)
+  optional ApiLevel api_level = 1;
+}

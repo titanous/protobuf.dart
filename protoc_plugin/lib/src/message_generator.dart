@@ -80,7 +80,7 @@ class MessageGenerator extends ProtobufContainer {
 
   Set<String> _usedTopLevelNames;
 
-  final bool useNullable;
+  final int dartApiLevel;
 
   MessageGenerator._(
     DescriptorProto descriptor,
@@ -90,7 +90,7 @@ class MessageGenerator extends ProtobufContainer {
     this._usedTopLevelNames,
     int repeatedFieldIndex,
     int fieldIdTag,
-    this.useNullable,
+    this.dartApiLevel,
   ) : _descriptor = descriptor,
       _fieldPathSegment = [fieldIdTag, repeatedFieldIndex],
       classname = messageOrEnumClassName(
@@ -123,7 +123,7 @@ class MessageGenerator extends ProtobufContainer {
           defaultMixin,
           _usedTopLevelNames,
           i,
-          useNullable,
+          dartApiLevel,
         ),
       );
     }
@@ -155,7 +155,7 @@ class MessageGenerator extends ProtobufContainer {
     PbMixin? defaultMixin,
     Set<String> usedNames,
     int repeatedFieldIndex,
-    bool useNullable,
+    int dartApiLevel,
   ) : this._(
         descriptor,
         parent,
@@ -164,7 +164,7 @@ class MessageGenerator extends ProtobufContainer {
         usedNames,
         repeatedFieldIndex,
         _topLevelMessageTag,
-        useNullable,
+        dartApiLevel,
       );
 
   MessageGenerator.nested(
@@ -174,7 +174,7 @@ class MessageGenerator extends ProtobufContainer {
     PbMixin? defaultMixin,
     Set<String> usedNames,
     int repeatedFieldIndex,
-    bool useNullable,
+    int dartApiLevel,
   ) : this._(
         descriptor,
         parent,
@@ -183,7 +183,7 @@ class MessageGenerator extends ProtobufContainer {
         usedNames,
         repeatedFieldIndex,
         _nestedMessageTag,
-        useNullable,
+        dartApiLevel,
       );
 
   @override
@@ -662,7 +662,11 @@ class MessageGenerator extends ProtobufContainer {
       out.println(commentBlock);
     }
 
-    if (useNullable && field.isOptional) {
+    final useNullableType =
+        (dartApiLevel == API_LEVEL_NULLABLE ||
+            dartApiLevel == API_LEVEL_HYBRID) &&
+        field.isOptional;
+    if (useNullableType) {
       fieldTypeString += '?';
     }
 
@@ -675,7 +679,7 @@ class MessageGenerator extends ProtobufContainer {
       defaultExpr,
       field.isRepeated,
       field.isMapField,
-      useNullable && field.isOptional,
+      useNullableType,
     );
 
     out.printlnAnnotated(
@@ -708,7 +712,7 @@ class MessageGenerator extends ProtobufContainer {
       _emitOverrideIf(field.overridesSetter, out);
       _emitIndexAnnotation(field.number, out);
       if (fastSetter != null) {
-        if (useNullable && field.isOptional) {
+        if (useNullableType) {
           fastSetter += 'Nullable';
         }
         out.printlnAnnotated(
@@ -724,9 +728,7 @@ class MessageGenerator extends ProtobufContainer {
         );
       } else {
         final setterName =
-            useNullable && field.isOptional
-                ? '\$_setFieldNullable'
-                : '\$_setField';
+            useNullableType ? '\$_setFieldNullable' : '\$_setField';
 
         out.printlnAnnotated(
           'set ${names.fieldName}($fieldTypeString value) => '
