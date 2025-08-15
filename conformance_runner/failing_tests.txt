@@ -19,11 +19,6 @@ Required.Editions_Proto3.JsonInput.FloatFieldTooSmall # Should have failed to pa
 Required.Editions_Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.SkipsDefaultPrimitive.Validator # JSON payload validation failed.
-Required.Editions_Proto3.JsonInput.TimestampJsonInputLowercaseZ # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.TimestampJsonInputMissingT # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.TimestampJsonInputMissingZ # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.TimestampJsonInputTooLarge # Should have failed to parse, but didn't.
-Required.Editions_Proto3.JsonInput.TimestampJsonInputTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
@@ -42,11 +37,6 @@ Required.Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but 
 Required.Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.SkipsDefaultPrimitive.Validator # JSON payload validation failed.
-Required.Proto3.JsonInput.TimestampJsonInputLowercaseZ # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.TimestampJsonInputMissingT # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.TimestampJsonInputMissingZ # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.TimestampJsonInputTooLarge # Should have failed to parse, but didn't.
-Required.Proto3.JsonInput.TimestampJsonInputTooSmall # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch

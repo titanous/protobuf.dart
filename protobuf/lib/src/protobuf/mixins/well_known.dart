@@ -268,33 +268,50 @@ mixin TimestampMixin {
     JsonParsingContext context,
   ) {
     if (json is String) {
-      var jsonWithoutFracSec = json;
-      var nanos = 0;
-      final Match? fracSecsMatch = RegExp(r'\.(\d+)').firstMatch(json);
-      if (fracSecsMatch != null) {
-        final fracSecs = fracSecsMatch[1]!;
-        if (fracSecs.length > 9) {
-          throw context.parseException(
-            'Timestamp can have at most than 9 decimal digits',
-            json,
-          );
-        }
-        nanos = int.parse(fracSecs.padRight(9, '0'));
-        jsonWithoutFracSec = json.replaceRange(
-          fracSecsMatch.start,
-          fracSecsMatch.end,
-          '',
+      // Strict RFC 3339 validation matching protobuf specification
+      // Format: YYYY-MM-DDTHH:MM:SS[.fractional]Z or timezone offset
+      final timestampRegex = RegExp(
+        r'^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]{1,9}))?(?:Z|([+-][0-9][0-9]:[0-9][0-9]))$',
+      );
+
+      final match = timestampRegex.firstMatch(json);
+      if (match == null) {
+        throw context.parseException(
+          'Timestamp not well formatted. Expected RFC 3339 format',
+          json,
         );
       }
-      final dateTimeWithoutFractionalSeconds =
-          DateTime.tryParse(jsonWithoutFracSec) ??
-          (throw context.parseException(
-            'Timestamp not well formatted. ',
-            json,
-          ));
+
+      // Extract nanoseconds if present
+      var nanos = 0;
+      if (match[7] != null) {
+        final fracSecs = match[7]!;
+        nanos = int.parse(fracSecs.padRight(9, '0'));
+      }
+
+      // Reconstruct the date string for parsing
+      // Use Z if no timezone offset is present (match[8] == null)
+      final dateStr =
+          '${match[1]}-${match[2]}-${match[3]}T'
+          '${match[4]}:${match[5]}:${match[6]}'
+          '${match[8] ?? 'Z'}';
+
+      final dateTime = DateTime.tryParse(dateStr);
+      if (dateTime == null) {
+        throw context.parseException('Timestamp not well formatted.', json);
+      }
+
+      // Validate range: must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z
+      if (dateTime.isBefore(_minTimestamp) || dateTime.isAfter(_maxTimestamp)) {
+        throw context.parseException(
+          'Timestamp must be from 0001-01-01T00:00:00Z to '
+          '9999-12-31T23:59:59Z inclusive',
+          json,
+        );
+      }
 
       final timestamp = message as TimestampMixin;
-      setFromDateTime(timestamp, dateTimeWithoutFractionalSeconds);
+      setFromDateTime(timestamp, dateTime);
       timestamp.nanos = nanos;
     } else {
       throw context.parseException(
