@@ -27,11 +27,10 @@ Use the checklist in `conformance_test_failures_checklist.md` to pick the next c
 3. Run `make generate` to rebuild protoc_plugin and generate dart protobuf code.
 4. Run tests: `./run_tests.sh`
 5. Remove fixed tests from `failing_tests.txt`
-6. Clean up and commit:
+6. Confirm that all checks pass: `../tool/check_all.sh`
+7. Clean up and commit:
    ```bash
-   dart format .
-   dart analyze
-   git add .
+   git add [changed_files]
    git commit -m "[type]: [concise description of fix]"
    ```
 
@@ -44,6 +43,32 @@ Use the checklist in `conformance_test_failures_checklist.md` to pick the next c
 - Look for patterns in failing test names to group related issues
 - Do not overfit to the test, create a generic solution that solves the general problem
 - Never hard-code or use test names or values in fix code
+
+### Running Individual Tests for Debugging
+
+To debug a specific failing test, you can run it individually with debug output:
+
+```bash
+# Run a single test with debug output
+./node_modules/.bin/conformance_test_runner \
+  --test "TestName.Here" \
+  --debug \
+  ./bin/conformance_test_runner.dart
+
+# Example for a packed bool test:
+./node_modules/.bin/conformance_test_runner \
+  --test "Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.PackedInput.PackedOutput.ProtobufOutput" \
+  --debug \
+  ./bin/conformance_test_runner.dart
+```
+
+The `--debug` flag provides detailed output including:
+- The exact input bytes sent to the test runner
+- The expected output bytes
+- The actual output bytes produced
+- Detailed error messages showing differences
+
+Multiple tests can be specified by repeating the `--test` flag.
 
 ## Testing Commands
 
