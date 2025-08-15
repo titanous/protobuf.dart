@@ -12,6 +12,13 @@ void _writeToCodedBufferWriter(FieldSet fs, CodedBufferWriter out) {
   for (final fi in fs._infosSortedByTag) {
     final value = fs._values[fi.index!];
     if (value == null) continue;
+
+    // For proto3 implicit presence, skip fields with default values
+    if (fi.presence == FieldPresence.implicit &&
+        !fs._shouldSerializeProto3Field(fi, value)) {
+      continue;
+    }
+
     out.writeField(fi.tagNumber, fi.type, value);
   }
 

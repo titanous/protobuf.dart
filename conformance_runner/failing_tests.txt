@@ -36,26 +36,8 @@ Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.Unp
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Editions_Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \260\006\000\260\006\001\260\006\002\260\006\377\377\377\377\377\377\377
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \150\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \172\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \141\000\000\000\000\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \250\001\000
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
 Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[4].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.FIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \075\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.FIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \101\000\000\000\000\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.FLOAT[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \135\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.INT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \010\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.INT32[6].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \010\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.INT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \020\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \115\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \121\000\000\000\000\000\000\000\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \050\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \060\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \162\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
-Recommended.Editions_Proto3.ProtobufInput.ValidDataScalarBinary.UINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \040\000
 Recommended.Proto2.JsonInput.FieldNameExtension.Validator # Expected JSON payload but got type 1
 Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapValue.ProtobufOutput # Failed to parse input or produce output.
@@ -95,26 +77,8 @@ Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.UnpackedOutp
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \260\006\000\260\006\001\260\006\002\260\006\377\377\377\377\377\377\377
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \150\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \172\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \141\000\000\000\000\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \250\001\000
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[3].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
 Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.ENUM[4].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\377\377\377\377\377\377\377\377\377\001, but got: \250\001\377\
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.FIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \075\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.FIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \101\000\000\000\000\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.FLOAT[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \135\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.INT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \010\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.INT32[6].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \010\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.INT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \020\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \115\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \121\000\000\000\000\000\000\000\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \050\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \060\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \162\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \030\000
-Recommended.Proto3.ProtobufInput.ValidDataScalarBinary.UINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: , but got: \040\000
 Required.Editions_Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.

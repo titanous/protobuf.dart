@@ -595,6 +595,39 @@ class FieldSet {
     return value != defaultValue;
   }
 
+  /// Check if a proto3 field with implicit presence should be serialized.
+  bool _shouldSerializeProto3Field(FieldInfo fieldInfo, dynamic value) {
+    // For repeated fields and maps, serialize if non-empty
+    if (fieldInfo.isRepeated) {
+      if (value is List) return value.isNotEmpty;
+      if (value is Map) return value.isNotEmpty;
+      return false;
+    }
+
+    // For message/group fields, always serialize if present
+    if (fieldInfo.isGroupOrMessage) {
+      return true;
+    }
+
+    // For scalar and enum fields, only serialize if not default value
+    if (value is bool) {
+      return value != false;
+    } else if (value is int) {
+      return value != 0;
+    } else if (value is double) {
+      return value != 0.0;
+    } else if (value is String) {
+      return value.isNotEmpty;
+    } else if (value is List<int>) {
+      // bytes field
+      return value.isNotEmpty;
+    }
+
+    // For other types, compare against the field's default value
+    final defaultValue = fieldInfo.makeDefault?.call();
+    return value != defaultValue;
+  }
+
   /// The implementation of a generated setter.
   ///
   /// In production, does no validation other than a null check.
