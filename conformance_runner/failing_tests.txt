@@ -5,13 +5,11 @@ Recommended.Proto2.JsonInput.FieldNameExtension.Validator # Expected JSON payloa
 Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.ProtobufOutput # Output was not equivalent to reference message: deleted: message_set_correct.(protobuf_test_messages.proto2.TestAllTypesProto2.M
 Recommended.Proto3.JsonInput.NullValueInOtherOneofNewFormat.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.NullValueInOtherOneofOldFormat.Validator # JSON payload validation failed.
-Required.Editions_Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Editions_Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
 Required.Editions_Proto3.JsonInput.SkipsDefaultPrimitive.Validator # JSON payload validation failed.
 Required.Editions_Proto3.TimestampProtoInputTooLarge.JsonOutput # Should have failed to serialize, but didn't.
-Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1

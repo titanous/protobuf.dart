@@ -296,10 +296,11 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
     final oneofIndex = fs._meta.oneofs[fieldInfo.tagNumber];
     final isInOneof = oneofIndex != null;
 
-    // Skip empty lists only if they are NOT part of a oneof
-    // For oneof fields, even empty bytes values should be serialized
-    if (!isInOneof && value is List && value.isEmpty) {
-      continue; // Skip empty repeated fields or empty byte arrays that aren't in a oneof
+    // Skip empty lists only if they are NOT part of a oneof AND are repeated fields
+    // For oneof fields or bytes fields, even empty values should be serialized
+    if (!isInOneof && value is List && value.isEmpty && 
+        PbFieldType.isRepeated(fieldInfo.type)) {
+      continue; // Skip empty repeated fields that aren't in a oneof
     }
     dynamic jsonValue;
     if (fieldInfo.isMapField) {
