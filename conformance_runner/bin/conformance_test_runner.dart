@@ -7,6 +7,9 @@ import 'package:protobuf/protobuf.dart';
 import 'package:conformance_runner/src/generated/conformance/conformance.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/test_messages_edition2023.pb.dart';
+import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2_editions.pb.dart' as proto2_editions;
+import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3_editions.pb.dart' as proto3_editions;
 import 'package:conformance_runner/src/generated/google/protobuf/any.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/duration.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/timestamp.pb.dart';
@@ -19,6 +22,9 @@ final _typeRegistry = TypeRegistry([
   // Test message types
   TestAllTypesProto2(),
   TestAllTypesProto3(),
+  TestAllTypesEdition2023(),
+  proto2_editions.TestAllTypesProto2(),
+  proto3_editions.TestAllTypesProto3(),
 
   // Well-known types
   Any(),
@@ -69,6 +75,15 @@ ConformanceResponse test(ConformanceRequest request) {
       break;
     case 'protobuf_test_messages.proto3.TestAllTypesProto3':
       message = TestAllTypesProto3();
+      break;
+    case 'protobuf_test_messages.editions.TestAllTypesEdition2023':
+      message = TestAllTypesEdition2023();
+      break;
+    case 'protobuf_test_messages.editions.proto2.TestAllTypesProto2':
+      message = proto2_editions.TestAllTypesProto2();
+      break;
+    case 'protobuf_test_messages.editions.proto3.TestAllTypesProto3':
+      message = proto3_editions.TestAllTypesProto3();
       break;
     default:
       response.runtimeError = 'Unknown message type: ${request.messageType}';

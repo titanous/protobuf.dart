@@ -6,7 +6,10 @@ PROTOC_PLUGIN_DIR=../protoc_plugin
 CONFORMANCE_PROTO_LIST = \
 	conformance/conformance \
 	google/protobuf/test_messages_proto2 \
-	google/protobuf/test_messages_proto3
+	google/protobuf/test_messages_proto3 \
+	google/protobuf/test_messages_edition2023 \
+	google/protobuf/test_messages_proto2_editions \
+	google/protobuf/test_messages_proto3_editions
 
 WKT_PROTO_LIST = \
 	google/protobuf/any \

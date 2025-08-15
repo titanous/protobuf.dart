@@ -43,6 +43,7 @@ echo "Test runner: $RUNNER"
 # Run the tests
 $CONFORMANCE_RUNNER \
     --enforce_recommended \
+    --maximum_edition 2023 \
     --failure_list "$FAILING_TESTS" \
     --text_format_failure_list "$TEXT_FORMAT_FAILING_TESTS" \
     --output_dir "$SCRIPT_DIR" \
