@@ -313,8 +313,9 @@ class FieldSet {
     }
 
     if (fi.isRepeated) {
-      throw ArgumentError(_setFieldFailedMessage(
-          fi, value, 'repeating field (use get + .add())'));
+      throw ArgumentError(
+        _setFieldFailedMessage(fi, value, 'repeating field (use get + .add())'),
+      );
     }
     if (value == null) {
       _clearField(tagNumber);
@@ -422,7 +423,7 @@ class FieldSet {
   dynamic _handleUnknownEnumValue(dynamic unknownEnum, int index) {
     final fieldInfo = _nonExtensionInfoByIndex(index);
     final enumValue = (unknownEnum as dynamic).value as int;
-    
+
     // Try to find a known enum with this value
     final valueOf = fieldInfo.valueOf;
     if (valueOf != null) {
@@ -431,7 +432,7 @@ class FieldSet {
         return knownEnum;
       }
     }
-    
+
     // For unknown enum values in proto3, return the default value to maintain type safety
     // The raw unknown value can still be accessed via getFieldOrNull() for special cases like CEL
     return fieldInfo.makeDefault!();
@@ -547,20 +548,20 @@ class FieldSet {
   bool _$has(int index) {
     final fieldInfo = _nonExtensionInfoByIndex(index);
     final value = _values[index];
-    
+
     // Handle null values consistently
     if (value == null) return false;
-    
+
     // Use proto3 implicit presence semantics for proto3 fields
     if (fieldInfo.presence == FieldPresence.implicit) {
       return _hasFieldImplicit(fieldInfo, value);
     }
-    
+
     // Use proto2 explicit presence semantics (existing behavior)
     if (value is List) return value.isNotEmpty;
     return true;
   }
-  
+
   /// Check if a field is set using proto3 implicit presence semantics.
   bool _hasFieldImplicit(FieldInfo fieldInfo, dynamic value) {
     // For repeated fields and maps, check if non-empty
@@ -569,12 +570,12 @@ class FieldSet {
       if (value is Map) return value.isNotEmpty;
       return false;
     }
-    
+
     // For message/group fields, still use explicit presence tracking
     if (fieldInfo.isGroupOrMessage) {
       return true; // If not null, it's set
     }
-    
+
     // For scalar and enum fields, compare against default values
     // This implements proto3 implicit presence semantics
     if (value is bool) {
@@ -588,7 +589,7 @@ class FieldSet {
     } else if (value is List<int>) {
       return value.isNotEmpty; // proto3 bytes default is empty
     }
-    
+
     // For other types, compare against the field's default value
     final defaultValue = fieldInfo.makeDefault?.call();
     return value != defaultValue;
@@ -1080,4 +1081,3 @@ extension FieldSetInternalExtension on FieldSet {
   void setFieldUnchecked(BuilderInfo meta, FieldInfo fi, dynamic value) =>
       _setFieldUnchecked(meta, fi, value);
 }
-

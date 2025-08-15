@@ -7,6 +7,7 @@
 
 import 'dart:collection' show MapMixin;
 
+import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:protobuf/protobuf.dart';
 import 'package:protobuf/src/protobuf/mixins/map_mixin.dart';
 import 'package:test/test.dart'
@@ -45,7 +46,7 @@ void main() {
     expect(v.first, 42);
     expect(v.toList()[1], '');
     expect(v.toList()[3].toString(), '[]');
-    expect(v.toList()[4], 0);
+    expect(v.toList()[4], Int64.ZERO);
     expect((v.toList()[5] as ProtobufEnum).name, 'a');
   });
 

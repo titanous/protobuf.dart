@@ -393,7 +393,7 @@ abstract class GeneratedMessage {
       _fieldSet._ensureInfo(tagNumber).readonlyDefault;
 
   /// Returns `true` if a value of [extension] is present.
-  /// 
+  ///
   /// This method validates both that the extension applies to this message type
   /// and that the extension field is actually set on this message instance.
   bool hasExtension(Extension extension) {
@@ -401,7 +401,7 @@ abstract class GeneratedMessage {
     if (extension.extendee != _fieldSet._messageName) {
       return false;
     }
-    
+
     // Then check if the extension field is set
     return _fieldSet._extensions?._getFieldOrNull(extension) != null;
   }

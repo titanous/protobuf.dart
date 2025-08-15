@@ -5,23 +5,24 @@
 part of 'internal.dart';
 
 /// Decodes a base64 or base64url encoded string to bytes.
-/// 
+///
 /// Supports both standard base64 encoding (using '+' and '/') and
 /// base64url encoding (using '-' and '_'). Handles optional padding.
 /// Based on the protobuf-es implementation.
 Uint8List _decodeBase64OrBase64Url(String base64Str) {
   // Create decode table that supports both base64 and base64url
   final decodeTable = <int, int>{};
-  const encodeTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-  
+  const encodeTable =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
   for (int i = 0; i < encodeTable.length; i++) {
     decodeTable[encodeTable.codeUnitAt(i)] = i;
   }
-  
+
   // Support base64url variants
   decodeTable['-'.codeUnitAt(0)] = encodeTable.indexOf('+'); // 62
   decodeTable['_'.codeUnitAt(0)] = encodeTable.indexOf('/'); // 63
-  
+
   // Estimate byte size, not accounting for inner padding and whitespace
   int es = (base64Str.length * 3) ~/ 4;
   if (base64Str.length >= 2 && base64Str[base64Str.length - 2] == '=') {
@@ -29,13 +30,13 @@ Uint8List _decodeBase64OrBase64Url(String base64Str) {
   } else if (base64Str.isNotEmpty && base64Str[base64Str.length - 1] == '=') {
     es -= 1;
   }
-  
+
   final bytes = Uint8List(es);
   int bytePos = 0; // position in byte array
   int groupPos = 0; // position in base64 group
   int b = 0; // current byte
   int p = 0; // previous byte
-  
+
   for (int i = 0; i < base64Str.length; i++) {
     final decodedByte = decodeTable[base64Str.codeUnitAt(i)];
     if (decodedByte == null) {
@@ -52,7 +53,7 @@ Uint8List _decodeBase64OrBase64Url(String base64Str) {
           throw FormatException('Invalid base64 string');
       }
     }
-    
+
     b = decodedByte;
     switch (groupPos) {
       case 0:
@@ -81,11 +82,11 @@ Uint8List _decodeBase64OrBase64Url(String base64Str) {
         break;
     }
   }
-  
+
   if (groupPos == 1) {
     throw FormatException('Invalid base64 string');
   }
-  
+
   return bytes.sublist(0, bytePos);
 }
 
@@ -822,7 +823,6 @@ void _mergeFromProto3JsonWithContext(
 
   recursionHelper(json, fieldSet);
 }
-
 
 /// A synthetic ProtobufEnum that preserves unknown integer enum values.
 /// This allows proto3 JSON parsing to handle unknown enum integers gracefully,

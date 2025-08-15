@@ -7,7 +7,7 @@ part of 'internal.dart';
 /// An object representing an extension field.
 class Extension<T> extends FieldInfo<T> {
   final String extendee;
-  
+
   /// The serialized options associated with this extension from the proto descriptor.
   /// This contains the raw bytes of the FieldOptions message that may contain extension options.
   /// Use a deserializer with the appropriate registry to get the FieldOptions.

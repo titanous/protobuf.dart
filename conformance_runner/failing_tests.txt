@@ -141,16 +141,6 @@ Required.Editions_Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput #
 Required.Editions_Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
@@ -205,16 +195,6 @@ Required.Editions_Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not e
 Required.Editions_Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Editions_Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Editions_Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
@@ -246,16 +226,6 @@ Required.Proto2.JsonInput.Uint64FieldMaxValueNotQuoted.ProtobufOutput # Failed t
 Required.Proto2.JsonInput.Uint64FieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
-Required.Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto2.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto2.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.
@@ -310,16 +280,6 @@ Required.Proto3.JsonInput.ValueAcceptNull.JsonOutput # Output was not equivalent
 Required.Proto3.JsonInput.ValueAcceptNull.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_value: { null_value: NULL_VALUE }
 Required.Proto3.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
-Required.Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.FIXED64.FIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.INT64.INT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.SFIXED64.SFIXED64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.SINT64.SINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.ProtobufInput.ValidDataMap.UINT64.UINT64.MissingDefault.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.ProtobufInput.ValidDataOneof.BYTES.DefaultValue.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
 Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.JsonOutput # JSON output we received from test was unparseable.
 Required.Proto3.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.JsonOutput # JSON output we received from test was unparseable.

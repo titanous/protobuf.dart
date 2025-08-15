@@ -12,23 +12,26 @@ class MockFieldOptions extends GeneratedMessage {
     package: const PackageName('test'),
     createEmptyInstance: () => MockFieldOptions._(),
   );
-  
+
   @override
   BuilderInfo get info_ => _i;
-  
+
   MockFieldOptions._();
-  
+
   factory MockFieldOptions() => create();
-  
+
   static MockFieldOptions create() => MockFieldOptions._();
-  
+
   @override
   MockFieldOptions createEmptyInstance() => create();
-  
+
   @override
   MockFieldOptions clone() => MockFieldOptions._()..mergeFromMessage(this);
-  
-  factory MockFieldOptions.fromBuffer(List<int> bytes, [ExtensionRegistry r = ExtensionRegistry.EMPTY]) {
+
+  factory MockFieldOptions.fromBuffer(
+    List<int> bytes, [
+    ExtensionRegistry r = ExtensionRegistry.EMPTY,
+  ]) {
     final result = create();
     result.mergeFromBuffer(bytes, r);
     return result;
@@ -45,7 +48,7 @@ class MockExtension {
     defaultOrMaker: '',
     optionsBytes: [1, 2, 3, 4, 5], // Sample bytes
   );
-  
+
   static final extensionWithoutOptions = Extension<int>(
     'TestMessage',
     'noOptionsField',
@@ -62,12 +65,12 @@ void main() {
       expect(ext.optionsBytes, isNotNull);
       expect(ext.optionsBytes, equals([1, 2, 3, 4, 5]));
     });
-    
+
     test('Extension without optionsBytes has null options', () {
       final ext = MockExtension.extensionWithoutOptions;
       expect(ext.optionsBytes, isNull);
     });
-    
+
     test('getExtensionOptions returns null for extension without options', () {
       final ext = MockExtension.extensionWithoutOptions;
       final options = getExtensionOptions(
@@ -77,7 +80,7 @@ void main() {
       );
       expect(options, isNull);
     });
-    
+
     test('getExtensionOptions returns null for empty optionsBytes', () {
       // Empty bytes are treated as no options
       final ext = Extension<String>(
@@ -96,7 +99,7 @@ void main() {
       // Empty bytes are treated as no options
       expect(options, isNull);
     });
-    
+
     test('getExtensionOptions deserializes non-empty valid protobuf bytes', () {
       // Use minimal valid protobuf bytes (field 1, varint 0)
       final ext = Extension<String>(
@@ -115,10 +118,15 @@ void main() {
       expect(options, isNotNull);
       expect(options, isA<MockFieldOptions>());
     });
-    
+
     test('hasOption returns false for extension without options', () {
       final ext = MockExtension.extensionWithoutOptions;
-      final testOption = Extension<bool>('FieldOptions', 'test', 2000, PbFieldType.OB);
+      final testOption = Extension<bool>(
+        'FieldOptions',
+        'test',
+        2000,
+        PbFieldType.OB,
+      );
       final result = hasOption(
         ext,
         testOption,
@@ -127,10 +135,15 @@ void main() {
       );
       expect(result, isFalse);
     });
-    
+
     test('getOption returns null for extension without options', () {
       final ext = MockExtension.extensionWithoutOptions;
-      final testOption = Extension<String>('FieldOptions', 'test', 2000, PbFieldType.OS);
+      final testOption = Extension<String>(
+        'FieldOptions',
+        'test',
+        2000,
+        PbFieldType.OS,
+      );
       final result = getOption(
         ext,
         testOption,
@@ -139,21 +152,29 @@ void main() {
       );
       expect(result, isNull);
     });
-    
-    test('getOptionWithDefault returns default for extension without options', () {
-      final ext = MockExtension.extensionWithoutOptions;
-      final testOption = Extension<String>('FieldOptions', 'test', 2000, PbFieldType.OS);
-      final result = getOptionWithDefault(
-        ext,
-        testOption,
-        'default_value',
-        (bytes, registry) => MockFieldOptions.fromBuffer(bytes, registry),
-        ExtensionRegistry(),
-      );
-      expect(result, equals('default_value'));
-    });
+
+    test(
+      'getOptionWithDefault returns default for extension without options',
+      () {
+        final ext = MockExtension.extensionWithoutOptions;
+        final testOption = Extension<String>(
+          'FieldOptions',
+          'test',
+          2000,
+          PbFieldType.OS,
+        );
+        final result = getOptionWithDefault(
+          ext,
+          testOption,
+          'default_value',
+          (bytes, registry) => MockFieldOptions.fromBuffer(bytes, registry),
+          ExtensionRegistry(),
+        );
+        expect(result, equals('default_value'));
+      },
+    );
   });
-  
+
   group('Extension Constructors', () {
     test('Extension constructor accepts optionsBytes', () {
       final ext = Extension<String>(
@@ -166,7 +187,7 @@ void main() {
       );
       expect(ext.optionsBytes, equals([10, 20, 30]));
     });
-    
+
     test('Extension.repeated constructor accepts optionsBytes', () {
       final ext = Extension<String>.repeated(
         'TestMessage',
@@ -178,7 +199,7 @@ void main() {
       );
       expect(ext.optionsBytes, equals([40, 50, 60]));
     });
-    
+
     test('Extension constructor without optionsBytes has null options', () {
       final ext = Extension<String>(
         'TestMessage',

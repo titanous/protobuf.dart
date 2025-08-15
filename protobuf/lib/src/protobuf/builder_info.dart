@@ -185,7 +185,12 @@ class BuilderInfo {
 
   /// Adds PbFieldType.OS String with no default value to reduce generated
   /// code size.
-  void aOS(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
+  void aOS(
+    int tagNumber,
+    String name, {
+    String? protoName,
+    FieldPresence? presence,
+  }) {
     add<String>(
       tagNumber,
       name,
@@ -214,7 +219,12 @@ class BuilderInfo {
   }
 
   /// Adds PbFieldType.QS String with no default value.
-  void aQS(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
+  void aQS(
+    int tagNumber,
+    String name, {
+    String? protoName,
+    FieldPresence? presence,
+  }) {
     add<String>(
       tagNumber,
       name,
@@ -229,7 +239,12 @@ class BuilderInfo {
   }
 
   /// Adds Int64 field with Int64.ZERO default.
-  void aInt64(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
+  void aInt64(
+    int tagNumber,
+    String name, {
+    String? protoName,
+    FieldPresence? presence,
+  }) {
     add<Int64>(
       tagNumber,
       name,
@@ -244,7 +259,12 @@ class BuilderInfo {
   }
 
   /// Adds a boolean with no default value.
-  void aOB(int tagNumber, String name, {String? protoName, FieldPresence? presence}) {
+  void aOB(
+    int tagNumber,
+    String name, {
+    String? protoName,
+    FieldPresence? presence,
+  }) {
     add<bool>(
       tagNumber,
       name,
@@ -372,7 +392,7 @@ class BuilderInfo {
     for (final tag in tags) {
       oneofs[tag] = oneofIndex;
     }
-    
+
     // Store oneof name if provided (following protobuf-es pattern)
     if (name != null) {
       // Grow list if needed to accommodate this index

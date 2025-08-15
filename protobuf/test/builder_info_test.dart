@@ -24,7 +24,7 @@ void main() {
     test('oo() works without name parameter (backward compatibility)', () {
       final info = BuilderInfo('TestMessage');
       info.oo(0, [1, 2]);
-      
+
       expect(info.oneofs[1], 0);
       expect(info.oneofs[2], 0);
       expect(info.getOneofName(0), null);
@@ -34,12 +34,12 @@ void main() {
       final info = BuilderInfo('TestMessage');
       info.oo(0, [1, 2], 'choice');
       info.oo(1, [3, 4], 'option');
-      
+
       expect(info.oneofs[1], 0);
       expect(info.oneofs[2], 0);
       expect(info.oneofs[3], 1);
       expect(info.oneofs[4], 1);
-      
+
       expect(info.getOneofName(0), 'choice');
       expect(info.getOneofName(1), 'option');
     });
@@ -47,7 +47,7 @@ void main() {
     test('getOneofName() returns null for invalid indices', () {
       final info = BuilderInfo('TestMessage');
       info.oo(0, [1, 2], 'choice');
-      
+
       expect(info.getOneofName(-1), null);
       expect(info.getOneofName(1), null);
       expect(info.getOneofName(99), null);
@@ -57,7 +57,7 @@ void main() {
       final info = BuilderInfo('TestMessage');
       info.oo(0, [1, 2], 'choice');
       info.oo(2, [5, 6], 'selection'); // Skip index 1
-      
+
       expect(info.getOneofIndexByName('choice'), 0);
       expect(info.getOneofIndexByName('selection'), 2);
       expect(info.getOneofIndexByName('unknown'), null);
@@ -66,10 +66,10 @@ void main() {
     test('handles sparse oneof indices correctly', () {
       final info = BuilderInfo('TestMessage');
       info.oo(5, [10, 11], 'sparse');
-      
+
       expect(info.getOneofName(5), 'sparse');
       expect(info.getOneofIndexByName('sparse'), 5);
-      
+
       // Indices 0-4 should return null
       for (int i = 0; i < 5; i++) {
         expect(info.getOneofName(i), null);
@@ -79,7 +79,7 @@ void main() {
     test('handles empty oneof names correctly', () {
       final info = BuilderInfo('TestMessage');
       info.oo(0, [1, 2], '');
-      
+
       expect(info.getOneofName(0), null); // Empty string treated as null
       expect(info.getOneofIndexByName(''), null);
     });

@@ -20,9 +20,10 @@ class Rec extends MockMessage {
 class TestMessageWithOneof extends MockMessage {
   @override
   BuilderInfo get info_ => _info;
-  static final _info = mockInfo('TestMessageWithOneof', TestMessageWithOneof.new)
-    ..oo(0, [1, 2], 'choice')
-    ..oo(1, [3, 4], 'option');
+  static final _info =
+      mockInfo('TestMessageWithOneof', TestMessageWithOneof.new)
+        ..oo(0, [1, 2], 'choice')
+        ..oo(1, [3, 4], 'option');
   @override
   TestMessageWithOneof createEmptyInstance() => TestMessageWithOneof();
 }

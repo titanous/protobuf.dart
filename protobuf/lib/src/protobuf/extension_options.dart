@@ -5,16 +5,14 @@
 import 'internal.dart';
 
 /// Type definition for a function that deserializes FieldOptions.
-typedef FieldOptionsDeserializer = GeneratedMessage Function(
-  List<int> bytes,
-  ExtensionRegistry registry,
-);
+typedef FieldOptionsDeserializer =
+    GeneratedMessage Function(List<int> bytes, ExtensionRegistry registry);
 
 /// Get the options for an extension, deserializing them if needed.
-/// 
+///
 /// The deserializer should be a function that creates a FieldOptions message
 /// from the bytes. Typically this would be FieldOptions.fromBuffer.
-/// 
+///
 /// Returns null if the extension has no options.
 GeneratedMessage? getExtensionOptions(
   Extension ext,
@@ -33,7 +31,7 @@ GeneratedMessage? getExtensionOptions(
 }
 
 /// Check if an extension has a specific option set.
-/// 
+///
 /// Options are extensions to the `google.protobuf.*Options` messages defined in
 /// google/protobuf/descriptor.proto.
 bool hasOption<T>(
@@ -50,7 +48,7 @@ bool hasOption<T>(
 }
 
 /// Retrieve an option value from an extension.
-/// 
+///
 /// Options are extensions to the `google.protobuf.*Options` messages defined in
 /// google/protobuf/descriptor.proto.
 T? getOption<T>(
@@ -70,7 +68,7 @@ T? getOption<T>(
 }
 
 /// Retrieve an option value from an extension, with a default value.
-/// 
+///
 /// Similar to getOption, but returns a default value if the option is not set.
 T getOptionWithDefault<T>(
   Extension ext,
