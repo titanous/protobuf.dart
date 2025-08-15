@@ -57,12 +57,6 @@ Required.Editions_Proto3.JsonInput.DurationJsonInputTooSmall # Should have faile
 Required.Editions_Proto3.JsonInput.DurationNegativeNanos.JsonOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Editions_Proto3.JsonInput.DurationNegativeNanos.ProtobufOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Editions_Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasDifferentCase.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasDifferentCase.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasLowerCase.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasLowerCase.ProtobufOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasUseAlias.JsonOutput # Failed to parse input or produce output.
-Required.Editions_Proto3.JsonInput.EnumFieldWithAliasUseAlias.ProtobufOutput # Failed to parse input or produce output.
 Required.Editions_Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
 Required.Editions_Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.
@@ -98,12 +92,6 @@ Required.Proto3.JsonInput.DurationJsonInputTooSmall # Should have failed to pars
 Required.Proto3.JsonInput.DurationNegativeNanos.JsonOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Proto3.JsonInput.DurationNegativeNanos.ProtobufOutput # Output was not equivalent to reference message: modified: optional_duration.nanos: -500000000 -> 500000000
 Required.Proto3.JsonInput.EnumFieldUnknownValue.Validator # Expected JSON payload but got type 1
-Required.Proto3.JsonInput.EnumFieldWithAliasDifferentCase.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.EnumFieldWithAliasDifferentCase.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.EnumFieldWithAliasLowerCase.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.EnumFieldWithAliasLowerCase.ProtobufOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.EnumFieldWithAliasUseAlias.JsonOutput # Failed to parse input or produce output.
-Required.Proto3.JsonInput.EnumFieldWithAliasUseAlias.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
 Required.Proto3.JsonInput.OneofFieldDuplicate # Should have failed to parse, but didn't.

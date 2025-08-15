@@ -94,7 +94,7 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 		--dart_out="$(TEST_PROTO_DIR)"\
 		-I$(TEST_PROTO_SRC_DIR)\
 		-Iprotos\
-		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
+		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
 		$(TEST_PROTO_SRCS)
 
 	mkdir -p $(TEST_PROTO_DIR)/constructor_args
@@ -104,7 +104,7 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 		--dart_out="$(TEST_PROTO_DIR)/constructor_args"\
 		-I$(TEST_PROTO_SRC_DIR)\
 		-Iprotos\
-		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
+		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
 		$(TEST_PROTO_SRCS)
 
 	mkdir -p $(TEST_PROTO_DIR)/nullable
@@ -114,7 +114,7 @@ $(TEST_PROTO_LIBS): $(PLUGIN_SRC) $(TEST_PROTO_SRCS)
 		--dart_out="nullable:$(TEST_PROTO_DIR)/nullable"\
 		-I$(TEST_PROTO_SRC_DIR)\
 		-Iprotos\
-		--plugin=protoc-gen-dart=$(realpath $(PLUGIN_PATH))\
+		--plugin=protoc-gen-dart=/Users/titanous/Developer/protovalidate-dart/protobuf.dart/protoc_plugin/build/protoc_plugin\
 		$(TEST_PROTO_SRCS)
 
 	dart format $(TEST_PROTO_DIR)

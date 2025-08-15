@@ -107,6 +107,9 @@ class EnumGenerator extends ProtobufContainer {
   @override
   FileGenerator? get fileGen => parent.fileGen;
 
+  /// Returns true if this enum has aliases.
+  bool get hasAliases => _aliases.isNotEmpty;
+
   /// Resolved features for this enum (computed once)
   late final bool isOpen = _computeIsOpen();
 
@@ -211,9 +214,18 @@ class EnumGenerator extends ProtobufContainer {
           for (var i = 0; i < _aliases.length; i++) {
             final alias = _aliases[i];
             final name = dartNames[alias.value.name]!;
+            final omitEnumNames = ConditionalConstDefinition('omit_enum_names');
+            out.addSuffix(
+              omitEnumNames.constFieldName,
+              omitEnumNames.constDefinition,
+            );
+            final conditionalAliasName = omitEnumNames.createTernary(
+              alias.value.name,
+            );
+            // Create separate instances for aliases with their own names
             out.printlnAnnotated(
               'static const $classname $name ='
-              ' ${dartNames[alias.canonicalValue.name]};',
+              ' $classname._(${alias.value.number}, $conditionalAliasName);',
               [
                 NamedLocation(
                   name: name,
@@ -237,6 +249,24 @@ class EnumGenerator extends ProtobufContainer {
         }
         out.println('];');
         out.println();
+
+        // Generate valuesWithAliases list if there are aliases
+        if (_aliases.isNotEmpty) {
+          out.println(
+            'static const $coreImportPrefix.List<$classname> valuesWithAliases ='
+            ' <$classname> [',
+          );
+          for (final val in _canonicalValues) {
+            final name = dartNames[val.name];
+            out.println('  $name,');
+          }
+          for (final alias in _aliases) {
+            final name = dartNames[alias.value.name];
+            out.println('  $name,');
+          }
+          out.println('];');
+          out.println();
+        }
 
         var maxEnumValue = -1;
         for (final valueDescriptor in _canonicalValues) {

@@ -3,12 +3,19 @@ class PhoneType extends $pb.ProtobufEnum {
   static const PhoneType HOME = PhoneType._(1, _omitEnumNames ? '' : 'HOME');
   static const PhoneType WORK = PhoneType._(2, _omitEnumNames ? '' : 'WORK');
 
-  static const PhoneType BUSINESS = WORK;
+  static const PhoneType BUSINESS = PhoneType._(2, _omitEnumNames ? '' : 'BUSINESS');
 
   static const $core.List<PhoneType> values = <PhoneType> [
     MOBILE,
     HOME,
     WORK,
+  ];
+
+  static const $core.List<PhoneType> valuesWithAliases = <PhoneType> [
+    MOBILE,
+    HOME,
+    WORK,
+    BUSINESS,
   ];
 
   static final $core.List<PhoneType?> _byValue = $pb.ProtobufEnum.$_initByValueList(values, 2);
