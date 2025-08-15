@@ -1214,11 +1214,26 @@ void _mergeFromProto3JsonWithContext(
             original.mergeFromMessage(parsedSubMessage);
           }
         } else {
-          fieldSet._setFieldUnchecked(
-            meta,
-            fieldInfo,
-            convertProto3JsonValue(value, fieldInfo),
-          );
+          final convertedValue = convertProto3JsonValue(value, fieldInfo);
+
+          // Proto3 JSON semantic: skip fields explicitly set to their default values
+          // Only apply this for proto3 implicit presence fields (not proto2 or oneof fields)
+          final oneofIndex = meta.oneofs[fieldInfo.tagNumber];
+          final isInOneof = oneofIndex != null;
+          final isProto3ImplicitField =
+              fieldInfo.presence == FieldPresence.implicit;
+
+          if (!isInOneof && isProto3ImplicitField) {
+            final defaultValue = fieldInfo.readonlyDefault;
+            if (convertedValue == defaultValue) {
+              // Skip setting fields that are explicitly set to their default values
+              // This implements "SkipsDefaultPrimitive" behavior for proto3
+              context.popIndex();
+              return;
+            }
+          }
+
+          fieldSet._setFieldUnchecked(meta, fieldInfo, convertedValue);
         }
         context.popIndex();
       });
