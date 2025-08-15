@@ -71,7 +71,11 @@ TEST_PROTO_LIST = \
 	service3 \
 	toplevel_import \
 	toplevel \
-	using_any
+	using_any \
+	edition2023 \
+	edition2023-proto2 \
+	edition2023-proto3 \
+	edition2023-map-encoding
 TEST_PROTO_DIR=$(OUTPUT_DIR)
 TEST_PROTO_LIBS=$(foreach f, $(TEST_PROTO_LIST), \
 	$(TEST_PROTO_DIR)/$(f).pb.dart \
