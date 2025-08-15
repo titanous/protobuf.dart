@@ -112,6 +112,12 @@ mixin AnyMixin implements GeneratedMessage {
     TypeRegistry typeRegistry,
   ) {
     final any = message as AnyMixin;
+
+    // Handle empty Any case
+    if (any.typeUrl.isEmpty && any.value.isEmpty) {
+      return <String, dynamic>{};
+    }
+
     final info = typeRegistry.lookup(_typeNameFromUrl(any.typeUrl));
     if (info == null) {
       throw ArgumentError(
@@ -156,6 +162,11 @@ mixin AnyMixin implements GeneratedMessage {
       );
       any.value = packedMessage.writeToBuffer();
       any.typeUrl = typeUrl;
+    } else if (typeUrl == null && object.isEmpty) {
+      // Handle empty Any case: {} with no @type field
+      final any = message as AnyMixin;
+      any.typeUrl = '';
+      any.value = <int>[];
     } else {
       throw context.parseException('Expected a string', json);
     }
