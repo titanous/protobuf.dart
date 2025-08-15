@@ -93,6 +93,11 @@ class FieldInfo<T> {
   /// Only available in enum fields.
   final ValueOfFunc? valueOf;
 
+  /// Mapping from enum string names to enum values.
+  ///
+  /// Only available in enum fields with aliases.
+  final ValueByNameFunc? valueByName;
+
   /// Function to verify items when adding to a repeated field.
   ///
   /// Only available in repeated fields.
@@ -114,6 +119,7 @@ class FieldInfo<T> {
     dynamic defaultOrMaker,
     this.subBuilder,
     this.valueOf,
+    this.valueByName,
     this.enumValues,
     this.defaultEnumValue,
     String? protoName,
@@ -137,6 +143,7 @@ class FieldInfo<T> {
       type = 0,
       makeDefault = null,
       valueOf = null,
+      valueByName = null,
       check = null,
       enumValues = null,
       defaultEnumValue = null,
@@ -151,6 +158,7 @@ class FieldInfo<T> {
     CheckFunc<T> this.check,
     this.subBuilder, {
     this.valueOf,
+    this.valueByName,
     this.enumValues,
     this.defaultEnumValue,
     String? protoName,
@@ -306,6 +314,7 @@ class MapFieldInfo<K, V> extends FieldInfo<PbMap<K, V>?> {
     this.valueFieldType,
     this.mapEntryBuilderInfo,
     this.valueCreator, {
+    ValueByNameFunc? valueByName,
     ProtobufEnum? defaultEnumValue,
     String? protoName,
     FieldPresence? presence,
@@ -316,6 +325,7 @@ class MapFieldInfo<K, V> extends FieldInfo<PbMap<K, V>?> {
          index,
          type,
          defaultOrMaker: () => PbMap<K, V>(keyFieldType, valueFieldType),
+         valueByName: valueByName,
          defaultEnumValue: defaultEnumValue,
          protoName: protoName,
          presence: presence ?? FieldPresence.explicit,

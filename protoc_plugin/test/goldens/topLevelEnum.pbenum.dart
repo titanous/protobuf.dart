@@ -14,20 +14,31 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class PhoneType extends $pb.ProtobufEnum {
-  static const PhoneType MOBILE =
-      PhoneType._(0, _omitEnumNames ? '' : 'MOBILE');
-  static const PhoneType HOME = PhoneType._(1, _omitEnumNames ? '' : 'HOME');
-  static const PhoneType WORK = PhoneType._(2, _omitEnumNames ? '' : 'WORK');
+enum PhoneType implements $pb.ProtobufEnum {
+  MOBILE(0, _omitEnumNames ? '' : 'MOBILE'),
 
-  static const PhoneType BUSINESS =
-      PhoneType._(2, _omitEnumNames ? '' : 'BUSINESS');
+  HOME(1, _omitEnumNames ? '' : 'HOME'),
 
-  static const $core.List<PhoneType> values = <PhoneType>[
-    MOBILE,
-    HOME,
-    WORK,
-  ];
+  WORK(2, _omitEnumNames ? '' : 'WORK'),
+  ;
+
+  static const PhoneType BUSINESS = WORK;
+
+  static final $core.Map<$core.int, PhoneType> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static PhoneType? valueOf($core.int value) => _byValue[value];
+
+  static PhoneType? valueByName($core.String name) {
+    for (final value in values) {
+      if (value.name == name) return value;
+    }
+    switch (name) {
+      case 'BUSINESS':
+        return WORK;
+      default:
+        return null;
+    }
+  }
 
   static const $core.List<PhoneType> valuesWithAliases = <PhoneType>[
     MOBILE,
@@ -36,12 +47,17 @@ class PhoneType extends $pb.ProtobufEnum {
     BUSINESS,
   ];
 
-  static final $core.List<PhoneType?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 2);
-  static PhoneType? valueOf($core.int value) =>
-      value < 0 || value >= _byValue.length ? null : _byValue[value];
+  @$core.override
+  final $core.int value;
 
-  const PhoneType._(super.value, super.name);
+  @$core.override
+  final $core.String name;
+
+  const PhoneType(this.value, this.name);
+
+  /// Returns this enum's [name] or the [value] if names are not represented.
+  @$core.override
+  $core.String toString() => name == '' ? value.toString() : name;
 }
 
 const $core.bool _omitEnumNames =

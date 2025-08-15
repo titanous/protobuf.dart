@@ -16,6 +16,10 @@ typedef MakeDefaultFunc = Function();
 /// [ProtobufEnum] value.
 typedef ValueOfFunc = ProtobufEnum? Function(int value);
 
+/// Type of a function that maps an enum string name to corresponding
+/// [ProtobufEnum] value.
+typedef ValueByNameFunc = ProtobufEnum? Function(String name);
+
 /// The base class for all protobuf message types.
 ///
 /// The protoc plugin generates subclasses providing type-specific properties

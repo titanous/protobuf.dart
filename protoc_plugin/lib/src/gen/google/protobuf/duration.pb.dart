@@ -136,8 +136,6 @@ class Duration extends $pb.GeneratedMessage with $mixin.DurationMixin {
   @$pb.TagNumber(1)
   set seconds($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasSeconds() => $_has(0);
-  @$pb.TagNumber(1)
   void clearSeconds() => $_clearField(1);
 
   /// Signed fractions of a second at nanosecond resolution of the span
@@ -150,8 +148,6 @@ class Duration extends $pb.GeneratedMessage with $mixin.DurationMixin {
   $core.int get nanos => $_getIZ(1);
   @$pb.TagNumber(2)
   set nanos($core.int value) => $_setSignedInt32(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasNanos() => $_has(1);
   @$pb.TagNumber(2)
   void clearNanos() => $_clearField(2);
 

@@ -86,8 +86,6 @@ class Http extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   set fullyDecodeReservedExpansion($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasFullyDecodeReservedExpansion() => $_has(1);
-  @$pb.TagNumber(2)
   void clearFullyDecodeReservedExpansion() => $_clearField(2);
 }
 
@@ -457,8 +455,6 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   set selector($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasSelector() => $_has(0);
-  @$pb.TagNumber(1)
   void clearSelector() => $_clearField(1);
 
   /// Maps to HTTP GET. Used for listing and getting information about
@@ -523,8 +519,6 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   set body($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
-  $core.bool hasBody() => $_has(6);
-  @$pb.TagNumber(7)
   void clearBody() => $_clearField(7);
 
   /// The custom pattern is used for specifying an HTTP method that is not
@@ -558,8 +552,6 @@ class HttpRule extends $pb.GeneratedMessage {
   $core.String get responseBody => $_getSZ(9);
   @$pb.TagNumber(12)
   set responseBody($core.String value) => $_setString(9, value);
-  @$pb.TagNumber(12)
-  $core.bool hasResponseBody() => $_has(9);
   @$pb.TagNumber(12)
   void clearResponseBody() => $_clearField(12);
 }
@@ -622,8 +614,6 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   set kind($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasKind() => $_has(0);
-  @$pb.TagNumber(1)
   void clearKind() => $_clearField(1);
 
   /// The path matched by this custom verb.
@@ -631,8 +621,6 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   $core.String get path => $_getSZ(1);
   @$pb.TagNumber(2)
   set path($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
   void clearPath() => $_clearField(2);
 }

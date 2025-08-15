@@ -65,6 +65,7 @@ class BuilderInfo {
     CreateBuilderFunc? subBuilder,
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues, {
+    ValueByNameFunc? valueByName,
     String? protoName,
     FieldPresence? presence,
   }) {
@@ -80,6 +81,7 @@ class BuilderInfo {
               defaultOrMaker: defaultOrMaker,
               subBuilder: subBuilder,
               valueOf: valueOf,
+              valueByName: valueByName,
               enumValues: enumValues,
               protoName: protoName,
               presence: presence ?? FieldPresence.explicit,
@@ -94,6 +96,7 @@ class BuilderInfo {
     int valueFieldType,
     BuilderInfo mapEntryBuilderInfo,
     CreateBuilderFunc? valueCreator, {
+    ValueByNameFunc? valueByName,
     ProtobufEnum? defaultEnumValue,
     String? protoName,
     FieldPresence? presence,
@@ -109,6 +112,7 @@ class BuilderInfo {
         valueFieldType,
         mapEntryBuilderInfo,
         valueCreator,
+        valueByName: valueByName,
         defaultEnumValue: defaultEnumValue,
         protoName: protoName,
         presence: presence ?? FieldPresence.explicit,
@@ -124,6 +128,7 @@ class BuilderInfo {
     CreateBuilderFunc? subBuilder,
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues, {
+    ValueByNameFunc? valueByName,
     ProtobufEnum? defaultEnumValue,
     String? protoName,
     FieldPresence? presence,
@@ -138,6 +143,7 @@ class BuilderInfo {
         check,
         subBuilder,
         valueOf: valueOf,
+        valueByName: valueByName,
         enumValues: enumValues,
         defaultEnumValue: defaultEnumValue,
         protoName: protoName,
@@ -285,6 +291,7 @@ class BuilderInfo {
     int fieldType, {
     dynamic defaultOrMaker,
     ValueOfFunc? valueOf,
+    ValueByNameFunc? valueByName,
     List<ProtobufEnum>? enumValues,
     String? protoName,
     FieldPresence? presence,
@@ -297,6 +304,7 @@ class BuilderInfo {
       null,
       valueOf,
       enumValues,
+      valueByName: valueByName,
       protoName: protoName,
       presence: presence,
     );
@@ -327,6 +335,7 @@ class BuilderInfo {
     int fieldType, {
     CreateBuilderFunc? subBuilder,
     ValueOfFunc? valueOf,
+    ValueByNameFunc? valueByName,
     List<ProtobufEnum>? enumValues,
     ProtobufEnum? defaultEnumValue,
     String? protoName,
@@ -342,6 +351,7 @@ class BuilderInfo {
       subBuilder,
       valueOf,
       enumValues,
+      valueByName: valueByName,
       defaultEnumValue: defaultEnumValue,
       protoName: protoName,
     );
@@ -412,6 +422,7 @@ class BuilderInfo {
     required int valueFieldType,
     CreateBuilderFunc? valueCreator,
     ValueOfFunc? valueOf,
+    ValueByNameFunc? valueByName,
     List<ProtobufEnum>? enumValues,
     ProtobufEnum? defaultEnumValue,
     PackageName packageName = const PackageName(''),
@@ -437,6 +448,7 @@ class BuilderInfo {
             valueCreator,
             valueOf,
             enumValues,
+            valueByName: valueByName,
           );
 
     addMapField<K, V>(
@@ -446,6 +458,7 @@ class BuilderInfo {
       valueFieldType,
       mapEntryBuilderInfo,
       valueCreator,
+      valueByName: valueByName,
       defaultEnumValue: defaultEnumValue,
       protoName: protoName,
     );

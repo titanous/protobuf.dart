@@ -73,10 +73,10 @@ class DartFeatures extends $pb.GeneratedMessage {
 
   /// Controls the API level for field presence in generated Dart code.
   /// Edition defaults are handled in code:
-  /// - EDITION_PROTO2: API_HAZZERS (backward compatibility)
-  /// - EDITION_PROTO3: API_HAZZERS (backward compatibility)
-  /// - EDITION_2023: API_NULLABLE (modern default)
-  /// - EDITION_2024: API_NULLABLE (modern default)
+  /// - EDITION_PROTO2: API_LEVEL_HAZZERS (backward compatibility)
+  /// - EDITION_PROTO3: API_LEVEL_HAZZERS (backward compatibility)
+  /// - EDITION_2023: API_LEVEL_NULLABLE (modern default)
+  /// - EDITION_2024: API_LEVEL_NULLABLE (modern default)
   @$pb.TagNumber(1)
   DartFeatures_ApiLevel get apiLevel => $_getN(0);
   @$pb.TagNumber(1)

@@ -161,27 +161,29 @@ class EnumGenerator extends ProtobufContainer {
     if (_descriptor.options.deprecated) {
       out.println('@$coreImportPrefix.Deprecated(\'This enum is deprecated\')');
     }
+
     out.addAnnotatedBlock(
-      'class $classname extends $protobufImportPrefix.ProtobufEnum {',
+      'enum $classname implements $protobufImportPrefix.ProtobufEnum {',
       '}\n',
       [
         NamedLocation(
           name: classname,
           fieldPathSegment: fieldPath,
-          start: 'class '.length,
+          start: 'enum '.length,
         ),
       ],
       () {
         // -----------------------------------------------------------------
         // Define enum types.
         final omitEnumNames = ConditionalConstDefinition('omit_enum_names');
+        out.addSuffix(
+          omitEnumNames.constFieldName,
+          omitEnumNames.constDefinition,
+        );
+
         for (var i = 0; i < _canonicalValues.length; i++) {
           final val = _canonicalValues[i];
           final name = dartNames[val.name]!;
-          out.addSuffix(
-            omitEnumNames.constFieldName,
-            omitEnumNames.constDefinition,
-          );
           final conditionalValName = omitEnumNames.createTernary(val.name);
           final fieldPathSegment = List<int>.from(fieldPath)
             ..addAll([_enumValueTag, _originalCanonicalIndices[i]]);
@@ -197,35 +199,26 @@ class EnumGenerator extends ProtobufContainer {
             );
           }
 
-          out.printlnAnnotated(
-            'static const $classname $name = '
-            '$classname._(${val.number}, $conditionalValName);',
-            [
-              NamedLocation(
-                name: name,
-                fieldPathSegment: fieldPathSegment,
-                start: 'static const $classname '.length,
-              ),
-            ],
-          );
+          out.printlnAnnotated('$name(${val.number}, $conditionalValName),', [
+            NamedLocation(
+              name: name,
+              fieldPathSegment: fieldPathSegment,
+              start: 0,
+            ),
+          ]);
+          out.println();
         }
+
+        out.println(';');
+
         if (_aliases.isNotEmpty) {
           out.println();
           for (var i = 0; i < _aliases.length; i++) {
             final alias = _aliases[i];
             final name = dartNames[alias.value.name]!;
-            final omitEnumNames = ConditionalConstDefinition('omit_enum_names');
-            out.addSuffix(
-              omitEnumNames.constFieldName,
-              omitEnumNames.constDefinition,
-            );
-            final conditionalAliasName = omitEnumNames.createTernary(
-              alias.value.name,
-            );
-            // Create separate instances for aliases with their own names
+            final canonicalName = dartNames[alias.canonicalValue.name]!;
             out.printlnAnnotated(
-              'static const $classname $name ='
-              ' $classname._(${alias.value.number}, $conditionalAliasName);',
+              'static const $classname $name = $canonicalName;',
               [
                 NamedLocation(
                   name: name,
@@ -237,21 +230,47 @@ class EnumGenerator extends ProtobufContainer {
             );
           }
         }
-        out.println();
 
-        out.println(
-          'static const $coreImportPrefix.List<$classname> values ='
-          ' <$classname> [',
-        );
-        for (final val in _canonicalValues) {
-          final name = dartNames[val.name];
-          out.println('  $name,');
-        }
-        out.println('];');
         out.println();
+        out.println(
+          'static final $coreImportPrefix.Map<$coreImportPrefix.int, $classname> _byValue ='
+          ' $protobufImportPrefix.ProtobufEnum.initByValue(values);',
+        );
+        out.println(
+          'static $classname? valueOf($coreImportPrefix.int value) =>'
+          ' _byValue[value];',
+        );
+
+        // Add custom valueByName method that handles aliases
+        if (_aliases.isNotEmpty) {
+          out.println();
+          out.println(
+            'static $classname? valueByName($coreImportPrefix.String name) {',
+          );
+
+          // Try canonical values first
+          out.println('  for (final value in values) {');
+          out.println('    if (value.name == name) return value;');
+          out.println('  }');
+
+          // Handle aliases manually
+          out.println('  switch (name) {');
+          for (final alias in _aliases) {
+            final canonicalName = dartNames[alias.canonicalValue.name]!;
+            out.println('    case \'${alias.value.name}\':');
+            out.println('      return $canonicalName;');
+          }
+          out.println('    default:');
+          out.println('      return null;');
+          out.println('  }');
+          out.println('}');
+        }
 
         // Generate valuesWithAliases list if there are aliases
+        // This is kept for backward compatibility, but the real alias handling
+        // is done through the valueByName method
         if (_aliases.isNotEmpty) {
+          out.println();
           out.println(
             'static const $coreImportPrefix.List<$classname> valuesWithAliases ='
             ' <$classname> [',
@@ -265,50 +284,26 @@ class EnumGenerator extends ProtobufContainer {
             out.println('  $name,');
           }
           out.println('];');
-          out.println();
-        }
-
-        var maxEnumValue = -1;
-        for (final valueDescriptor in _canonicalValues) {
-          if (valueDescriptor.number.isNegative) {
-            maxEnumValue = -1; // don't use list
-            break;
-          }
-          if (valueDescriptor.number > maxEnumValue) {
-            maxEnumValue = valueDescriptor.number;
-          }
-        }
-
-        final useList =
-            _canonicalValues.isEmpty ||
-            (maxEnumValue >= 0 &&
-                _canonicalValues.length / (maxEnumValue + 1) >= 0.7);
-
-        if (useList) {
-          out.println(
-            'static final $coreImportPrefix.List<$classname?> _byValue ='
-            ' $protobufImportPrefix.ProtobufEnum.\$_initByValueList(values, $maxEnumValue);',
-          );
-
-          out.println(
-            'static $classname? valueOf($coreImportPrefix.int value) =>'
-            '  value < 0 || value >= _byValue.length ? null : _byValue[value];',
-          );
-        } else {
-          out.println(
-            'static final $coreImportPrefix.Map<$coreImportPrefix.int, $classname> _byValue ='
-            ' $protobufImportPrefix.ProtobufEnum.initByValue(values);',
-          );
-
-          out.println(
-            'static $classname? valueOf($coreImportPrefix.int value) =>'
-            ' _byValue[value];',
-          );
         }
 
         out.println();
-
-        out.println('const $classname._(super.value, super.name);');
+        out.println('@$coreImportPrefix.override');
+        out.println('final $coreImportPrefix.int value;');
+        out.println();
+        out.println('@$coreImportPrefix.override');
+        out.println('final $coreImportPrefix.String name;');
+        out.println();
+        out.println('const $classname(this.value, this.name);');
+        out.println();
+        out.println(
+          "/// Returns this enum's [name] or the [value] if names are not"
+          ' represented.',
+        );
+        out.println('@$coreImportPrefix.override');
+        out.println(
+          "$coreImportPrefix.String toString() => name == '' ? "
+          'value.toString() : name;',
+        );
       },
     );
   }

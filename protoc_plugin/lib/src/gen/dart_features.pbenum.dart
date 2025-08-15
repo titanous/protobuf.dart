@@ -23,26 +23,26 @@ class DartFeatures_ApiLevel extends $pb.ProtobufEnum {
   /// HAZZERS: Traditional mode with hasXxx() methods for presence tracking.
   /// Non-nullable types for optional fields.
   /// This is the default for proto2 and proto3.
-  static const DartFeatures_ApiLevel API_HAZZERS =
-      DartFeatures_ApiLevel._(1, _omitEnumNames ? '' : 'API_HAZZERS');
+  static const DartFeatures_ApiLevel API_LEVEL_HAZZERS =
+      DartFeatures_ApiLevel._(1, _omitEnumNames ? '' : 'API_LEVEL_HAZZERS');
 
   /// NULLABLE: Modern mode using nullable types without hazzer methods.
   /// Null indicates field absence.
   /// This is the default for edition 2023 and later.
-  static const DartFeatures_ApiLevel API_NULLABLE =
-      DartFeatures_ApiLevel._(2, _omitEnumNames ? '' : 'API_NULLABLE');
+  static const DartFeatures_ApiLevel API_LEVEL_NULLABLE =
+      DartFeatures_ApiLevel._(2, _omitEnumNames ? '' : 'API_LEVEL_NULLABLE');
 
   /// HYBRID: Both nullable types AND hazzer methods.
   /// Provides flexibility for transition.
-  static const DartFeatures_ApiLevel API_HYBRID =
-      DartFeatures_ApiLevel._(3, _omitEnumNames ? '' : 'API_HYBRID');
+  static const DartFeatures_ApiLevel API_LEVEL_HYBRID =
+      DartFeatures_ApiLevel._(3, _omitEnumNames ? '' : 'API_LEVEL_HYBRID');
 
   static const $core.List<DartFeatures_ApiLevel> values =
       <DartFeatures_ApiLevel>[
     API_LEVEL_UNSPECIFIED,
-    API_HAZZERS,
-    API_NULLABLE,
-    API_HYBRID,
+    API_LEVEL_HAZZERS,
+    API_LEVEL_NULLABLE,
+    API_LEVEL_HYBRID,
   ];
 
   static final $core.List<DartFeatures_ApiLevel?> _byValue =

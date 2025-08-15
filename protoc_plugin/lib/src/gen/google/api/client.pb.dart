@@ -97,9 +97,6 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
   set referenceDocsUri($core.String value) => $_setString(0, value);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(1)
-  $core.bool hasReferenceDocsUri() => $_has(0);
-  @$core.Deprecated('This field is deprecated.')
-  @$pb.TagNumber(1)
   void clearReferenceDocsUri() => $_clearField(1);
 
   /// The destination where API teams want this client library to be published.
@@ -222,8 +219,6 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   set version($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasVersion() => $_has(0);
-  @$pb.TagNumber(1)
   void clearVersion() => $_clearField(1);
 
   /// Launch stage of this version of the API.
@@ -231,8 +226,6 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   $1.LaunchStage get launchStage => $_getN(1);
   @$pb.TagNumber(2)
   set launchStage($1.LaunchStage value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasLaunchStage() => $_has(1);
   @$pb.TagNumber(2)
   void clearLaunchStage() => $_clearField(2);
 
@@ -242,8 +235,6 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   $core.bool get restNumericEnums => $_getBF(2);
   @$pb.TagNumber(3)
   set restNumericEnums($core.bool value) => $_setBool(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasRestNumericEnums() => $_has(2);
   @$pb.TagNumber(3)
   void clearRestNumericEnums() => $_clearField(3);
 
@@ -453,8 +444,6 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(101)
   set newIssueUri($core.String value) => $_setString(1, value);
   @$pb.TagNumber(101)
-  $core.bool hasNewIssueUri() => $_has(1);
-  @$pb.TagNumber(101)
   void clearNewIssueUri() => $_clearField(101);
 
   /// Link to product home page.  Example:
@@ -463,8 +452,6 @@ class Publishing extends $pb.GeneratedMessage {
   $core.String get documentationUri => $_getSZ(2);
   @$pb.TagNumber(102)
   set documentationUri($core.String value) => $_setString(2, value);
-  @$pb.TagNumber(102)
-  $core.bool hasDocumentationUri() => $_has(2);
   @$pb.TagNumber(102)
   void clearDocumentationUri() => $_clearField(102);
 
@@ -476,8 +463,6 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(103)
   set apiShortName($core.String value) => $_setString(3, value);
   @$pb.TagNumber(103)
-  $core.bool hasApiShortName() => $_has(3);
-  @$pb.TagNumber(103)
   void clearApiShortName() => $_clearField(103);
 
   /// GitHub label to apply to issues and pull requests opened for this API.
@@ -485,8 +470,6 @@ class Publishing extends $pb.GeneratedMessage {
   $core.String get githubLabel => $_getSZ(4);
   @$pb.TagNumber(104)
   set githubLabel($core.String value) => $_setString(4, value);
-  @$pb.TagNumber(104)
-  $core.bool hasGithubLabel() => $_has(4);
   @$pb.TagNumber(104)
   void clearGithubLabel() => $_clearField(104);
 
@@ -502,8 +485,6 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(106)
   set docTagPrefix($core.String value) => $_setString(6, value);
   @$pb.TagNumber(106)
-  $core.bool hasDocTagPrefix() => $_has(6);
-  @$pb.TagNumber(106)
   void clearDocTagPrefix() => $_clearField(106);
 
   /// For whom the client library is being published.
@@ -511,8 +492,6 @@ class Publishing extends $pb.GeneratedMessage {
   ClientLibraryOrganization get organization => $_getN(7);
   @$pb.TagNumber(107)
   set organization(ClientLibraryOrganization value) => $_setField(107, value);
-  @$pb.TagNumber(107)
-  $core.bool hasOrganization() => $_has(7);
   @$pb.TagNumber(107)
   void clearOrganization() => $_clearField(107);
 
@@ -530,8 +509,6 @@ class Publishing extends $pb.GeneratedMessage {
   set protoReferenceDocumentationUri($core.String value) =>
       $_setString(9, value);
   @$pb.TagNumber(110)
-  $core.bool hasProtoReferenceDocumentationUri() => $_has(9);
-  @$pb.TagNumber(110)
   void clearProtoReferenceDocumentationUri() => $_clearField(110);
 
   /// Optional link to REST reference documentation.  Example:
@@ -541,8 +518,6 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(111)
   set restReferenceDocumentationUri($core.String value) =>
       $_setString(10, value);
-  @$pb.TagNumber(111)
-  $core.bool hasRestReferenceDocumentationUri() => $_has(10);
   @$pb.TagNumber(111)
   void clearRestReferenceDocumentationUri() => $_clearField(111);
 }
@@ -624,8 +599,6 @@ class JavaSettings extends $pb.GeneratedMessage {
   $core.String get libraryPackage => $_getSZ(0);
   @$pb.TagNumber(1)
   set libraryPackage($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasLibraryPackage() => $_has(0);
   @$pb.TagNumber(1)
   void clearLibraryPackage() => $_clearField(1);
 
@@ -855,8 +828,6 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   set restAsyncIoEnabled($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasRestAsyncIoEnabled() => $_has(0);
-  @$pb.TagNumber(1)
   void clearRestAsyncIoEnabled() => $_clearField(1);
 
   /// Enables generation of protobuf code using new types that are more
@@ -868,8 +839,6 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   set protobufPythonicTypesEnabled($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasProtobufPythonicTypesEnabled() => $_has(1);
-  @$pb.TagNumber(2)
   void clearProtobufPythonicTypesEnabled() => $_clearField(2);
 
   /// Disables generation of an unversioned Python package for this client
@@ -880,8 +849,6 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   $core.bool get unversionedPackageDisabled => $_getBF(2);
   @$pb.TagNumber(3)
   set unversionedPackageDisabled($core.bool value) => $_setBool(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasUnversionedPackageDisabled() => $_has(2);
   @$pb.TagNumber(3)
   void clearUnversionedPackageDisabled() => $_clearField(3);
 }
@@ -1383,8 +1350,6 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   set pollDelayMultiplier($core.double value) => $_setFloat(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasPollDelayMultiplier() => $_has(1);
-  @$pb.TagNumber(2)
   void clearPollDelayMultiplier() => $_clearField(2);
 
   /// Maximum time between two subsequent poll requests.
@@ -1483,8 +1448,6 @@ class MethodSettings extends $pb.GeneratedMessage {
   $core.String get selector => $_getSZ(0);
   @$pb.TagNumber(1)
   set selector($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasSelector() => $_has(0);
   @$pb.TagNumber(1)
   void clearSelector() => $_clearField(1);
 
@@ -1598,8 +1561,6 @@ class SelectiveGapicGeneration extends $pb.GeneratedMessage {
   $core.bool get generateOmittedAsInternal => $_getBF(1);
   @$pb.TagNumber(2)
   set generateOmittedAsInternal($core.bool value) => $_setBool(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasGenerateOmittedAsInternal() => $_has(1);
   @$pb.TagNumber(2)
   void clearGenerateOmittedAsInternal() => $_clearField(2);
 }

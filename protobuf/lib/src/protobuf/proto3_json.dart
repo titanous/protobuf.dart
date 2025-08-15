@@ -614,6 +614,15 @@ void _mergeFromProto3JsonWithContext(
           );
         case PbFieldType.ENUM_BIT:
           if (value is String) {
+            // First try valueByName if available (for handling aliases)
+            if (fieldInfo.valueByName != null) {
+              final result = fieldInfo.valueByName!(value);
+              if (result != null) return result;
+              if (context.ignoreUnknownFields) return null;
+              throw context.parseException('Unknown enum value', value);
+            }
+
+            // Fall back to linear search through enumValues
             // TODO(sigurdm): Do we want to avoid linear search here? Measure...
             final result =
                 context.permissiveEnums
@@ -831,7 +840,7 @@ void _mergeFromProto3JsonWithContext(
 
     final meta = fieldSet._meta;
     final wellKnownType = meta._wellKnownType;
-    
+
     // Special handling for google.protobuf.Value which accepts null
     if (wellKnownType == WellKnownType.value) {
       ValueMixin.fromProto3JsonHelper(
@@ -842,7 +851,7 @@ void _mergeFromProto3JsonWithContext(
       );
       return;
     }
-    
+
     if (json == null) {
       // `null` represents the default value. Do nothing more.
       return;
@@ -1017,10 +1026,11 @@ void _mergeFromProto3JsonWithContext(
         // Handle null values - skip them unless the field is google.protobuf.Value
         if (value == null) {
           // Check if this field is a google.protobuf.Value message type
-          if (PbFieldType.isGroupOrMessage(fieldInfo.type) && 
+          if (PbFieldType.isGroupOrMessage(fieldInfo.type) &&
               fieldInfo.subBuilder != null) {
             final subMessage = fieldInfo.subBuilder!();
-            if (subMessage._fieldSet._meta._wellKnownType == WellKnownType.value) {
+            if (subMessage._fieldSet._meta._wellKnownType ==
+                WellKnownType.value) {
               // This is a google.protobuf.Value field, pass null to its handler
               recursionHelper(null, subMessage._fieldSet);
               fieldSet._setNonExtensionFieldUnchecked(

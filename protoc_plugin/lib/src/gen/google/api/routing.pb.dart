@@ -491,8 +491,6 @@ class RoutingParameter extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   set field_1($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasField_1() => $_has(0);
-  @$pb.TagNumber(1)
   void clearField_1() => $_clearField(1);
 
   /// A pattern matching the key-value field. Optional.
@@ -553,8 +551,6 @@ class RoutingParameter extends $pb.GeneratedMessage {
   $core.String get pathTemplate => $_getSZ(1);
   @$pb.TagNumber(2)
   set pathTemplate($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasPathTemplate() => $_has(1);
   @$pb.TagNumber(2)
   void clearPathTemplate() => $_clearField(2);
 }

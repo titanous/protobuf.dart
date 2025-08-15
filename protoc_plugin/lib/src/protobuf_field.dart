@@ -324,6 +324,10 @@ class ProtobufField {
             enumGen.hasAliases
                 ? '$valueType.valuesWithAliases'
                 : '$valueType.values';
+        // Add valueByName for enums with aliases
+        if (enumGen.hasAliases) {
+          named['valueByName'] = '$valueType.valueByName';
+        }
         named['valueDefaultOrMaker'] = value.generateDefaultFunction();
         named['defaultEnumValue'] = value.generateDefaultFunction();
       }
@@ -350,6 +354,10 @@ class ProtobufField {
           final enumGen = baseType.generator as EnumGenerator;
           named['enumValues'] =
               enumGen.hasAliases ? '$type.valuesWithAliases' : '$type.values';
+          // Add valueByName for enums with aliases
+          if (enumGen.hasAliases) {
+            named['valueByName'] = '$type.valueByName';
+          }
           named['defaultEnumValue'] = generateDefaultFunction();
         }
       }
@@ -365,6 +373,10 @@ class ProtobufField {
         final enumGen = baseType.generator as EnumGenerator;
         named['enumValues'] =
             enumGen.hasAliases ? '$type.valuesWithAliases' : '$type.values';
+        // Add valueByName for enums with aliases
+        if (enumGen.hasAliases) {
+          named['valueByName'] = '$type.valueByName';
+        }
         invocation = 'e<$type>';
       } else if (makeDefault == null) {
         switch (type) {
