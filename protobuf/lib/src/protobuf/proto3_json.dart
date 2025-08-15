@@ -976,6 +976,8 @@ void _mergeFromProto3JsonWithContext(
 
     if (json is Map) {
       final byName = meta.byName;
+      // Track which oneof groups have been set to detect duplicates
+      final Map<int, String> seenOneofs = {};
 
       json.forEach((key, Object? value) {
         if (value == null) {
@@ -1000,6 +1002,20 @@ void _mergeFromProto3JsonWithContext(
           } else {
             throw context.parseException('Unknown field name \'$key\'', key);
           }
+        }
+
+        // Check for duplicate oneof fields
+        final oneofIndex = meta.oneofs[fieldInfo.tagNumber];
+        if (oneofIndex != null) {
+          final previousField = seenOneofs[oneofIndex];
+          if (previousField != null) {
+            throw context.parseException(
+              'Cannot set multiple fields in the same oneof. '
+              'Field "$key" is already set by field "$previousField".',
+              key,
+            );
+          }
+          seenOneofs[oneofIndex] = key;
         }
 
         if (PbFieldType.isMapField(fieldInfo.type)) {
