@@ -142,6 +142,7 @@ class CodeGenerator {
       CodeGeneratorResponse_Feature.FEATURE_PROTO3_OPTIONAL.value |
           CodeGeneratorResponse_Feature.FEATURE_SUPPORTS_EDITIONS.value,
     );
+    response.minimumEdition = 998; // EDITION_PROTO2
     response.maximumEdition = 1000; // EDITION_2023
     _streamOut.add(response.writeToBuffer());
   }
