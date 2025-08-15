@@ -9,6 +9,33 @@ const int _int32Min = -2147483648; // -2^31
 const int _int32Max = 2147483647; // 2^31 - 1
 const int _uint32Max = 0xFFFFFFFF; // 2^32 - 1
 
+/// Validates that a string contains valid UTF-16 sequences.
+/// Returns true if valid, false if it contains invalid surrogate sequences.
+bool _isValidUtf16(String str) {
+  final codeUnits = str.codeUnits;
+  for (int i = 0; i < codeUnits.length; i++) {
+    final unit = codeUnits[i];
+
+    // Check for high surrogate (0xD800-0xDBFF)
+    if (unit >= 0xD800 && unit <= 0xDBFF) {
+      // High surrogate must be followed by low surrogate
+      if (i + 1 >= codeUnits.length) {
+        return false; // Unpaired high surrogate at end
+      }
+      final nextUnit = codeUnits[i + 1];
+      if (nextUnit < 0xDC00 || nextUnit > 0xDFFF) {
+        return false; // High surrogate not followed by low surrogate
+      }
+      i++; // Skip the low surrogate we just validated
+    }
+    // Check for unpaired low surrogate (0xDC00-0xDFFF)
+    else if (unit >= 0xDC00 && unit <= 0xDFFF) {
+      return false; // Unpaired low surrogate
+    }
+  }
+  return true;
+}
+
 /// Decodes a base64 or base64url encoded string to bytes.
 ///
 /// Supports both standard base64 encoding (using '+' and '/') and
@@ -495,6 +522,9 @@ void _mergeFromProto3JsonWithContext(
           );
         case PbFieldType.STRING_BIT:
           if (value is String) {
+            if (!_isValidUtf16(value)) {
+              throw context.parseException('Invalid UTF-16 string', value);
+            }
             return value;
           }
           throw context.parseException('Expected String value', value);
