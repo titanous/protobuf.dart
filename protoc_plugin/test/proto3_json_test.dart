@@ -1091,20 +1091,16 @@ void main() {
         Int64.parseHex('f0000000ffff0000'),
       );
 
-      // TODO(sigurdm): This should throw.
+      // Negative values should be rejected for unsigned int64
       expect(
-        TestAllTypes()..mergeFromProto3Json({'optionalUint64': '-1'}),
-        TestAllTypes()
-          ..optionalUint64 = Int64.fromBytes([
-            255,
-            255,
-            255,
-            255,
-            255,
-            255,
-            255,
-            255,
-          ]),
+        () => TestAllTypes()..mergeFromProto3Json({'optionalUint64': '-1'}),
+        throwsA(
+          isA<FormatException>().having(
+            (e) => e.message,
+            'message',
+            contains('Expected unsigned integer'),
+          ),
+        ),
       );
 
       void expectRoundTrip(String typeName, int value) {

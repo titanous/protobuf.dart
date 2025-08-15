@@ -491,15 +491,46 @@ void _mergeFromProto3JsonWithContext(
         case PbFieldType.FLOAT_BIT:
         case PbFieldType.DOUBLE_BIT:
           if (value is double) {
+            // Reject numeric NaN and Infinity - they must be encoded as strings
+            if (value.isNaN || !value.isFinite) {
+              throw context.parseException(
+                'NaN and Infinity must be encoded as strings',
+                value,
+              );
+            }
             return value;
           } else if (value is num) {
-            return value.toDouble();
+            final doubleValue = value.toDouble();
+            if (doubleValue.isNaN || !doubleValue.isFinite) {
+              throw context.parseException(
+                'NaN and Infinity must be encoded as strings',
+                value,
+              );
+            }
+            return doubleValue;
           } else if (value is String) {
-            return double.tryParse(value) ??
-                (throw context.parseException(
-                  'Expected String to encode a double',
-                  value,
-                ));
+            // Handle special string values
+            if (value == 'NaN') return double.nan;
+            if (value == 'Infinity') return double.infinity;
+            if (value == '-Infinity') return double.negativeInfinity;
+
+            final parsed = double.tryParse(value);
+            if (parsed == null) {
+              throw context.parseException(
+                'Expected String to encode a double',
+                value,
+              );
+            }
+            // Reject if parsing resulted in infinity (overflow)
+            if (!parsed.isFinite &&
+                value != 'Infinity' &&
+                value != '-Infinity') {
+              throw context.parseException(
+                'double field value out of range',
+                value,
+              );
+            }
+            return parsed;
           }
           throw context.parseException(
             'Expected a double represented as a String or number',
@@ -584,16 +615,36 @@ void _mergeFromProto3JsonWithContext(
         case PbFieldType.UINT64_BIT:
           Int64 result;
           if (value is int) {
+            if (value < 0) {
+              throw context.parseException('Expected unsigned integer', value);
+            }
             result = Int64(value);
           } else if (value is double) {
             // Handle double values that represent integers
             if (value.isFinite && value == value.truncateToDouble()) {
+              if (value < 0) {
+                throw context.parseException(
+                  'Expected unsigned integer',
+                  value,
+                );
+              }
               result = Int64(value.toInt());
             } else {
               throw context.parseException('Expected integer value', value);
             }
           } else if (value is String) {
+            // Check for negative values
+            if (value.startsWith('-')) {
+              throw context.parseException('Expected unsigned integer', value);
+            }
             result = _tryParse64BitProto3(json, value, context);
+            // Check for overflow (values > UINT64_MAX)
+            if (result.isNegative && result.toStringUnsigned() != value) {
+              throw context.parseException(
+                'uint64 field value out of range',
+                value,
+              );
+            }
           } else {
             throw context.parseException(
               'Expected int or stringified int',
@@ -618,6 +669,13 @@ void _mergeFromProto3JsonWithContext(
             Int64 result;
             try {
               result = Int64.parseInt(value);
+              // Check for overflow by comparing string representation
+              if (result.toString() != value) {
+                throw context.parseException(
+                  'int64 field value out of range',
+                  value,
+                );
+              }
             } on FormatException {
               throw context.parseException(
                 'Expected int or stringified int',
