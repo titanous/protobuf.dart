@@ -1,0 +1,9 @@
+SubMessage? get optionalMsg => $_getNullable(0);
+set optionalMsg(SubMessage? value) => $_setFieldNullable(1, value);
+void clearOptionalMsg() => $_clearField(1);
+SubMessage get implicitMsg => $_getN(1);
+set implicitMsg(SubMessage value) => $_setField(2, value);
+void clearImplicitMsg() => $_clearField(2);
+$core.String? get optionalString => $_getSNullable(2);
+set optionalString($core.String? value) => $_setStringNullable(2, value);
+void clearOptionalString() => $_clearField(3);

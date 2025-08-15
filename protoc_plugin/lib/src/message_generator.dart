@@ -772,7 +772,9 @@ class MessageGenerator extends ProtobufContainer {
           ),
         ],
       );
-      if (field.baseType.isMessage) {
+      // Only generate ensure method for message fields when NOT in nullable mode
+      // In nullable mode, ensure doesn't make semantic sense
+      if (field.baseType.isMessage && dartApiLevel != API_LEVEL_NULLABLE) {
         _emitDeprecatedIf(field.isDeprecated, out);
         _emitIndexAnnotation(field.number, out);
         out.printlnAnnotated(
