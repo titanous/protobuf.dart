@@ -9,6 +9,9 @@ class UnknownFieldSet {
   static final UnknownFieldSet emptyUnknownFieldSet =
       UnknownFieldSet().._markReadOnly();
   final Map<int, UnknownFieldSetField> _fields = <int, UnknownFieldSetField>{};
+  // Track each field occurrence individually to preserve order
+  final List<_UnknownFieldOccurrence> _fieldOccurrences =
+      <_UnknownFieldOccurrence>[];
 
   UnknownFieldSet();
 
@@ -27,11 +30,13 @@ class UnknownFieldSet {
   void clear() {
     _ensureWritable('clear');
     _fields.clear();
+    _fieldOccurrences.clear();
   }
 
   void clearField(int tagNumber) {
     _ensureWritable('clearField');
     _fields.remove(tagNumber);
+    _fieldOccurrences.removeWhere((occ) => occ.number == tagNumber);
   }
 
   UnknownFieldSetField? getField(int tagNumber) => _fields[tagNumber];
@@ -42,6 +47,33 @@ class UnknownFieldSet {
     _ensureWritable('addField');
     _checkFieldNumber(number);
     _fields[number] = field;
+    // Clear old occurrences and add new ones from the field
+    _fieldOccurrences.removeWhere((occ) => occ.number == number);
+    for (final varint in field.varints) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.varint, varint),
+      );
+    }
+    for (final fixed32 in field.fixed32s) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.fixed32, fixed32),
+      );
+    }
+    for (final fixed64 in field.fixed64s) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.fixed64, fixed64),
+      );
+    }
+    for (final bytes in field.lengthDelimited) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.lengthDelimited, bytes),
+      );
+    }
+    for (final group in field.groups) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.group, group),
+      );
+    }
   }
 
   void mergeField(int number, UnknownFieldSetField field) {
@@ -52,6 +84,32 @@ class UnknownFieldSet {
       ..fixed64s.addAll(field.fixed64s)
       ..lengthDelimited.addAll(field.lengthDelimited)
       ..groups.addAll(field.groups);
+    // Track the new occurrences
+    for (final varint in field.varints) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.varint, varint),
+      );
+    }
+    for (final fixed32 in field.fixed32s) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.fixed32, fixed32),
+      );
+    }
+    for (final fixed64 in field.fixed64s) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.fixed64, fixed64),
+      );
+    }
+    for (final bytes in field.lengthDelimited) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.lengthDelimited, bytes),
+      );
+    }
+    for (final group in field.groups) {
+      _fieldOccurrences.add(
+        _UnknownFieldOccurrence(number, _OccurrenceType.group, group),
+      );
+    }
   }
 
   bool mergeFieldFromBuffer(int tag, CodedBufferReader input) {
@@ -93,8 +151,28 @@ class UnknownFieldSet {
 
   void mergeFromUnknownFieldSet(UnknownFieldSet other) {
     _ensureWritable('mergeFromUnknownFieldSet');
-    for (final key in other._fields.keys) {
-      mergeField(key, other._fields[key]!);
+    // Preserve the order from the other set by copying occurrences
+    for (final occ in other._fieldOccurrences) {
+      _fieldOccurrences.add(occ);
+      // Also merge into the fields map
+      final field = _getField(occ.number);
+      switch (occ.type) {
+        case _OccurrenceType.varint:
+          field.varints.add(occ.value as Int64);
+          break;
+        case _OccurrenceType.fixed32:
+          field.fixed32s.add(occ.value as int);
+          break;
+        case _OccurrenceType.fixed64:
+          field.fixed64s.add(occ.value as Int64);
+          break;
+        case _OccurrenceType.lengthDelimited:
+          field.lengthDelimited.add(occ.value as List<int>);
+          break;
+        case _OccurrenceType.group:
+          field.groups.add(occ.value as UnknownFieldSet);
+          break;
+      }
     }
   }
 
@@ -107,26 +185,41 @@ class UnknownFieldSet {
   void mergeFixed32Field(int number, int value) {
     _ensureWritable('mergeFixed32Field');
     _getField(number).addFixed32(value);
+    _fieldOccurrences.add(
+      _UnknownFieldOccurrence(number, _OccurrenceType.fixed32, value),
+    );
   }
 
   void mergeFixed64Field(int number, Int64 value) {
     _ensureWritable('mergeFixed64Field');
     _getField(number).addFixed64(value);
+    _fieldOccurrences.add(
+      _UnknownFieldOccurrence(number, _OccurrenceType.fixed64, value),
+    );
   }
 
   void mergeGroupField(int number, UnknownFieldSet value) {
     _ensureWritable('mergeGroupField');
     _getField(number).addGroup(value);
+    _fieldOccurrences.add(
+      _UnknownFieldOccurrence(number, _OccurrenceType.group, value),
+    );
   }
 
   void mergeLengthDelimitedField(int number, List<int> value) {
     _ensureWritable('mergeLengthDelimitedField');
     _getField(number).addLengthDelimited(value);
+    _fieldOccurrences.add(
+      _UnknownFieldOccurrence(number, _OccurrenceType.lengthDelimited, value),
+    );
   }
 
   void mergeVarintField(int number, Int64 value) {
     _ensureWritable('mergeVarintField');
     _getField(number).addVarint(value);
+    _fieldOccurrences.add(
+      _UnknownFieldOccurrence(number, _OccurrenceType.varint, value),
+    );
   }
 
   UnknownFieldSetField _getField(int number) {
@@ -177,8 +270,33 @@ class UnknownFieldSet {
   }
 
   void writeToCodedBufferWriter(CodedBufferWriter output) {
-    for (final entry in _fields.entries) {
-      entry.value.writeTo(entry.key, output);
+    // Write fields in the order they were encountered
+    for (final occ in _fieldOccurrences) {
+      switch (occ.type) {
+        case _OccurrenceType.varint:
+          output.writeField(occ.number, PbFieldType.OPTIONAL_UINT64, occ.value);
+          break;
+        case _OccurrenceType.fixed32:
+          output.writeField(
+            occ.number,
+            PbFieldType.OPTIONAL_FIXED32,
+            occ.value,
+          );
+          break;
+        case _OccurrenceType.fixed64:
+          output.writeField(
+            occ.number,
+            PbFieldType.OPTIONAL_FIXED64,
+            occ.value,
+          );
+          break;
+        case _OccurrenceType.lengthDelimited:
+          output.writeField(occ.number, PbFieldType.OPTIONAL_BYTES, occ.value);
+          break;
+        case _OccurrenceType.group:
+          output.writeField(occ.number, PbFieldType.OPTIONAL_GROUP, occ.value);
+          break;
+      }
     }
   }
 
@@ -309,4 +427,14 @@ class UnknownFieldSetField {
   void addVarint(Int64 value) {
     varints.add(value);
   }
+}
+
+enum _OccurrenceType { varint, fixed32, fixed64, lengthDelimited, group }
+
+class _UnknownFieldOccurrence {
+  final int number;
+  final _OccurrenceType type;
+  final Object value;
+
+  _UnknownFieldOccurrence(this.number, this.type, this.value);
 }
