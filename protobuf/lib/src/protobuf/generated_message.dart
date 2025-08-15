@@ -269,6 +269,7 @@ abstract class GeneratedMessage {
   /// field, will not be included.
   Object? toProto3Json({
     TypeRegistry typeRegistry = const TypeRegistry.empty(),
+    ExtensionRegistry extensionRegistry = ExtensionRegistry.EMPTY,
   }) => _writeToProto3Json(_fieldSet, typeRegistry);
 
   /// Merges field values from [json], a JSON object using proto3 encoding.
@@ -305,6 +306,7 @@ abstract class GeneratedMessage {
   void mergeFromProto3Json(
     Object? json, {
     TypeRegistry typeRegistry = const TypeRegistry.empty(),
+    ExtensionRegistry extensionRegistry = ExtensionRegistry.EMPTY,
     bool ignoreUnknownFields = false,
     bool supportNamesWithUnderscores = true,
     bool permissiveEnums = false,
@@ -313,6 +315,7 @@ abstract class GeneratedMessage {
     json,
     _fieldSet,
     typeRegistry,
+    extensionRegistry,
     ignoreUnknownFields,
     supportNamesWithUnderscores,
     permissiveEnums,

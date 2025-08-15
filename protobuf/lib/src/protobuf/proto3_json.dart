@@ -328,7 +328,25 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
     }
     result[fieldInfo.name] = jsonValue;
   }
-  // Extensions and unknown fields are not encoded by proto3 JSON.
+
+  // Include extensions in proto3 JSON with bracket notation
+  if (fs._extensions != null) {
+    for (final tagNumber in fs._extensions!._tagNumbers) {
+      final extension = fs._extensions!._getInfoOrNull(tagNumber);
+      if (extension != null) {
+        final value = fs._extensions!._values[tagNumber];
+        if (value != null) {
+          final jsonValue = valueToProto3Json(value, extension.type);
+          // Use bracket notation for extension field names
+          // Build the full extension name based on the extension info
+          final extensionName = _buildFullExtensionName(extension);
+          result['[$extensionName]'] = jsonValue;
+        }
+      }
+    }
+  }
+
+  // Unknown fields are not encoded by proto3 JSON.
   return result;
 }
 
@@ -431,6 +449,7 @@ void mergeFromProto3JsonAny(
   Object? json,
   FieldSet fieldSet,
   TypeRegistry typeRegistry,
+  ExtensionRegistry extensionRegistry,
   JsonParsingContext context,
 ) {
   if (json is! Map<String, dynamic>) {
@@ -461,6 +480,7 @@ void mergeFromProto3JsonAny(
           value,
           fieldSet,
           typeRegistry,
+          extensionRegistry,
           context,
         );
     }
@@ -472,6 +492,7 @@ void mergeFromProto3JsonAny(
     withoutType,
     fieldSet,
     typeRegistry,
+    extensionRegistry,
     context,
   );
 }
@@ -482,6 +503,7 @@ void _mergeFromProto3Json(
   Object? json,
   FieldSet fieldSet,
   TypeRegistry typeRegistry,
+  ExtensionRegistry extensionRegistry,
   bool ignoreUnknownFields,
   bool supportNamesWithUnderscores,
   bool permissiveEnums,
@@ -493,7 +515,13 @@ void _mergeFromProto3Json(
     permissiveEnums,
     allowUnknownEnumIntegers,
   );
-  return _mergeFromProto3JsonWithContext(json, fieldSet, typeRegistry, context);
+  return _mergeFromProto3JsonWithContext(
+    json,
+    fieldSet,
+    typeRegistry,
+    extensionRegistry,
+    context,
+  );
 }
 
 /// Merge a JSON object representing a message in proto3 JSON format ([json])
@@ -502,6 +530,7 @@ void _mergeFromProto3JsonWithContext(
   Object? json,
   FieldSet fieldSet,
   TypeRegistry typeRegistry,
+  ExtensionRegistry extensionRegistry,
   JsonParsingContext context,
 ) {
   // Reject top-level null for proto3 JSON
@@ -1023,6 +1052,67 @@ void _mergeFromProto3JsonWithContext(
             (FieldInfo info) => info.protoName == key,
           );
         }
+
+        // Handle extension field names in bracket notation: [extension.name]
+        Extension? extension;
+        if (fieldInfo == null && key.startsWith('[') && key.endsWith(']')) {
+          // For proto3 JSON, extension fields are encoded as [fully.qualified.name]
+          final extensionName = key.substring(1, key.length - 1);
+
+          // Look up the extension in the registry
+          // We need to find the extension by its name across all registered extensions
+          final messageName = fieldSet._meta.qualifiedMessageName;
+
+          // Search through all extensions for this message type
+          final messageExtensions = extensionRegistry._extensions[messageName];
+          if (messageExtensions != null) {
+            for (final ext in messageExtensions.values) {
+              // Try to match the extension name in various ways:
+              // 1. Direct name match
+              // 2. Match the fully qualified name we would generate
+              // 3. Match by converting between camelCase and snake_case
+              if (_extensionMatches(ext, extensionName)) {
+                extension = ext;
+                break;
+              }
+            }
+          }
+
+          if (extension == null) {
+            if (context.ignoreUnknownFields) {
+              context.popIndex();
+              return;
+            } else {
+              throw context.parseException(
+                'Unknown extension field \'$extensionName\'',
+                key,
+              );
+            }
+          }
+        }
+
+        // Handle extension field
+        if (extension != null) {
+          // Skip null values for extensions (don't set them)
+          if (value != null) {
+            // Convert the JSON value according to the extension type
+            final convertedValue = convertProto3JsonValue(
+              value,
+              // Create a synthetic FieldInfo for the extension
+              // Extensions don't use FieldInfo but we need to convert the value
+              _createExtensionFieldInfo(extension),
+            );
+
+            // Set the extension value using the proper extension mechanism
+            fieldSet._ensureExtensions();
+            fieldSet._extensions!._addInfoUnchecked(extension);
+            fieldSet._extensions!._setFieldUnchecked(extension, convertedValue);
+          }
+
+          context.popIndex();
+          return;
+        }
+
         if (fieldInfo == null) {
           if (context.ignoreUnknownFields) {
             return;
@@ -1138,6 +1228,74 @@ void _mergeFromProto3JsonWithContext(
   }
 
   recursionHelper(json, fieldSet);
+}
+
+/// Builds the full extension name for JSON serialization
+/// This attempts to reconstruct the fully qualified extension name that would
+/// be used in JSON bracket notation, based on standard protobuf naming conventions
+String _buildFullExtensionName(Extension extension) {
+  // If the extension name already contains dots, it might be fully qualified
+  if (extension.name.contains('.')) {
+    return extension.name;
+  }
+
+  // Try to construct the full name from the extendee package/message info
+  // and the extension name, following standard protobuf conventions
+  final extendee = extension.extendee;
+
+  // Extract package from the extendee (everything before the last dot)
+  final lastDotIndex = extendee.lastIndexOf('.');
+  if (lastDotIndex > 0) {
+    final packageName = extendee.substring(0, lastDotIndex);
+    // Convert camelCase extension name to snake_case for JSON
+    final snakeCaseName = _unCamelCase(extension.name);
+    return '$packageName.$snakeCaseName';
+  }
+
+  // Fallback: just use the extension name
+  return extension.name;
+}
+
+/// Checks if an extension matches the given JSON extension name
+bool _extensionMatches(Extension extension, String jsonExtensionName) {
+  // 1. Direct name match
+  if (extension.name == jsonExtensionName) {
+    return true;
+  }
+
+  // 2. Check if our generated full name matches
+  final generatedFullName = _buildFullExtensionName(extension);
+  if (generatedFullName == jsonExtensionName) {
+    return true;
+  }
+
+  // 3. Check if the last segment matches (handling snake_case/camelCase conversion)
+  final jsonLastSegment = jsonExtensionName.split('.').last;
+  final extensionSnakeName = _unCamelCase(extension.name);
+  if (jsonLastSegment == extensionSnakeName ||
+      jsonLastSegment == extension.name) {
+    return true;
+  }
+
+  return false;
+}
+
+/// Creates a synthetic FieldInfo for extension field value conversion
+FieldInfo _createExtensionFieldInfo(Extension extension) {
+  // Create a minimal FieldInfo that can be used for value conversion
+  // Extensions are handled differently from regular fields, but we can reuse
+  // the conversion logic by creating a compatible FieldInfo
+  return FieldInfo(
+    extension.name,
+    extension.tagNumber,
+    null, // index not used for extensions
+    extension.type,
+    subBuilder: extension.subBuilder,
+    valueOf: extension.valueOf,
+    valueByName: extension.valueByName,
+    enumValues: extension.enumValues,
+    protoName: extension.protoName,
+  );
 }
 
 /// A synthetic ProtobufEnum that preserves unknown integer enum values.

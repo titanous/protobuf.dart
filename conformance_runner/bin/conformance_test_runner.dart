@@ -19,6 +19,13 @@ import 'package:conformance_runner/src/generated/google/protobuf/field_mask.pb.d
 import 'package:conformance_runner/src/generated/google/protobuf/struct.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/wrappers.pb.dart';
 
+// Extension registry containing all extensions
+final _extensionRegistry = ExtensionRegistry()
+  ..add(Test_messages_proto2.extensionInt32)
+  ..add(Test_messages_proto2.groupField)
+  ..add(proto2_editions.Test_messages_proto2_editions.extensionInt32)
+  ..add(proto2_editions.Test_messages_proto2_editions.groupfield);
+
 // TypeRegistry containing all message types that might be wrapped in Any
 final _typeRegistry = TypeRegistry([
   // Test message types
@@ -105,6 +112,7 @@ ConformanceResponse test(ConformanceRequest request) {
           message.mergeFromProto3Json(
             decoded,
             typeRegistry: _typeRegistry,
+            extensionRegistry: _extensionRegistry,
             ignoreUnknownFields: request.testCategory ==
                 TestCategory.JSON_IGNORE_UNKNOWN_PARSING_TEST,
             supportNamesWithUnderscores: true,

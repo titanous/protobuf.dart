@@ -158,6 +158,7 @@ mixin AnyMixin implements GeneratedMessage {
         json,
         packedMessage.fieldSet,
         typeRegistry,
+        ExtensionRegistry.EMPTY,
         context,
       );
       any.value = packedMessage.writeToBuffer();
