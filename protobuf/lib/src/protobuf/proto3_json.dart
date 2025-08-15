@@ -829,13 +829,25 @@ void _mergeFromProto3JsonWithContext(
       }
     }
 
+    final meta = fieldSet._meta;
+    final wellKnownType = meta._wellKnownType;
+    
+    // Special handling for google.protobuf.Value which accepts null
+    if (wellKnownType == WellKnownType.value) {
+      ValueMixin.fromProto3JsonHelper(
+        fieldSet._message!,
+        json,
+        typeRegistry,
+        context,
+      );
+      return;
+    }
+    
     if (json == null) {
       // `null` represents the default value. Do nothing more.
       return;
     }
 
-    final meta = fieldSet._meta;
-    final wellKnownType = meta._wellKnownType;
     if (wellKnownType != null) {
       switch (wellKnownType) {
         case WellKnownType.any:
@@ -871,6 +883,7 @@ void _mergeFromProto3JsonWithContext(
           );
           return;
         case WellKnownType.value:
+          // Already handled above for null case
           ValueMixin.fromProto3JsonHelper(
             fieldSet._message!,
             json,
@@ -980,9 +993,6 @@ void _mergeFromProto3JsonWithContext(
       final Map<int, String> seenOneofs = {};
 
       json.forEach((key, Object? value) {
-        if (value == null) {
-          return;
-        }
         if (key is! String) {
           throw context.parseException('Key was not a String', key);
         }
@@ -1004,7 +1014,30 @@ void _mergeFromProto3JsonWithContext(
           }
         }
 
-        // Check for duplicate oneof fields
+        // Handle null values - skip them unless the field is google.protobuf.Value
+        if (value == null) {
+          // Check if this field is a google.protobuf.Value message type
+          if (PbFieldType.isGroupOrMessage(fieldInfo.type) && 
+              fieldInfo.subBuilder != null) {
+            final subMessage = fieldInfo.subBuilder!();
+            if (subMessage._fieldSet._meta._wellKnownType == WellKnownType.value) {
+              // This is a google.protobuf.Value field, pass null to its handler
+              recursionHelper(null, subMessage._fieldSet);
+              fieldSet._setNonExtensionFieldUnchecked(
+                meta,
+                fieldInfo,
+                subMessage,
+              );
+              context.popIndex();
+              return;
+            }
+          }
+          // For non-Value fields, skip null values (don't track in oneofs)
+          context.popIndex();
+          return;
+        }
+
+        // Check for duplicate oneof fields (only for non-null values)
         final oneofIndex = meta.oneofs[fieldInfo.tagNumber];
         if (oneofIndex != null) {
           final previousField = seenOneofs[oneofIndex];
