@@ -63,6 +63,7 @@ To debug a specific failing test, you can run it individually with debug output:
 ```
 
 The `--debug` flag provides detailed output including:
+
 - The exact input bytes sent to the test runner
 - The expected output bytes
 - The actual output bytes produced
@@ -85,6 +86,27 @@ dart format .
 # Run static analysis
 dart analyze
 ```
+
+## Updating Expected Failures
+
+When you fix conformance test issues:
+
+1. **Delete and regenerate failing_tests.txt**:
+
+   ```bash
+   rm failing_tests.txt
+   ./run_tests.sh
+   ```
+
+   This ensures the list only contains currently failing tests, removing any that were fixed.
+
+2. **Check the diff to see what was fixed**:
+
+   ```bash
+   git diff failing_tests.txt
+   ```
+
+3. **Always regenerate after fixes** to keep the list accurate and avoid false "unexpected failures" in future runs.
 
 ## Progress Tracking
 
