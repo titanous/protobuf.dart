@@ -84,7 +84,7 @@ fi
 # 4. Run dart test on protobuf
 print_info "Running tests for protobuf..."
 cd protobuf
-if dart test; then
+if dart test --reporter=expanded 2>&1 | tail -1 | grep -q "All tests passed"; then
     print_status "protobuf tests passed"
 else
     print_error "protobuf tests failed"
@@ -95,7 +95,7 @@ cd "$PROJECT_ROOT"
 # 5. Run dart test on protoc_plugin
 print_info "Running tests for protoc_plugin..."
 cd protoc_plugin
-if dart test; then
+if dart test --reporter=expanded 2>&1 | tail -1 | grep -q "All tests passed"; then
     print_status "protoc_plugin tests passed"
 else
     print_error "protoc_plugin tests failed"
@@ -106,7 +106,7 @@ cd "$PROJECT_ROOT"
 # 6. Run make generate in conformance_runner
 print_info "Running make generate in conformance_runner..."
 cd conformance_runner
-if make generate; then
+if make generate > /dev/null 2>&1; then
     print_status "make generate completed successfully"
 else
     print_error "make generate failed"
@@ -116,10 +116,23 @@ fi
 # 7. Run ./run_tests.sh in conformance_runner
 print_info "Running conformance tests..."
 if [ -f "./run_tests.sh" ]; then
-    if ./run_tests.sh; then
+    # Capture the output and only show the summary
+    CONFORMANCE_OUTPUT=$(./run_tests.sh 2>&1)
+    CONFORMANCE_EXIT_CODE=$?
+    
+    # Extract just the conformance suite summary line
+    SUMMARY=$(echo "$CONFORMANCE_OUTPUT" | grep "CONFORMANCE SUITE")
+    
+    if [ $CONFORMANCE_EXIT_CODE -eq 0 ]; then
         print_status "Conformance tests passed"
+        if [ -n "$SUMMARY" ]; then
+            echo "  $SUMMARY"
+        fi
     else
         print_error "Conformance tests failed"
+        if [ -n "$SUMMARY" ]; then
+            echo "  $SUMMARY"
+        fi
         OVERALL_SUCCESS=false
     fi
 else
