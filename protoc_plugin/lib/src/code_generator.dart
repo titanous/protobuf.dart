@@ -139,8 +139,10 @@ class CodeGenerator {
       }
     }
     response.supportedFeatures = Int64(
-      CodeGeneratorResponse_Feature.FEATURE_PROTO3_OPTIONAL.value,
+      CodeGeneratorResponse_Feature.FEATURE_PROTO3_OPTIONAL.value |
+          CodeGeneratorResponse_Feature.FEATURE_SUPPORTS_EDITIONS.value,
     );
+    response.maximumEdition = 1000; // EDITION_2023
     _streamOut.add(response.writeToBuffer());
   }
 }
