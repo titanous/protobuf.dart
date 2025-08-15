@@ -382,7 +382,7 @@ class CodedBufferWriter {
         break;
       case PbFieldType.ENUM_BIT:
         final ProtobufEnum enum_ = value;
-        _writeVarint32(enum_.value & 0xffffffff);
+        _writeVarint64(Int64(enum_.value));
         break;
       case PbFieldType.GROUP_BIT:
         // `value` is `UnknownFieldSet` or `GeneratedMessage`. Test for
