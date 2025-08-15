@@ -136,8 +136,8 @@ class ProtobufField {
       final messageGen = parent as MessageGenerator;
       final apiLevel = messageGen.dartApiLevel;
 
-      // API_LEVEL_NULLABLE: No hazzers for optional fields
-      if (apiLevel == API_LEVEL_NULLABLE && isOptional) {
+      // API_LEVEL_NULLABLE: No hazzers for any fields
+      if (apiLevel == API_LEVEL_NULLABLE) {
         return false;
       }
 

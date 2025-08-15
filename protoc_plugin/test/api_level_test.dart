@@ -357,7 +357,7 @@ void main() {
     });
 
     group('Field type generation', () {
-      test('Required fields always have hazzers', () {
+      test('Required fields do not have hazzers in nullable mode', () {
         final request =
             CodeGeneratorRequest()
               ..parameter = 'default_api_level=API_LEVEL_NULLABLE'
@@ -393,8 +393,11 @@ void main() {
         final out = fileGen.generateMainFile();
         final code = out.emitSource(format: false);
 
-        // Required fields always have hazzers regardless of API level
-        expect(code, contains('$coreImportPrefix.bool hasRequiredField()'));
+        // Required fields do not have hazzers in nullable mode
+        expect(
+          code,
+          isNot(contains('$coreImportPrefix.bool hasRequiredField()')),
+        );
       });
 
       test('Repeated fields never have hazzers', () {
