@@ -198,7 +198,34 @@ class CodedBufferReader {
 
   @pragma('vm:prefer-inline')
   @pragma('wasm:prefer-inline')
-  bool readBool() => _readRawVarint32(true) != 0;
+  bool readBool() {
+    // For booleans, we need to check if the varint is non-zero.
+    // We can't use _readRawVarint32 because it may incorrectly return 0
+    // for large varints due to overflow handling.
+    // Instead, we just need to check if we read a non-zero varint.
+
+    // Read the first byte
+    final firstByte = _readRawVarintByte();
+    if ((firstByte & 0x80) == 0) {
+      // Single byte varint
+      return firstByte != 0;
+    }
+
+    // Multi-byte varint - consume remaining bytes
+    // If the first byte had any value bits set, it's non-zero
+    var isNonZero = (firstByte & 0x7f) != 0;
+
+    // Read remaining bytes (up to 9 more for a total of 10)
+    for (var i = 1; i < 10; i++) {
+      final byte = _readRawVarintByte();
+      isNonZero = isNonZero || ((byte & 0x7f) != 0);
+      if ((byte & 0x80) == 0) {
+        return isNonZero;
+      }
+    }
+
+    throw InvalidProtocolBufferException.malformedVarint();
+  }
 
   /// Read a length-delimited field as bytes.
   @pragma('vm:prefer-inline')
