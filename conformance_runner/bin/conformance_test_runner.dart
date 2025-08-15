@@ -8,8 +8,10 @@ import 'package:conformance_runner/src/generated/conformance/conformance.pb.dart
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/test_messages_edition2023.pb.dart';
-import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2_editions.pb.dart' as proto2_editions;
-import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3_editions.pb.dart' as proto3_editions;
+import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto2_editions.pb.dart'
+    as proto2_editions;
+import 'package:conformance_runner/src/generated/google/protobuf/test_messages_proto3_editions.pb.dart'
+    as proto3_editions;
 import 'package:conformance_runner/src/generated/google/protobuf/any.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/duration.pb.dart';
 import 'package:conformance_runner/src/generated/google/protobuf/timestamp.pb.dart';
@@ -106,6 +108,7 @@ ConformanceResponse test(ConformanceRequest request) {
             ignoreUnknownFields: request.testCategory ==
                 TestCategory.JSON_IGNORE_UNKNOWN_PARSING_TEST,
             supportNamesWithUnderscores: true,
+            allowUnknownEnumIntegers: true,
           );
         } catch (e) {
           response.parseError = e.toString();

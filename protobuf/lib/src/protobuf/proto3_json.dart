@@ -197,7 +197,12 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
         typeRegistry,
       );
     } else if (PbFieldType.isEnum(fieldType)) {
-      return (fieldValue as ProtobufEnum).name;
+      final enumValue = fieldValue as ProtobufEnum;
+      // For unknown enum values, return the integer value instead of the name
+      if (enumValue is _UnknownEnumValue) {
+        return enumValue.value;
+      }
+      return enumValue.name;
     } else {
       final baseType = PbFieldType.baseType(fieldType);
       switch (baseType) {
@@ -298,7 +303,9 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
 
     // Skip empty lists only if they are NOT part of a oneof AND are repeated fields
     // For oneof fields or bytes fields, even empty values should be serialized
-    if (!isInOneof && value is List && value.isEmpty && 
+    if (!isInOneof &&
+        value is List &&
+        value.isEmpty &&
         PbFieldType.isRepeated(fieldInfo.type)) {
       continue; // Skip empty repeated fields that aren't in a oneof
     }
