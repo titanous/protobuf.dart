@@ -66,6 +66,28 @@ abstract class $_MessageSet extends GeneratedMessage {
       }
 
       if (tagNumber != _messageSetItemsTag) {
+        // Check if this might be a standard protobuf encoded MessageSet extension
+        // Try to find this field number directly as an extension
+        final ext = extensionRegistry.getExtension(
+          info_.qualifiedMessageName,
+          tagNumber,
+        );
+        if (ext != null) {
+          // Parse this as a standard protobuf extension
+          final wireType = getTagWireType(tag);
+          if (wireType == WIRETYPE_LENGTH_DELIMITED) {
+            final message = input.readBytesAsView();
+            _parseExtension(tagNumber, message, extensionRegistry);
+          } else {
+            // Skip non-length-delimited fields for now
+            if (!input.skipField(tag)) {
+              break;
+            }
+          }
+          continue;
+        }
+        
+        // Not a recognized extension, skip the field
         if (!input.skipField(tag)) {
           break; // End of group.
         } else {
