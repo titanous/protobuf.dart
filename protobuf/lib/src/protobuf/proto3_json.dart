@@ -666,14 +666,6 @@ void _mergeFromProto3JsonWithContext(
             value,
           );
         case PbFieldType.ENUM_BIT:
-          // Special handling for google.protobuf.NullValue
-          // This enum should only accept JSON null, not string values
-          if (_isGoogleProtobufNullValue(fieldInfo)) {
-            throw context.parseException(
-              'google.protobuf.NullValue enum must be set to null, not a string',
-              value,
-            );
-          }
 
           if (value is String) {
             // First try valueByName if available (for handling aliases)

@@ -24,7 +24,22 @@ final _extensionRegistry = ExtensionRegistry()
   ..add(Test_messages_proto2.extensionInt32)
   ..add(Test_messages_proto2.groupField)
   ..add(proto2_editions.Test_messages_proto2_editions.extensionInt32)
-  ..add(proto2_editions.Test_messages_proto2_editions.groupfield);
+  ..add(proto2_editions.Test_messages_proto2_editions.groupfield)
+  // Message Set extensions
+  ..add(TestAllTypesProto2_MessageSetCorrectExtension1.messageSetExtension)
+  ..add(TestAllTypesProto2_MessageSetCorrectExtension2.messageSetExtension)
+  ..add(TestAllRequiredTypesProto2_MessageSetCorrectExtension1
+      .messageSetExtension)
+  ..add(TestAllRequiredTypesProto2_MessageSetCorrectExtension2
+      .messageSetExtension)
+  ..add(proto2_editions
+      .TestAllTypesProto2_MessageSetCorrectExtension1.messageSetExtension)
+  ..add(proto2_editions
+      .TestAllTypesProto2_MessageSetCorrectExtension2.messageSetExtension)
+  ..add(proto2_editions.TestAllRequiredTypesProto2_MessageSetCorrectExtension1
+      .messageSetExtension)
+  ..add(proto2_editions.TestAllRequiredTypesProto2_MessageSetCorrectExtension2
+      .messageSetExtension);
 
 // TypeRegistry containing all message types that might be wrapped in Any
 final _typeRegistry = TypeRegistry([
@@ -34,6 +49,16 @@ final _typeRegistry = TypeRegistry([
   TestAllTypesEdition2023(),
   proto2_editions.TestAllTypesProto2(),
   proto3_editions.TestAllTypesProto3(),
+
+  // Message Set extension types
+  TestAllTypesProto2_MessageSetCorrectExtension1(),
+  TestAllTypesProto2_MessageSetCorrectExtension2(),
+  TestAllRequiredTypesProto2_MessageSetCorrectExtension1(),
+  TestAllRequiredTypesProto2_MessageSetCorrectExtension2(),
+  proto2_editions.TestAllTypesProto2_MessageSetCorrectExtension1(),
+  proto2_editions.TestAllTypesProto2_MessageSetCorrectExtension2(),
+  proto2_editions.TestAllRequiredTypesProto2_MessageSetCorrectExtension1(),
+  proto2_editions.TestAllRequiredTypesProto2_MessageSetCorrectExtension2(),
 
   // Well-known types
   Any(),
@@ -103,7 +128,7 @@ ConformanceResponse test(ConformanceRequest request) {
   try {
     switch (request.whichPayload()) {
       case ConformanceRequest_Payload.protobufPayload:
-        message.mergeFromBuffer(request.protobufPayload);
+        message.mergeFromBuffer(request.protobufPayload, _extensionRegistry);
         break;
       case ConformanceRequest_Payload.jsonPayload:
         // Parse using proto3 JSON format
@@ -162,10 +187,6 @@ ConformanceResponse test(ConformanceRequest request) {
     response.serializeError = e.toString();
     return response;
   }
-
-  // Should never reach here, but Dart requires a return
-  response.runtimeError = 'Unexpected error';
-  return response;
 }
 
 /// Read and write conformance test messages using the binary protocol
