@@ -202,6 +202,10 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
       if (enumValue is _UnknownEnumValue) {
         return enumValue.value;
       }
+      // Special handling for google.protobuf.NullValue
+      if (enumValue.name == 'NULL_VALUE' && enumValue.value == 0) {
+        return null; // google.protobuf.NullValue should be serialized as JSON null
+      }
       return enumValue.name;
     } else {
       final baseType = PbFieldType.baseType(fieldType);
@@ -326,6 +330,18 @@ Object? _writeToProto3Json(FieldSet fs, TypeRegistry typeRegistry) {
     } else {
       jsonValue = valueToProto3Json(value, fieldInfo.type);
     }
+
+    // Proto3 JSON semantic: skip fields set to their default values for proto3 implicit presence fields
+    // This applies to non-oneof, proto3 implicit presence fields only
+    if (!isInOneof && fieldInfo.presence == FieldPresence.implicit) {
+      final defaultValue = fieldInfo.readonlyDefault;
+      // For google.protobuf.NullValue, the default is NULL_VALUE (0)
+      // When serialized to JSON, this becomes null, so we should omit the field entirely
+      if (value == defaultValue) {
+        continue; // Skip this field in JSON output
+      }
+    }
+
     result[fieldInfo.name] = jsonValue;
   }
 
@@ -650,6 +666,15 @@ void _mergeFromProto3JsonWithContext(
             value,
           );
         case PbFieldType.ENUM_BIT:
+          // Special handling for google.protobuf.NullValue
+          // This enum should only accept JSON null, not string values
+          if (_isGoogleProtobufNullValue(fieldInfo)) {
+            throw context.parseException(
+              'google.protobuf.NullValue enum must be set to null, not a string',
+              value,
+            );
+          }
+
           if (value is String) {
             // First try valueByName if available (for handling aliases)
             if (fieldInfo.valueByName != null) {
@@ -1121,7 +1146,7 @@ void _mergeFromProto3JsonWithContext(
           }
         }
 
-        // Handle null values - skip them unless the field is google.protobuf.Value
+        // Handle null values - skip them unless the field is google.protobuf.Value or google.protobuf.NullValue
         if (value == null) {
           // Check if this field is a google.protobuf.Value message type
           if (PbFieldType.isGroupOrMessage(fieldInfo.type) &&
@@ -1140,6 +1165,40 @@ void _mergeFromProto3JsonWithContext(
               return;
             }
           }
+
+          // Check if this field is a google.protobuf.NullValue enum type
+          if (PbFieldType.isEnum(fieldInfo.type) &&
+              _isGoogleProtobufNullValue(fieldInfo)) {
+            // For google.protobuf.NullValue, null JSON should be converted to enum value 0
+            final nullValueEnum =
+                fieldInfo.enumValues!.first; // This should be NULL_VALUE = 0
+            fieldSet._setFieldUnchecked(meta, fieldInfo, nullValueEnum);
+
+            // Track this in oneof if applicable
+            final oneofIndex = meta.oneofs[fieldInfo.tagNumber];
+            if (oneofIndex != null) {
+              seenOneofs[oneofIndex] = key;
+            }
+
+            context.popIndex();
+            return;
+          }
+
+          // For oneof fields that are not Value or NullValue, check the field type
+          final oneofIndex = meta.oneofs[fieldInfo.tagNumber];
+          if (oneofIndex != null) {
+            // For scalar oneof fields, null should be ignored (skip)
+            // For non-scalar oneof fields, null should cause an error
+            if (PbFieldType.isGroupOrMessage(fieldInfo.type) ||
+                PbFieldType.isEnum(fieldInfo.type)) {
+              throw context.parseException(
+                'null value is not allowed for non-scalar oneof field',
+                value,
+              );
+            }
+            // For scalar oneof fields, just skip (continue processing)
+          }
+
           // For non-Value fields, skip null values (don't track in oneofs)
           context.popIndex();
           return;
@@ -1329,4 +1388,20 @@ class _UnknownEnumValue extends ProtobufEnum {
 
   @override
   int get hashCode => value.hashCode;
+}
+
+/// Helper function to check if a FieldInfo represents a google.protobuf.NullValue enum field
+bool _isGoogleProtobufNullValue(FieldInfo fieldInfo) {
+  if (fieldInfo.enumValues == null || fieldInfo.enumValues!.isEmpty) {
+    return false;
+  }
+
+  // Check if this is the NullValue enum by checking if:
+  // 1. It has exactly one value
+  // 2. That value has the name 'NULL_VALUE'
+  // 3. That value has the numeric value 0
+  final enumValues = fieldInfo.enumValues!;
+  return enumValues.length == 1 &&
+      enumValues.first.name == 'NULL_VALUE' &&
+      enumValues.first.value == 0;
 }
