@@ -166,6 +166,13 @@ class ExtensionGenerator {
       }
     }
 
+    // Add the fully qualified type name for the extension
+    // This allows the extension to be properly identified without hardcoding namespaces
+    final extensionTypeName = _parent.fullName.isEmpty 
+        ? _extensionName 
+        : '${_parent.fullName}.$_extensionName';
+    named['typeName'] = "'$extensionTypeName'";
+
     // Add options bytes if they exist
     if (_descriptor.hasOptions()) {
       final optionsBytes = _descriptor.options.writeToBuffer();

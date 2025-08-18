@@ -32,6 +32,20 @@ class ExtensionRegistry {
   Extension? getExtension(String messageName, int tagNumber) =>
       _extensions[messageName]?[tagNumber];
 
+  /// Retrieves all extensions from the registry that extend the [messageName] message type.
+  List<Extension> getExtensionsForMessage(String messageName) {
+    final map = _extensions[messageName];
+    if (map == null) return const [];
+    return map.values.toList();
+  }
+
+  /// Retrieves all extensions in the registry.
+  Iterable<Extension> getAllExtensions() sync* {
+    for (final map in _extensions.values) {
+      yield* map.values;
+    }
+  }
+
   /// Creates a shallow copy of [message], with all extensions in `this` parsed
   /// from the unknown fields of [message] and of every nested submessage.
   ///
@@ -229,6 +243,12 @@ class _EmptyExtensionRegistry implements ExtensionRegistry {
 
   @override
   Extension? getExtension(String messageName, int tagNumber) => null;
+
+  @override
+  List<Extension> getExtensionsForMessage(String messageName) => const [];
+
+  @override
+  Iterable<Extension> getAllExtensions() => const [];
 
   @override
   T reparseMessage<T extends GeneratedMessage>(T message) =>

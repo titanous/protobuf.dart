@@ -8,6 +8,10 @@ part of 'internal.dart';
 class Extension<T> extends FieldInfo<T> {
   final String extendee;
 
+  /// The fully qualified name of this extension (e.g., "package.name.extension_name").
+  /// This is null for legacy extensions that don't provide this information.
+  final String? typeName;
+
   /// The serialized options associated with this extension from the proto descriptor.
   /// This contains the raw bytes of the FieldOptions message that may contain extension options.
   /// Use a deserializer with the appropriate registry to get the FieldOptions.
@@ -23,6 +27,7 @@ class Extension<T> extends FieldInfo<T> {
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues,
     String? protoName,
+    this.typeName,
     this.optionsBytes,
   }) : super(
          name,
@@ -46,6 +51,7 @@ class Extension<T> extends FieldInfo<T> {
     ValueOfFunc? valueOf,
     List<ProtobufEnum>? enumValues,
     String? protoName,
+    this.typeName,
     this.optionsBytes,
   }) : super.repeated(
          name,
