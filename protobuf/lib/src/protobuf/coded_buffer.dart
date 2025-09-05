@@ -82,10 +82,12 @@ void _mergeFromCodedBufferReader(
         final rawValue = input.readEnum();
         final value = meta._decodeEnum(tagNumber, registry, rawValue);
         if (value == null) {
-          // Store unknown enum values as _UnknownEnumValue instances
-          // instead of putting them in unknownFields, so they can be
-          // accessed via getFieldOrNull()
-          fs._setFieldUnchecked(meta, fi, _UnknownEnumValue(rawValue));
+          // For unknown enum values in singular fields, store them in unknownFields
+          // This preserves the last known value in the field itself
+          fs._ensureUnknownFields().mergeVarintField(
+            tagNumber,
+            Int64(rawValue),
+          );
         } else {
           fs._setFieldUnchecked(meta, fi, value);
         }
@@ -443,9 +445,9 @@ void _readRepeatedEnum(
   final rawValue = input.readEnum();
   final value = meta._decodeEnum(tagNumber, registry, rawValue);
   if (value == null) {
-    // Store unknown enum values as _UnknownEnumValue instances
-    // in repeated fields too
-    list.add(_UnknownEnumValue(rawValue));
+    // For unknown enum values in repeated fields, store them in unknownFields
+    // instead of trying to add to the typed list (which would cause a type error)
+    fs._ensureUnknownFields().mergeVarintField(tagNumber, Int64(rawValue));
   } else {
     list.add(value);
   }
