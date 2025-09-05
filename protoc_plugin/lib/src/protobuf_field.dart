@@ -79,8 +79,24 @@ class ProtobufField {
 
   bool get isOptional {
     if (isRepeated) return false;
-    if (isRequired || !descriptor.proto3Optional) return false;
-    return true;
+    if (isRequired) return false;
+
+    // For proto3 with optional keyword
+    if (descriptor.proto3Optional) return true;
+
+    // For proto3 message fields without optional keyword, they should NOT be nullable
+    // even though they have explicit presence per protobuf spec
+    if (parent.fileGen!.descriptor.syntax == 'proto3' &&
+        descriptor.type == FieldDescriptorProto_Type.TYPE_MESSAGE &&
+        !descriptor.proto3Optional) {
+      return false;
+    }
+
+    // For editions: explicit presence fields are "optional" for nullable generation
+    // (they can be unset, so need nullable types in API_LEVEL_NULLABLE mode)
+    if (_fieldPresence == FIELD_PRESENCE_EXPLICIT) return true;
+
+    return false;
   }
 
   /// Whether a numeric field is repeated and must be encoded with packed
